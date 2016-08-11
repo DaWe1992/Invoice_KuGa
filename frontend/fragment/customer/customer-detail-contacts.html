@@ -1,0 +1,49 @@
+<div class="panel panel-warning">
+    <div class="panel-heading">
+        <div>
+            <b>
+                <span class="glyphicon glyphicon-earphone"></span>
+                Kontakte
+            </b>
+        </div>
+    </div>
+    <!-- Contacts table -->
+    <div id="table-contacts" class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th ng-hide="readOnly"></th>
+                    <th><b>Kontaktart</b></th>
+                    <th><b>Kontakt</b></th>
+                    <th><b>Bemerkung</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-row" ng-repeat="contact in contacts">
+                    <td ng-hide="readOnly">
+                        <div class="btn-group" role="group">
+                            <a class="btn btn-xs btn-default" href="" ng-click="modifyContact(id)">
+                                <span class="glyphicon glyphicon-erase"></span>
+                            </a>
+                            <a class="btn btn-xs btn-default" href="" ng-click="modifyContact(id)">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </div>
+                    </td>
+                    <td>{{contact.type}}</td>
+                    <td>{{contact.data}}</td>
+                    <td><em>{{contact.comments}}</em></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-footer" ng-hide="readOnly">
+        <div class="pull-right">
+            <a class="btn btn-default" ng-href="#/customers/{{customer.id}}/contacts/new">
+                <span class="glyphicon glyphicon-asterisk"></span>
+                Neuer Kontakt
+            </a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

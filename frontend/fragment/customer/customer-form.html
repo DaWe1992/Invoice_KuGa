@@ -1,0 +1,76 @@
+<form class="form-horizontal" role="form" novalidate>
+    <div class="input-group col-xl-5 col-lg-5 col-sm-12 col-xs-12">
+        <span class="input-group-addon"><b>KdNr</b></span>
+        <input
+            type="text"
+            class="form-control"
+            ng-model="customer.id"
+            disabled
+        >
+    </div>
+    <br/>
+    <div class="input-group col-xl-8 col-lg-8 col-sm-12 col-xs-12">
+        <span class="input-group-addon"><b>Anrede*</b></span>
+        <input
+            type="text"
+            class="form-control"
+            ng-model="customer.address"
+            ng-disabled="readOnly"
+            required
+        >
+    </div>
+    <br/>
+    <div class="input-group col-xl-12 col-lg-12 col-sm-12 col-xs-12">
+        <span class="input-group-addon"><b>Vorname</b></span>
+        <input
+            type="text"
+            class="form-control"
+            ng-model="customer.firstname"
+            ng-disabled="readOnly"
+        >
+    </div>
+    <br/>
+    <div class="input-group col-xl-12 col-lg-12 col-sm-12 col-xs-12">
+        <span class="input-group-addon"><b>Nachname*</b></span>
+        <input
+            type="text"
+            class="form-control"
+            ng-model="customer.lastname"
+            ng-disabled="readOnly"
+            required
+        >
+    </div>
+    <br/>
+    <div class="input-group col-xl-12 col-lg-12 col-sm-12 col-xs-12">
+        <span class="input-group-addon"><b>Straße*</b></span>
+        <input
+            type="text"
+            class="form-control"
+            ng-model="customer.street"
+            ng-disabled="readOnly"
+            required
+        >
+    </div>
+    <br/>
+    <div class="input-group col-xl-6 col-lg-6 col-sm-12 col-xs-12">
+        <span class="input-group-addon"><b>PLZ*</b></span>
+        <input
+            type="text"
+            class="form-control"
+            ng-model="customer.zip"
+            ng-disabled="readOnly"
+            required
+        >
+    </div>
+    <br/>
+    <div class="input-group col-xl-12 col-lg-12 col-sm-12 col-xs-12">
+        <span class="input-group-addon"><b>Ort*</b></span>
+        <input
+            type="text"
+            class="form-control"
+            ng-model="customer.city"
+            ng-disabled="readOnly"
+            required
+        >
+    </div>
+</form>

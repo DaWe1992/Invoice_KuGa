@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Invoice KuGa</title>
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+        <!-- Bootstrap -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <!-- Angular -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+
+        <!-- Angular ngRoute -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
+
+        <!-- Angular ngAnimate -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.js"></script>
+
+        <!-- Angular ngDialog -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.6.2/js/ngDialog.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.6.2/css/ngDialog.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.6.2/css/ngDialog-theme-default.min.css" rel="stylesheet">
+
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular-sanitize.js"></script>
+
+        <!-- app.js -->
+        <script src="./app.js"></script>
+
+        <!-- Services -->
+        <script src="./service/customerService.js"></script>
+        <script src="./service/sessionService.js"></script>
+        <script src="./service/dialogService.js"></script>
+
+        <!-- Controller -->
+        <script src="./controller/mainController.js"></script>
+        <script src="./controller/customer/customerListController.js"></script>
+        <script src="./controller/customer/customerDetailController.js"></script>
+        <script src="./controller/customer/customerNewController.js"></script>
+
+        <!-- custom styles -->
+        <link href="./css/styles.css" rel="stylesheet">
+    </head>
+    <body ng-app="InvoiceKuGa">
+        <!-- Navbar -->
+        <nav class="navbar navbar-inverse">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://www.kurgarten-cafe.de">
+                    <img class="icon-sm icon-navbar" src="./image/favicon.ico"/>
+                    Kurgarten Cafe
+                </a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse" ng-controller="MainController">
+                <!-- Navbar items -->
+                <ul class="nav navbar-nav navbar-left">
+                    <li id="tab_home" class="active">
+                        <a href="#" ng-click="switchTab('tab_home')">
+                            <span class="glyphicon glyphicon-home"></span>
+                            Home
+                        </a>
+                    </li>
+                    <li id="tab_customers">
+                        <a href="#/customers" ng-click="switchTab('tab_customers')">
+                            <span class="glyphicon glyphicon-user"></span>
+                            Kunden
+                        </a>
+                    </li>
+                    <li id="tab_invoices">
+                        <a href="#" ng-click="switchTab('tab_invoices')">
+                            <span class="glyphicon glyphicon-eur"></span>
+                            Rechnungen
+                        </a>
+                    </li>
+                    <li id="tab_stats">
+                        <a href="#" ng-click="switchTab('tab_stats')">
+                            <span class="glyphicon glyphicon-stats"></span>
+                            Statistiken
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="btn" href="" ng-click="showPopup()">
+                            <span class="glyphicon glyphicon-off"></span>
+                            Beenden
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- Content -->
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div ngAnimate ng-view></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

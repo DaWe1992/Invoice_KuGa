@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS customers(
+    cust_id serial PRIMARY KEY,
+    cust_address VARCHAR(10),
+    cust_firstname VARCHAR(50),
+    cust_lastname VARCHAR(50),
+    cust_street VARCHAR(50),
+    cust_zip VARCHAR(5),
+    cust_city VARCHAR(50)
+);
+
+CREATE TABLE customer_contacts(
+	cuco_id serial PRIMARY KEY,
+	cuco_customer INT REFERENCES customers(cust_id) ON UPDATE CASCADE ON DELETE CASCADE,
+	cuco_contact_type VARCHAR(10),
+	cuco_contact VARCHAR(100),
+	cuco_comments VARCHAR(200)
+);
+
+create table customers_lock(
+	culo_id int references customers(cust_id) primary key,
+	culo_user_email varchar(100),
+	culo_user_name varchar(50)
+);

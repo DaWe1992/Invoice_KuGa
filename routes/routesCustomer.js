@@ -6,7 +6,7 @@
 "use strict";
 
 //import necessary modules
-var db = require("../db.js")
+var db = require("../db.js");
 
 module.exports = function(app) {
 

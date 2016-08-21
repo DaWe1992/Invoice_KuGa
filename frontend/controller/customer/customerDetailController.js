@@ -76,7 +76,7 @@
                         );
                     } else {
                         Customer.lock().success(function() {
-                            $scope.readOnly = !$scope.readOnly;
+                            $scope.readOnly = false;
                         })
                         .error(function() {
                             Dialog.errBox();
@@ -88,7 +88,7 @@
                 });
             } else {
                 Customer.unlock().success(function() {
-                    $scope.readOnly = !$scope.readOnly;
+                    $scope.readOnly = true;
                 })
                 .error(function() {
                     Dialog.errBox();
@@ -101,7 +101,7 @@
          * @param id
          */
         $scope.deleteContact = function(id) {
-            //TODO: implement function to delete a customer
+            //TODO: implement function to delete a customer contact
         };
 
         $scope.getCustomer();

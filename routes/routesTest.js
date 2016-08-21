@@ -64,7 +64,7 @@ module.exports = function(app) {
             //create pdf and pipe it to the response stream
             pdf.create(html).toStream(function(err, stream) {
                 res.setHeader("Content-type", "application/pdf");
-                res.setHeader("Content-disposition", "attachment; filename=Rechnung.pdf");
+                res.setHeader("Content-disposition", "attachment; filename=Rechnung_" + data.invoice.id + ".pdf");
                 stream.pipe(res);
             });
         });

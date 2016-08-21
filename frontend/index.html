@@ -27,6 +27,11 @@
 
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular-sanitize.js"></script>
 
+        <!-- d3.js/c3.js charts-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css" rel="stylesheet">
+
         <!-- app.js -->
         <script src="./app.js"></script>
 
@@ -40,6 +45,7 @@
         <script src="./controller/customer/customerListController.js"></script>
         <script src="./controller/customer/customerDetailController.js"></script>
         <script src="./controller/customer/customerNewController.js"></script>
+        <script src="./controller/stats/statsController.js"></script>
 
         <!-- custom styles -->
         <link href="./css/styles.css" rel="stylesheet">
@@ -80,7 +86,7 @@
                         </a>
                     </li>
                     <li id="tab_stats">
-                        <a href="#" ng-click="switchTab('tab_stats')">
+                        <a href="#/statistics" ng-click="switchTab('tab_stats')">
                             <span class="glyphicon glyphicon-stats"></span>
                             Statistiken
                         </a>

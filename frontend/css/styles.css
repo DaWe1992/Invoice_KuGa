@@ -76,6 +76,14 @@ input.ng-invalid.ng-dirty {
     display: inline !important;
 }
 
+/* Charts */
+#chart-container {
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 20px;
+}
+
 /* Applying of animations */
 .ng-enter {
     -webkit-animation: fadeIn 0.5s both ease-in;

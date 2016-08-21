@@ -17,6 +17,7 @@
         "customerList",
         "customerDetail",
         "customerNew",
+        "statistics",
         "ngRoute",
         "ngAnimate",
         "ngDialog",
@@ -39,6 +40,10 @@
         .when("/customers/:cu_id", {
             templateUrl: "./view/customer/customer-detail.html",
             controller: "CustomerDetailController"
+        })
+        .when("/statistics", {
+            templateUrl: "./view/stats/statistics.html",
+            controller: "StatsController"
         })
         /*.when("/customers/:cu_id/contacts/:co_id", {
             templateUrl: "",

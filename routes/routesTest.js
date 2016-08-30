@@ -15,11 +15,11 @@ module.exports = function(app) {
     var data = {
         "customer": {
             "address": "Herr",
-            "firstname": "Daniel",
-            "lastname": "Wehner",
-            "street": "Im Pförtlein 14a",
-            "zip": "97688",
-            "city": "Bad Kissingen"
+            "firstname": "Max",
+            "lastname": "Mustermann",
+            "street": "Musterstraße 25",
+            "zip": "12345",
+            "city": "Musterstadt"
         },
         "invoice": {
             "id": "2016-0001",

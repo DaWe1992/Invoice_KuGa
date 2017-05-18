@@ -42,7 +42,7 @@
             .error(function() {
                 Dialog.errBox();
             });
-        }
+        };
 
         /**
          * Deletes the customer specified
@@ -74,7 +74,7 @@
         $scope.sortBy = function(propertyName) {
             $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
             $scope.propertyName = propertyName;
-        }
+        };
 
         $scope.getCustomers();
     }]);

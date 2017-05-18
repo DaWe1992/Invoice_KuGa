@@ -1,6 +1,7 @@
 /* Body */
 body {
     background: url(../image/coffee_beans_wallpaper.jpg) fixed;
+    /* background-color: #545556; */
     background-size: cover;
 }
 

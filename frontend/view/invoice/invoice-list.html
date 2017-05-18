@@ -1,1 +1,22 @@
-<p>HALLO, DAS IST EIN TEST!</p>
+<div>
+    <!-- Sidebar -->
+    <div class="col-sm-4">
+        <!-- Actions -->
+        <div class="list-group">
+            <p class="list-group-item active"><b>Aktionen</b></p>
+            <a class="list-group-item" href="#/invoices/new">
+                <span class="glyphicon glyphicon-asterisk"></span>
+                Rechnung anlegen
+            </a>
+            <a class="list-group-item" href="" ng-click="toggleFilterPanel()">
+                <span class="glyphicon glyphicon-filter"></span>
+                Rechnungen filtern
+            </a>
+        </div>
+        <!-- Filter panel -->
+        <div ng-include="'../fragment/general/filter-bar.html'"></div>
+    </div>
+    <div class="col-sm-8">
+
+    </div>
+</div>

@@ -49,6 +49,6 @@
                     $(this).removeClass("active");
                 }
             });
-        }
+        };
     }]);
 })();

@@ -17,6 +17,7 @@
         "customerList",
         "customerDetail",
         "customerNew",
+        "invoiceList",
         "statistics",
         "ngRoute",
         "ngAnimate",

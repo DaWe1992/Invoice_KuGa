@@ -37,6 +37,7 @@
 
         <!-- Services -->
         <script src="./service/customerService.js"></script>
+        <script src="./service/invoiceService.js"></script>
         <script src="./service/sessionService.js"></script>
         <script src="./service/dialogService.js"></script>
 
@@ -45,6 +46,7 @@
         <script src="./controller/customer/customerListController.js"></script>
         <script src="./controller/customer/customerDetailController.js"></script>
         <script src="./controller/customer/customerNewController.js"></script>
+        <script src="./controller/invoice/invoiceListController.js"></script>
         <script src="./controller/stats/statsController.js"></script>
 
         <!-- custom styles -->
@@ -80,7 +82,7 @@
                         </a>
                     </li>
                     <li id="tab_invoices">
-                        <a href="#" ng-click="switchTab('tab_invoices')">
+                        <a href="#/invoices" ng-click="switchTab('tab_invoices')">
                             <span class="glyphicon glyphicon-eur"></span>
                             Rechnungen
                         </a>

@@ -14,7 +14,7 @@ var favicon = require("serve-favicon");
 var stormpath = require("express-stormpath");
 
 var app = express();
-var port = 80;
+var port = 8080;
 
 console.log("\nSETTING UP THE SERVER...");
 console.log("========================\n");

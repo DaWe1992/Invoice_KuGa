@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS customers(
     cust_city VARCHAR(50)
 );
 
-CREATE TABLE customer_contacts(
+CREATE TABLE IF NOT EXISTS customer_contacts(
 	cuco_id serial PRIMARY KEY,
 	cuco_customer INT REFERENCES customers(cust_id) ON UPDATE CASCADE ON DELETE CASCADE,
 	cuco_contact_type VARCHAR(10),
@@ -16,8 +16,24 @@ CREATE TABLE customer_contacts(
 	cuco_comments VARCHAR(200)
 );
 
-create table customers_lock(
+CREATE TABLE IF NOT EXISTS customers_lock(
 	culo_id int references customers(cust_id) primary key,
-	culo_user_email varchar(100),
-	culo_user_name varchar(50)
+	culo_user_email VARCHAR(100),
+	culo_user_name VARCHAR(50)
+);
+
+CREATE TABLE IF NOT EXISTS invoices(
+  inv_id serial PRIMARY KEY,
+  inv_cust_id INT REFERENCES customers(cust_id) ON UPDATE CASCADE ON DELETE CASCADE,
+  inv_date DATE,
+  inv_description VARCHAR(100)
+);
+
+CREATE TABLE IF NOT EXISTS invoice_positions (
+  ipos_id SERIAL PRIMARY KEY,
+  ipos_inv_id INT REFERENCES invoices(inv_id) ON UPDATE CASCADE ON DELETE CASCADE,
+  ipos_description VARCHAR(100),
+  ipos_qty INT,
+  ipos_net_price NUMERIC(10,2),
+  ipos_vat NUMERIC(3,2)
 );

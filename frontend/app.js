@@ -41,6 +41,10 @@
             templateUrl: "./view/customer/customer-detail.html",
             controller: "CustomerDetailController"
         })
+        .when("/invoices", {
+            templateUrl: "./view/invoice/invoice-list.html",
+            controller: "InvoiceListController"
+        })
         .when("/statistics", {
             templateUrl: "./view/stats/statistics.html",
             controller: "StatsController"

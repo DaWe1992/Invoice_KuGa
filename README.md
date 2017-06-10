@@ -1,6 +1,7 @@
 # InvoiceKuGa
 
-The purpose of the application is to create invoices. Furthermore, it is possible to administer customers and customer contacts 
+The purpose of the application is to create invoices and it is possible to administer customers and customer contacts.
+Furthermore, the application supports the generation of statistics and charts to analyse the revenues.
 
 ## Installation
 

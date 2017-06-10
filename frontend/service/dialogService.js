@@ -29,15 +29,15 @@
              */
             confirmBox: function(title, body, yesOption, noOption) {
                 var scope = $rootScope.$new(true);
-                
+
                 scope.title = title;
                 scope.body = body;
-                
+
                 scope.yesOption = function() {
                     yesOption();
                     ngDialog.close();
                 };
-                
+
                 scope.noOption = function() {
                     if(noOption) noOption();
                     ngDialog.close();
@@ -61,16 +61,39 @@
 
                 scope.title = title;
                 scope.body = body;
-                
+
                 scope.okOption = function() {
                     ngDialog.close();
                 };
-                
+
                 return ngDialog.open({
                     template: "../fragment/dialog/msg-dialog.html",
                     className: "ngdialog-theme-default",
                     scope: scope
                 });
+            },
+
+            /**
+             * Displays a simple message box that closes automatically.
+             * @param title (title of the dialog)
+             * @param body (body text of the dialog)
+             * @param millis (time to show box in milliseconds)
+             */
+            autoCloseBox: function(title, body, millis) {
+                var scope = $rootScope.$new(true);
+
+                scope.title = title;
+                scope.body = body;
+
+                var dialog = ngDialog.open({
+                    template: "../fragment/dialog/autoclose-dialog.html",
+                    className: "ngdialog-theme-default",
+                    scope: scope
+                });
+
+                setTimeout(function() {
+                    dialog.close();
+                }, millis);
             },
 
             /**

@@ -46,9 +46,7 @@
                         <div class="col-sm-6">
                             <p>
                                 <b>Betrag:</b><br/>
-                                <!--<div class="alert alert-success" role="alert">-->
-                                    <h3 class="fg-success">{{invoice.sum | currency:"€ ":2}}</h3>
-                                <!--</div>-->
+                                <h3 class="fg-success">{{invoice.sum | currency:"€ ":2}}</h3>
                             </p>
                         </div>
                     </div>
@@ -57,7 +55,7 @@
                             <span class="glyphicon glyphicon-search"></span>
                             Details
                         </a>
-                        <a class="btn btn-default" href="" ng-click="" ng-hide="readOnly">
+                        <a class="btn btn-default" href="" ng-click=informUser() ng-href="/invoices/{{invoice.id}}/print" ng-hide="readOnly">
                             <span class="glyphicon glyphicon-print"></span>
                             Drucken
                         </a>

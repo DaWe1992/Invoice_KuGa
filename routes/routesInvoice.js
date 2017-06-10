@@ -91,7 +91,7 @@ module.exports = function(app) {
                 data.invoice = result.rows[0];
 
                 // load invoice positions
-                sql = "SELECT ipos_description AS pos, ipos_qty AS qty, ipos_net_price AS unitPrice, " +
+                sql = "SELECT ipos_description AS pos, ipos_qty AS qty, ipos_net_price AS unitprice, " +
                           "ROUND((ipos_qty * ipos_net_price)::numeric,2) AS net, ROUND(((ipos_qty * ipos_net_price) * ipos_vat)::numeric,2) AS vat, " +
                           "ROUND(((ipos_qty * ipos_net_price) + ((ipos_qty * ipos_net_price) * ipos_vat))::numeric,2) AS gross " +
                       "FROM invoice_positions " +

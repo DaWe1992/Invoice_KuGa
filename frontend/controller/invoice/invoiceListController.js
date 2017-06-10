@@ -19,7 +19,7 @@
     * the invoice list.
     */
    module.controller("InvoiceListController",
-   ["$scope", "Invoice", function($scope, Invoice) {
+   ["$scope", "Invoice", "Dialog", function($scope, Invoice, Dialog) {
        $scope.invoices;
 
        //filter
@@ -42,6 +42,17 @@
            .error(function() {
                Dialog.errBox();
            });
+       };
+
+       /**
+        * Inform the user about workload.
+        */
+       $scope.informUser = function() {
+           Dialog.autoCloseBox(
+               "Bitte warten!",
+               "Die Rechnung wird erzeugt, es wird um Geduld gebeten...",
+               5000
+           );
        };
 
        /**

@@ -23,6 +23,8 @@ node express.js
 
 The application now listens on port `8080`.
 
+![application is ready](img_readme/server_execute.png)
+
 ## Debug Node.js Backend
 
 Debugging is an integral part of the development process. For debugging a `Node.js` application it is recommended to use
@@ -39,3 +41,6 @@ node-debug express.js
 ```
 
 After that the debugger listens on port `5858` on your local machine.
+(The browser should open automatically.)
+
+![node inspector](img_readme/node_inspector.png)

@@ -36,10 +36,39 @@ body {
     background-color: #ffca5c !important;
 }
 
+/* Page Header */
+.page-header {
+    padding: 9px !important;
+    border-bottom: 1px solid #000 !important;
+    background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.myHeader {
+    padding: 0px 0px 5px 20px;
+    background-color: #aaa !important;
+    border-color: #888 !important;
+}
+
+.mySubheader {
+    padding: 0px 0px 5px 20px;
+    background-color: #ddd !important;
+    border-color: #aaa !important;
+}
+
 /* Panel */
 .list-group-item.active {
     background-color: #ffc451 !important;
     border-color: #ddd !important;
+}
+
+.scrollable {
+    overflow-y: scroll;
+    max-height: 100vh;
+}
+
+/* Colors */
+.fg-success {
+    color: #3c763d;
 }
 
 /* Form validation */

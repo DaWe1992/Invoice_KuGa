@@ -22,7 +22,8 @@
         "ngRoute",
         "ngAnimate",
         "ngDialog",
-        "ngSanitize"
+        "ngSanitize",
+        "angular.filter"
     ]);
 
     /**

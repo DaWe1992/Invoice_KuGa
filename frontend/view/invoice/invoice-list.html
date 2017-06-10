@@ -1,4 +1,9 @@
 <div>
+    <div class="col-sm-12">
+        <div class="panel panel-default myHeader">
+            <h2>Rechnungen</h2>
+        </div>
+    </div>
     <!-- Sidebar -->
     <div class="col-sm-4">
         <!-- Actions -->
@@ -17,6 +22,52 @@
         <div ng-include="'../fragment/general/filter-bar.html'"></div>
     </div>
     <div class="col-sm-8">
-
+        <div class="scrollable">
+            <div ng-repeat="(lastname, invoices) in invoices | filter:filter.string | groupBy: 'custlastname'">
+                <div class="panel panel-default mySubheader">
+                    <h3>{{lastname}}</h3>
+                </div>
+                <div class="panel panel-default" ng-repeat="invoice in invoices">
+                    <div class="panel-heading">
+                        <b>RNr: {{invoice.id}} ({{invoice.description}}, {{invoice.date | date:"shortDate"}})</b>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-sm-6">
+                            <p>
+                                <b>Empfänger:</b>
+                            </p>
+                            <p>
+                                {{invoice.custaddress}}<br/>
+                                {{invoice.custfirstname}} {{invoice.custlastname}}<br/>
+                                {{invoice.custstreet}}<br/>
+                                {{invoice.custzip}} {{invoice.custcity}}
+                            </p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>
+                                <b>Betrag:</b><br/>
+                                <!--<div class="alert alert-success" role="alert">-->
+                                    <h3 class="fg-success">{{invoice.sum | currency:"€ ":2}}</h3>
+                                <!--</div>-->
+                            </p>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <a class="btn btn-default" href="" ng-click="" ng-hide="readOnly">
+                            <span class="glyphicon glyphicon-search"></span>
+                            Details
+                        </a>
+                        <a class="btn btn-default" href="" ng-click="" ng-hide="readOnly">
+                            <span class="glyphicon glyphicon-print"></span>
+                            Drucken
+                        </a>
+                        <a class="btn btn-danger" href="" ng-click="" ng-hide="readOnly">
+                            <span class="glyphicon glyphicon-trash"></span>
+                            Löschen
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

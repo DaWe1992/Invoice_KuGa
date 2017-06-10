@@ -51,6 +51,13 @@
            $scope.showFilterPanel = !$scope.showFilterPanel;
        };
 
+       /**
+        * Resets the filter string.
+        */
+       $scope.deleteFilter = function() {
+           $scope.filter.string = "";
+       };
+
        $scope.getInvoices();
    }]);
  })();

@@ -13,7 +13,27 @@ npm initialize
 ```
 
 This command installs all dependencies of the application which were specified in the `package.json` file.
+This is what the `package.json` file looks like:
 
+```json
+{
+  "name": "invoice_app_kuga",
+  "version": "1.0.0",
+  "description": "",
+  "main": "express.js",
+  "author": "Daniel Wehner",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "express": "^4.14.0",
+    "express-stormpath": "^3.1.3",
+    "html-pdf": "^2.0.1",
+    "mustache": "^2.2.1",
+    "pg": "^6.0.3",
+    "serve-favicon": "^2.3.0"
+  }
+}
+```
 ## Start the Application
 
 In order to start the application, go to the root folder of the application and run the following command:

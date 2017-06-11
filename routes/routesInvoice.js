@@ -62,10 +62,10 @@ module.exports = function(app) {
         var data = {};
 
         // Load customer data
-        var sql = "SELECT cust_address AS address, cust_firstname AS firstname, cust_lastname AS lastname, " +
-                      "cust_street AS street, cust_zip AS zip, cust_city AS city " +
-                  "FROM customers " +
-                  "WHERE cust_id = '" + id + "';"
+        var sql = "SELECT customers.cust_address AS address, customers.cust_firstname AS firstname, customers.cust_lastname AS lastname, " +
+                      "customers.cust_street AS street, customers.cust_zip AS zip, customers.cust_city AS city " +
+                  "FROM customers INNER JOIN invoices ON customers.cust_id = invoices.inv_cust_id " +
+                  "WHERE invoices.inv_id = '" + id + "';"
 
         db.query(sql, function(err, result) {
             if(err) {

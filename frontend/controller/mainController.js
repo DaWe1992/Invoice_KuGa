@@ -21,6 +21,8 @@
     module.controller("MainController",
     ["$scope", "Dialog", "Session", function($scope, Dialog, Session) {
 
+        $scope.year = new Date().getFullYear();
+
         /**
          * Shows the dialog.
          */

@@ -31,7 +31,7 @@ module.exports = function(app) {
 
         var queryObject = url.parse(req.url,true).query;
 
-        var gross = queryObject.gross ? " * (1 + ipos_vat)" : "";
+        var gross = queryObject.gross === "true" ? " * (1 + ipos_vat)" : "";
         var limit = !isNaN(queryObject.limit) ? " LIMIT " + queryObject.limit : " LIMIT 10";
 
         // Get revenues by customer

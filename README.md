@@ -94,11 +94,11 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
 - `http://<host>:8080/statistics/revbymonth`:  
   Returns the revenue statistics grouped by months.  
   **Query parameters:**  
-  - gross: true|false (true := returns gross revenues, false := returns net revenues)
+  - *gross*: true | false (true := returns gross revenues, false := returns net revenues)
 - `http://<host>:8080/statistics/revbycustomer`:   
   Returns the revenue statistics grouped by customers.  
   **Query parameters:**  
-  - gross: true|false (true := returns gross revenues, false := returns net revenues)
+  - *gross*: true | false (true := returns gross revenues, false := returns net revenues)
 
 ## Debugging Node.js Backend
 

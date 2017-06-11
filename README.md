@@ -59,41 +59,41 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
 
 ### Customer Endpoints
 
-GET:
+**GET:**
 
-- `http://<host>:<8080>/customers`:  
+- `http://<host>:8080/customers`:  
   Returns a list of all customers.
-- `http://<host>:<8080>/customers/:id`:  
+- `http://<host>:8080/customers/:id`:  
   Returns the customer with id `id`.
-- `http://<host>:<8080>/customers/:id/islocked`:  
+- `http://<host>:8080/customers/:id/islocked`:  
   Returns `true` if the customer with id `id` is currently locked by another user.
 
-POST:
+**POST:**
 
-- `http://<host>:<8080>/customers/:id/lock`:  
+- `http://<host>:8080/customers/:id/lock`:  
   Locks the customer record with id `id`.
-- `http://<host>:<8080>/customers/:id/unlock`:  
+- `http://<host>:8080/customers/:id/unlock`:  
   Unlocks the customer record with id `id`.
 
 ### Invoice Endpoints
 
-GET:
+**GET:**
 
-- `http://<host>:<8080>/invoices`:  
+- `http://<host>:8080/invoices`:  
   Returns a list of all invoices.
-- `http://<host>:<8080>/invoices/:id`:  
+- `http://<host>:8080/invoices/:id`:  
   Returns the invoice with id `id`.
-- `http://<host>:<8080>/invoices/:id/print`:  
+- `http://<host>:8080/invoices/:id/print`:  
   Creates pdf for the invoice with id `id`.
 
 
 ### Statistics Endpoints
 
-GET:
+**GET:**
 
-- `http://<host>:<8080>/statistics/revbymonth`:  
+- `http://<host>:8080/statistics/revbymonth`:  
   Returns the revenue statistics grouped by months.
-- `http://<host>:<8080>/statistics/revbycustomer`:  
+- `http://<host>:8080/statistics/revbycustomer`:  
   Returns the revenue statistics grouped by customers.
 
 ## Debugging Node.js Backend

@@ -31,6 +31,9 @@ This is what the `package.json` file looks like:
     "mustache": "^2.2.1",
     "pg": "^6.0.3",
     "serve-favicon": "^2.3.0"
+  },
+  "scripts": {
+    "start": "node express.js"
   }
 }
 ```
@@ -40,6 +43,12 @@ In order to start the application, go to the root folder of the application and 
 
 ```
 node express.js
+```
+
+or
+
+```
+npm start
 ```
 
 The `express.js` file is the entry point of the `Node.js` application. All API endpoints are defined there and all the configuration is made there. The application now listens on port `8080`.

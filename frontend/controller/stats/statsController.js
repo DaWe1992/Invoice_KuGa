@@ -59,11 +59,14 @@
         // Binding
         $scope.config.bindto = "#chartArea";
 
+        $scope.title = "Bitte Statistik auswählen...";
+
         /**
          * Create chart that shows the revenues
          * by months.
          */
         $scope.showChartRevByMonth = function() {
+            $scope.title = "Umsatz nach Monaten";
             var config = $.extend(true, {}, $scope.config); // Clone object
             config.data = {
                 columns: [
@@ -86,6 +89,7 @@
          * by customers.
          */
         $scope.showChartRevByCustomer = function() {
+            $scope.title = "Umsatz nach Kunden";
             var config = $.extend(true, {}, $scope.config); // Clone object
             config.data.types = {
                 Umsatz: "bar"

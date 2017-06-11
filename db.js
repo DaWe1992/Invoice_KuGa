@@ -4,7 +4,7 @@
  * It wraps the db connection and query process.
  */
 
-//import necessary modules
+// Import necessary modules
 var pg = require("pg");
 
 const conString = "postgres://postgres:admin@localhost:5432/db_invoice_kuga";

@@ -18,10 +18,54 @@
      * This controller is responsible for
      * displaying statistics on the screen.
      */
-    module.controller("StatsController", ["$scope", function($scope) {
-        $scope.chart = c3.generate({
-            bindto: "#chart",
-            data: {
+    module.controller("StatsController",
+    ["$scope", "Stats", function($scope, Stats) {
+        $scope.chart = null;
+
+        // Create configuration for the charts
+
+        // Initialize emptry config object
+        $scope.config = {};
+
+        $scope.config.data = {
+            columns: []
+        };
+
+        // Grid config
+        $scope.config.grid = {
+            x: {show: false},
+            y: {show: true}
+        };
+
+        // Axis config
+        $scope.config.axis = {
+            x: {
+                type: "category",
+                categories: []
+            },
+            y: {
+                label: {
+                    text: "Y Label",
+                    position: "outer-middle"
+                }
+            }
+        };
+
+        // Zoom config
+        $scope.config.zoom = {
+            enabled: true
+        };
+
+        // Binding
+        $scope.config.bindto = "#chartArea";
+
+        /**
+         * Create chart that shows the revenues
+         * by months.
+         */
+        $scope.showChartRevByMonth = function() {
+            var config = $.extend(true, {}, $scope.config); // Clone object
+            config.data = {
                 columns: [
                     ["Umsatz", 30, 200, 100, 400, 150, 250],
                     ["Gewinn", 50, 20, 10, 40, 15, 25]
@@ -31,29 +75,45 @@
                     Umsatz: "area-spline",
                     Gewinn: "bar"
                 }
-            },
-            grid: {
-                x: {show: false},
-                y: {show: true}
-            },
-            axis: {
-                y: {
-                    label: {
-                        text: "Y Label",
-                        position: "outer-middle"
-                    }
-                },
-                y2: {
-                    show: true,
-                    label: {
-                        text: "Y2 Label",
-                        position: "outer-middle"
-                    }
-                }
-            },
-            zoom: {
-                enabled: true
-            }
-        });
+            };
+
+            // Generate graph
+            c3.generate(config);
+        };
+
+        /**
+         * Create chart that shows the revenues
+         * by customers.
+         */
+        $scope.showChartRevByCustomer = function() {
+            var config = $.extend(true, {}, $scope.config); // Clone object
+            config.data.types = {
+                Umsatz: "bar"
+            };
+
+            // Get the data
+            Stats.getRevByCustomer().success(function(res) {
+                var data = res.data.map(function(item, index) {
+                    return item.revenue;
+                });
+
+                data.unshift("Umsatz");
+                config.data.columns.push(data);
+
+                // Get labels for x-axis
+                var categories = res.data.map(function(item, index) {
+                    return item.cust_firstname + " " + item.cust_lastname;
+                });
+
+                config.axis.x.categories = categories;
+                config.axis.y.label.text = "Umsatz in €";
+
+                // Generate graph
+                c3.generate(config);
+            })
+            .error(function() {
+                Dialog.errBox();
+            });
+        };
     }]);
 })();

@@ -22,13 +22,13 @@
     ["$scope", "Customer", function($scope, Customer) {
         $scope.customers;
 
-        //filter
+        // Filter
         $scope.showFilterPanel = false;
         $scope.filter = {
             string: ""
         };
 
-        //sort
+        // Sort
         $scope.propertyName = "id";
         $scope.reverse = false;
 

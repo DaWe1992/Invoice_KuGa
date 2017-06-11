@@ -5,7 +5,7 @@
 
 "use strict";
 
-//import necessary modules
+// Import necessary modules
 var path = require("path");
 var http = require("http");
 var colors = require("colors");
@@ -19,14 +19,14 @@ var port = 8080;
 console.log("\nSETTING UP THE SERVER...");
 console.log("========================\n");
 
-//MIDDLEWARE
-//log routes
+// **** MIDDLEWARE ****
+// Log routes
 app.use(function(req, res, next) {
     console.log(colors.yellow(req.method + "\t" + req.url));
     next();
 });
 
-//configure stormpath
+// Configure stormpath
 app.use(stormpath.init(app, {
     client: {
         apiKey: {
@@ -55,14 +55,14 @@ app.use(stormpath.init(app, {
     }
 }));
 
-//serve favicon
+// Serve favicon
 app.use(favicon(path.join(__dirname, "frontend", "image", "favicon.ico")));
 
-//serve static files in frontend folder
+// Serve static files in frontend folder
 app.use(stormpath.loginRequired, express.static(__dirname + "/frontend"));
 
-//ROUTES
-//include routes
+// **** ROUTES ****
+// Include routes
 console.log("Including routes...");
 
 require("./routes/routesCustomer.js")(app);
@@ -72,8 +72,8 @@ require("./routes/routesTest.js")(app);
 
 console.log(colors.green("Success.\n"));
 
-//BIND APP TO PORT
-//create the server and bind app to the port
+// **** BIND APP TO PORT ****
+// Create the server and bind app to the port
 console.log("Binding application to port...");
 http.createServer(app).listen(port, function() {
     console.log(colors.green("Success. Magic happens on port " + port + "!"));

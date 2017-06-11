@@ -5,7 +5,7 @@
 
 "use strict";
 
-//import necessary modules
+// Import necessary modules
 var fs = require("fs");
 var pdf = require("html-pdf");
 var mustache = require("mustache");
@@ -52,16 +52,16 @@ module.exports = function(app) {
      */
     app.get("/test", function(req, res) {
 
-        //read template
+        // Read template
         fs.readFile("./template/invoice.html", "utf-8", function(err, template) {
             var html;
             var path;
 
-            //render template with data
+            // Render template with data
             mustache.parse(template);
             html = mustache.render(template, data);
 
-            //create pdf and pipe it to the response stream
+            // Create pdf and pipe it to the response stream
             pdf.create(html).toStream(function(err, stream) {
                 res.setHeader("Content-type", "application/pdf");
                 res.setHeader("Content-disposition", "attachment; filename=Rechnung_" + data.invoice.id + ".pdf");

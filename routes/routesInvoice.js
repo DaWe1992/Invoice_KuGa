@@ -5,13 +5,13 @@
 
 "use strict";
 
-//import necessary modules
+// Import necessary modules
 var db = require("../db.js");
 var fs = require("fs");
 var pdf = require("html-pdf");
 var mustache = require("mustache");
 
-// options for pdf creation
+// Options for pdf creation
 var pdf_options = {
     "format": "A4"
     //"orientation": "landscape"
@@ -26,7 +26,7 @@ module.exports = function(app) {
      */
     app.get("/invoices", function(req, res) {
 
-        // get a list of all invoices including their gross amounts
+        // Get a list of all invoices including their gross amounts
         var sql = "SELECT inv_id AS id, inv_date AS date, inv_description AS description, (" +
                       "SELECT SUM((ipos_qty * ipos_net_price) * (1 + ipos_vat)) " +
                       "FROM invoice_positions WHERE ipos_inv_id = inv_id" +
@@ -58,10 +58,10 @@ module.exports = function(app) {
     app.get("/invoices/:id/print", function(req, res) {
         var id = req.params.id;
 
-        // initialize empty object
+        // Initialize empty object
         var data = {};
 
-        // load customer data
+        // Load customer data
         var sql = "SELECT cust_address AS address, cust_firstname AS firstname, cust_lastname AS lastname, " +
                       "cust_street AS street, cust_zip AS zip, cust_city AS city " +
                   "FROM customers " +
@@ -77,7 +77,7 @@ module.exports = function(app) {
 
             data.customer = result.rows[0];
 
-            // load invoice data
+            // Load invoice data
             sql = "SELECT inv_id AS id, to_char(inv_date, 'DD.MM.YYYY') AS date FROM invoices WHERE inv_id = '" + id + "';";
 
             db.query(sql, function(err, result) {
@@ -90,7 +90,7 @@ module.exports = function(app) {
 
                 data.invoice = result.rows[0];
 
-                // load invoice positions
+                // Load invoice positions
                 sql = "SELECT ipos_description AS pos, ipos_qty AS qty, ipos_net_price AS unitprice, " +
                           "ROUND((ipos_qty * ipos_net_price)::numeric,2) AS net, ROUND(((ipos_qty * ipos_net_price) * ipos_vat)::numeric,2) AS vat, " +
                           "ROUND(((ipos_qty * ipos_net_price) + ((ipos_qty * ipos_net_price) * ipos_vat))::numeric,2) AS gross " +
@@ -109,7 +109,7 @@ module.exports = function(app) {
 
                     readAndRenderTemplate(data, function(html) {
 
-                        //create pdf and pipe it to the response stream
+                        // Create pdf and pipe it to the response stream
                         pdf.create(html, pdf_options).toStream(function(err, stream) {
                             res.setHeader("Content-type", "application/pdf");
                             res.setHeader("Content-disposition", "attachment; filename=Rechnung_" + data.invoice.id + ".pdf");
@@ -129,12 +129,12 @@ module.exports = function(app) {
  * @param callback
  */
 function readAndRenderTemplate(data, callback) {
-    // read template
+    // Read template
     fs.readFile("./template/invoice.html", "utf-8", function(err, template) {
         var html;
         var path;
 
-        //render template with data
+        // Render template with data
         mustache.parse(template);
         html = mustache.render(template, data);
 

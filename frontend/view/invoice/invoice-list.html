@@ -1,7 +1,7 @@
 <div>
     <div class="col-sm-12">
         <div class="panel panel-default myHeader">
-            <h2>Rechnungen</h2>
+            <h2><span class="glyphicon glyphicon-euro"></span> Rechnungen</h2>
         </div>
     </div>
     <!-- Sidebar -->
@@ -21,6 +21,7 @@
         <!-- Filter panel -->
         <div ng-include="'../fragment/general/filter-bar.html'"></div>
     </div>
+    <!-- Invoice list -->
     <div class="col-sm-8">
         <div class="scrollable">
             <div ng-repeat="(lastname, invoices) in invoices | filter:filter.string | groupBy: 'custlastname'">

@@ -5,7 +5,7 @@
 
 "use strict";
 
-//import necessary modules
+// Import necessary modules
 var db = require("../db.js");
 
 module.exports = function(app) {
@@ -17,7 +17,7 @@ module.exports = function(app) {
     app.get("/customers", function(req, res) {
         var sql = "SELECT cust_id AS id, cust_address AS address, " +
         "cust_firstname AS firstname, cust_lastname AS lastname FROM customers;";
-        
+
         db.query(sql, function(err, result) {
             if(err) {
                 return res.status(500).json({

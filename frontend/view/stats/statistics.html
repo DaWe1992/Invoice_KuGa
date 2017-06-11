@@ -1,5 +1,28 @@
 <div>
-    <div id="chart-container">
-        <div id="chart"></div>
+    <div class="col-sm-12">
+        <div class="panel panel-default myHeader">
+            <h2><span class="glyphicon glyphicon-stats"></span> Statistiken</h2>
+        </div>
+    </div>
+    <!-- Sidebar -->
+    <div class="col-sm-3">
+        <!-- Actions -->
+        <div class="list-group">
+            <p class="list-group-item active"><b>Auswertungen</b></p>
+            <a class="list-group-item" href="" ng-click="showChartRevByMonth()">
+                <span class="glyphicon glyphicon-calendar"></span>
+                Umsatz nach Monaten
+            </a>
+            <a class="list-group-item" href="" ng-click="showChartRevByCustomer()">
+                <span class="glyphicon glyphicon-user"></span>
+                Umsatz nach Kunden
+            </a>
+        </div>
+    </div>
+    <!-- Statistics -->
+    <div class="col-sm-9">
+        <div id="chart-container">
+            <div id="chartArea">Bitte Statistik auswählen.</div>
+        </div>
     </div>
 </div>

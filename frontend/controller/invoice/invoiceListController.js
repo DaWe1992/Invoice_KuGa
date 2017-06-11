@@ -22,13 +22,13 @@
    ["$scope", "Invoice", "Dialog", function($scope, Invoice, Dialog) {
        $scope.invoices;
 
-       //filter
+       // Filter
        $scope.showFilterPanel = false;
        $scope.filter = {
            string: ""
        };
 
-       //sort
+       // Sort
        $scope.propertyName = "id";
        $scope.reverse = false;
 

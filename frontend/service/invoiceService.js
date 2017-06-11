@@ -16,7 +16,7 @@
     /**
      * Service for the invoices.
      */
-    module.factory("Invoice", function CustomerFactory($http, $routeParams) {
+    module.factory("Invoice", function InvoiceFactory($http, $routeParams) {
         return {
             add: function() {
                 //TODO: implement add function
@@ -41,5 +41,4 @@
             }*/
         };
     });
-
 })();

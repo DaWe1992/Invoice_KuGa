@@ -25,12 +25,14 @@ module.exports = function(app) {
      * Returns the revenues grouped by customers.
      * @name /statistics/revbycustomer
      * @param gross (if true, gross prices are returned, else net prices)
+     * @param limit (limits the number of result rows)
      */
     app.get("/statistics/revbycustomer", function(req, res) {
 
         var queryObject = url.parse(req.url,true).query;
 
         var gross = queryObject.gross ? " * (1 + ipos_vat)" : "";
+        var limit = !isNaN(queryObject.limit) ? " LIMIT " + queryObject.limit : " LIMIT 10";
 
         // Get revenues by customer
         var sql = "SELECT customers.cust_id, customers.cust_firstname, customers.cust_lastname, " +
@@ -41,7 +43,7 @@ module.exports = function(app) {
                   ") INNER JOIN invoice_positions " +
                       "ON invoice_positions.ipos_inv_id = invoices.inv_id " +
                   "GROUP BY customers.cust_id " +
-                  "ORDER BY revenue DESC;";
+                  "ORDER BY revenue DESC" + limit + ";";
 
         db.query(sql, function(err, result) {
             if(err) {

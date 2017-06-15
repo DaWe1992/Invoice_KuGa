@@ -40,7 +40,6 @@ This is what the `package.json` file looks like (example):
 
 Repeat this procedure in the `frontend` folder of the application to install the frontend dependencies.
 
-
 ## Start the Application
 
 In order to start the application, go to the root folder of the application and run the following command:

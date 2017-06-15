@@ -13,17 +13,20 @@
      * @type {IModule}
      */
     var app = angular.module("InvoiceKuGa", [
-        "main",
-        "customerList",
-        "customerDetail",
-        "customerNew",
-        "invoiceList",
-        "statistics",
+        "Main",
+        "Home",
+        "CustomerList",
+        "CustomerDetail",
+        "CustomerNew",
+        "InvoiceList",
+        "CashEarnings",
+        "Statistics",
         "ngRoute",
         "ngAnimate",
         "ngDialog",
         "ngSanitize",
-        "angular.filter"
+        "angular.filter",
+        "ui.bootstrap.datetimepicker"
     ]);
 
     /**
@@ -31,6 +34,10 @@
      */
     app.config(function($routeProvider) {
         $routeProvider
+        .when("/", {
+            templateUrl: "./view/home/home.html",
+            controller: "HomeController"
+        })
         .when("/customers", {
             templateUrl: "./view/customer/customer-list.html",
             controller: "CustomerListController"
@@ -46,6 +53,10 @@
         .when("/invoices", {
             templateUrl: "./view/invoice/invoice-list.html",
             controller: "InvoiceListController"
+        })
+        .when("/daily-cash-earnings", {
+            templateUrl: "./view/cash-earnings/cash-earnings.html",
+            controller: "CashEarningsController"
         })
         .when("/statistics", {
             templateUrl: "./view/stats/statistics.html",

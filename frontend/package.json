@@ -1,0 +1,11 @@
+{
+  "name": "invoice_app_kuga_frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "author": "Daniel Wehner",
+  "license": "ISC",
+  "dependencies": {
+    "angular-bootstrap-datetimepicker": "^1.1.4"
+  }
+}

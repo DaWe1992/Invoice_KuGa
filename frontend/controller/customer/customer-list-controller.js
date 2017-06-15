@@ -1,6 +1,6 @@
 /**
  * Created by Daniel on 28.07.2016.
- * This file contains the customerList module.
+ * This file contains the CustomerList module.
  */
 
 "use strict";
@@ -8,10 +8,10 @@
 (function() {
 
     /**
-     * Initialize the module customerList.
+     * Initialize the module CustomerList.
      * @type {IModule}
      */
-    var module = angular.module("customerList", []);
+    var module = angular.module("CustomerList", []);
 
     /**
      * CustomerListController.

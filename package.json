@@ -1,5 +1,5 @@
 {
-  "name": "invoice_app_kuga",
+  "name": "invoice_app_kuga_backend",
   "version": "1.0.0",
   "description": "",
   "main": "express.js",

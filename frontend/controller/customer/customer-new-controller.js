@@ -1,6 +1,6 @@
 /**
  * Created by Daniel on 09.08.2016.
- * This file contains the customerNew module.
+ * This file contains the CustomerNew module.
  */
 
 "use strict";
@@ -8,10 +8,10 @@
 (function() {
 
     /**
-     * Initialize the module customerNew.
+     * Initialize the module CustomerNew.
      * @type {IModule}
      */
-    var module = angular.module("customerNew", []);
+    var module = angular.module("CustomerNew", []);
 
     /**
      * CustomerNewController.

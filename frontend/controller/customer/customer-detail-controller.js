@@ -1,6 +1,6 @@
 /**
  * Created by Daniel on 06.08.2016.
- * This file contains the customerDetail module.
+ * This file contains the CustomerDetail module.
  */
 
 "use strict";
@@ -8,10 +8,10 @@
 (function() {
 
     /**
-     * Initialize the module customerDetail.
+     * Initialize the module CustomerDetail.
      * @type {IModule}
      */
-    var module = angular.module("customerDetail", []);
+    var module = angular.module("CustomerDetail", []);
 
     /**
      * CustomerDetailController.
@@ -61,7 +61,7 @@
                 Dialog.errBox();
             });
         };
-    
+
         /**
          * Toggles read/write mode
          */

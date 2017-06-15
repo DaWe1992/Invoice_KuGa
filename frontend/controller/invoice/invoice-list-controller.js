@@ -1,6 +1,6 @@
 /**
  * Created by Daniel on 17.08.2016.
- * This file contains the invoiceList module.
+ * This file contains the InvoiceList module.
  */
 
  "use strict";
@@ -8,10 +8,10 @@
  (function() {
 
    /**
-    * Initialize the module invoiceList.
+    * Initialize the module InvoiceList.
     * @type {IModule}
     */
-   var module = angular.module("invoiceList", []);
+   var module = angular.module("InvoiceList", []);
 
    /**
     * InvoiceListController.

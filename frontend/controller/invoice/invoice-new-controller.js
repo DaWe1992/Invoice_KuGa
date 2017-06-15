@@ -1,6 +1,6 @@
 /**
  * Created by Daniel on 17.08.2016.
- * This file contains the invoiceNew module.
+ * This file contains the InvoiceNew module.
  */
 
  "use strict";

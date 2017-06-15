@@ -11,7 +11,7 @@
      * Initialize the module statistics.
      * @type {IModule}
      */
-    var module = angular.module("statistics", []);
+    var module = angular.module("Statistics", []);
 
     /**
      * StatsController.
@@ -62,10 +62,10 @@
         $scope.title = "Bitte Statistik auswählen...";
 
         /**
-         * Create chart that shows the revenues
+         * Create chart that shows the event revenues
          * by months.
          */
-        $scope.showChartRevByMonth = function() {
+        $scope.showChartEvtRevByMonth = function() {
             $scope.title = "Umsatz nach Monaten";
             var config = $.extend(true, {}, $scope.config); // Clone object
             config.data = {
@@ -85,10 +85,10 @@
         };
 
         /**
-         * Create chart that shows the revenues
+         * Create chart that shows the event revenues
          * by customers.
          */
-        $scope.showChartRevByCustomer = function() {
+        $scope.showChartEvtRevByCustomer = function() {
             $scope.title = "Umsatz nach Kunden";
             var config = $.extend(true, {}, $scope.config); // Clone object
             config.data.types = {
@@ -98,7 +98,7 @@
             // Get the data
             Stats.getRevByCustomer().success(function(res) {
                 var data = res.data.map(function(item, index) {
-                    return item.revenue;
+                    return item.evtrevenue;
                 });
 
                 data.unshift("Umsatz");

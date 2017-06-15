@@ -19,10 +19,10 @@
       module.factory("Stats", function StatsFactory($http, $routeParams) {
           return {
               getRevByMonth: function() {
-                  return $http.get("/statistics/revbymonth");
+                  return $http.get("/statistics/evt-rev-by-month");
               },
               getRevByCustomer: function() {
-                  return $http.get("/statistics/revbycustomer");
+                  return $http.get("/statistics/evt-rev-by-customer");
               }
           };
       });

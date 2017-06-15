@@ -34,7 +34,7 @@ body {
 }
 
 /* Inputs and Buttons*/
-.input-group-addon {
+.custom-input-group-addon {
     width: 120px;
 }
 .ngdialog-button-primary {

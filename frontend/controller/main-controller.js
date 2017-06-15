@@ -1,6 +1,6 @@
 /**
  * Created by Daniel on 04.08.2016.
- * This file contains the main module.
+ * This file contains the Main module.
  */
 
 "use strict";
@@ -11,7 +11,7 @@
      * Initialize the module main.
      * @type {IModule}
      */
-    var module = angular.module("main", []);
+    var module = angular.module("Main", []);
 
     /**
      * MainController.

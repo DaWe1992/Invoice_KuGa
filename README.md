@@ -6,14 +6,14 @@ Furthermore, the application supports the generation of statistics and charts to
 ## Installation
 
 `Node.js` needs to be installed to run the application. [Install Node.js here.](https://nodejs.org/en/download/)
-After the installation has completed, run the following command:
+After the installation has completed, go to the root folder of the application and run the following command:
 
 ```
-npm initialize
+npm install
 ```
 
 This command installs all dependencies of the application which were specified in the `package.json` file.
-This is what the `package.json` file looks like:
+This is what the `package.json` file looks like (example):
 
 ```json
 {
@@ -37,6 +37,10 @@ This is what the `package.json` file looks like:
   }
 }
 ```
+
+Repeat this procedure in the `frontend` folder of the application to install the frontend dependencies.
+
+
 ## Start the Application
 
 In order to start the application, go to the root folder of the application and run the following command:
@@ -108,7 +112,7 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
   | name    | values       | description                                                   |
   | ------- | ------------ | ------------------------------------------------------------- |
   | *gross* | true, false  | true := returns gross revenues, false := returns net revenues |
-  | *limit* | integer      | limits the number of result rows to *limit* (default: 10)     | 
+  | *limit* | integer      | limits the number of result rows to *limit* (default: 10)     |
 
 ## Debugging Node.js Backend
 

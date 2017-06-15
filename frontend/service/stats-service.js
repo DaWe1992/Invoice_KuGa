@@ -18,11 +18,14 @@
       */
       module.factory("Stats", function StatsFactory($http, $routeParams) {
           return {
-              getRevByMonth: function() {
+              getEvtRevByMonth: function() {
                   return $http.get("/statistics/evt-rev-by-month");
               },
-              getRevByCustomer: function() {
+              getEvtRevByCustomer: function() {
                   return $http.get("/statistics/evt-rev-by-customer");
+              },
+              getCeRev: function() {
+                  return $http.get("statistics/ce-rev");
               }
           };
       });

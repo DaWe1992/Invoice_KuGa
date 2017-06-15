@@ -12,7 +12,7 @@ var url = require("url");
 module.exports = function(app) {
 
     /**
-     * Returns the revenues grouped by month.
+     * Returns the event revenues grouped by month.
      * @name /statistics/evtrevbymonth
      */
     app.get("/statistics/evt-rev-by-month", function(req, res) {
@@ -22,7 +22,7 @@ module.exports = function(app) {
     });
 
     /**
-     * Returns the revenues grouped by customers.
+     * Returns the event revenues grouped by customers.
      * @name /statistics/evtrevbycustomer
      * @param gross (if true, gross prices are returned, else net prices)
      * @param limit (limits the number of result rows)
@@ -56,6 +56,29 @@ module.exports = function(app) {
             return res.status(200).json({
                 "success": true,
                 "gross": queryObject.gross ? true : false,
+                "data": result.rows
+            });
+        });
+    });
+
+    /**
+     * Returns the cash earnings revenues.
+     * @name /statistics/ce-rev
+     */
+    app.get("/statistics/ce-rev", function(req ,res) {
+        var sql = "SELECT ce_amount AS cerevenue, ce_date AS date FROM cash_earnings " +
+                  "ORDER BY date DESC;";
+
+        db.query(sql, function(err, result) {
+            if(err) {
+                return res.status(500).json({
+                    "success": false,
+                    "err": err
+                });
+            }
+
+            return res.status(200).json({
+                "success": true,
                 "data": result.rows
             });
         });

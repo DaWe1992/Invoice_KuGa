@@ -62,7 +62,7 @@
         $scope.title = "Bitte Statistik auswählen...";
 
         /**
-         * Create chart that shows the event revenues
+         * Creates chart that shows the event revenues
          * by months.
          */
         $scope.showChartEvtRevByMonth = function() {
@@ -85,24 +85,27 @@
         };
 
         /**
-         * Create chart that shows the event revenues
+         * Creates chart that shows the event revenues
          * by customers.
          */
         $scope.showChartEvtRevByCustomer = function() {
-            $scope.title = "Umsatz nach Kunden";
+            $scope.title = "Umsatz nach Kunden (Veranstaltungen)";
             var config = $.extend(true, {}, $scope.config); // Clone object
             config.data.types = {
                 Umsatz: "bar"
             };
 
             // Get the data
-            Stats.getRevByCustomer().success(function(res) {
+            Stats.getEvtRevByCustomer().success(function(res) {
                 var data = res.data.map(function(item, index) {
                     return item.evtrevenue;
                 });
 
                 data.unshift("Umsatz");
                 config.data.columns.push(data);
+                config.data.colors = {
+                    Umsatz: "#ffa600"
+                }
 
                 // Get labels for x-axis
                 var categories = res.data.map(function(item, index) {
@@ -110,6 +113,52 @@
                 });
 
                 config.axis.x.categories = categories;
+                config.axis.y.label.text = "Umsatz in €";
+
+                // Generate graph
+                c3.generate(config);
+            })
+            .error(function() {
+                Dialog.errBox();
+            });
+        };
+
+        /**
+         * Creates chart that shows the
+         * cash earnings revenues
+         */
+        $scope.showChartCeRev = function() {
+            $scope.title = "Umsatz Kasseneinnahmen";
+            var config = $.extend(true, {}, $scope.config); // Clone object
+            config.data.types = {
+                Umsatz: "area-spline"
+            };
+
+            // Get the data
+            Stats.getCeRev().success(function(res) {
+                var data = res.data.map(function(item, index) {
+                    return item.cerevenue;
+                });
+
+                data.unshift("Umsatz");
+                config.data.columns.push(data);
+                config.data.colors = {
+                    Umsatz: "#ffa600"
+                }
+
+                // Get labels for x-axis
+                var categories = res.data.map(function(item, index) {
+                    return item.date;
+                });
+
+                config.axis.x.categories = categories;
+                config.axis.x.tick = {
+                    rotate: 20,
+                    multiline: false,
+                    culling: {
+                        max: 10
+                    }
+                };
                 config.axis.y.label.text = "Umsatz in €";
 
                 // Generate graph

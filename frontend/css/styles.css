@@ -62,6 +62,11 @@ body {
 .list-group-item.active {
     background-color: #ffc451 !important;
     border-color: #ddd !important;
+    color: #000 !important;
+}
+.list-group-item.active.subitem {
+    background-color: #ffebad !important;
+    color: #000 !important;
 }
 .scrollable {
     overflow-y: scroll;

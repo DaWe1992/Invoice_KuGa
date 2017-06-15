@@ -56,29 +56,31 @@
     </div>
     <!-- Cash Earnings table -->
     <div class="col-sm-8">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div>
-                    <b>Kasseneinnahmen</b>
+        <div class="scrollable">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div>
+                        <b>Kasseneinnahmen</b>
+                    </div>
                 </div>
-            </div>
-            <div id="table-cash-earnings" class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th><b>Datum</b></th>
-                            <th><b>Betrag</b></th>
-                            <th><b>Bemerkung</b></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="table-row" ng-repeat="earning in earnings">
-                            <td>{{earning.date | date:"shortDate"}}</td>
-                            <td>{{earning.amount | currency:"€ ":2}}</td>
-                            <td><em>{{earning.description}}</em></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div id="table-cash-earnings" class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th><b>Datum</b></th>
+                                <th><b>Betrag</b></th>
+                                <th><b>Bemerkung</b></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="table-row" ng-repeat="earning in earnings">
+                                <td><b>{{earning.date | date:"shortDate"}}</b></td>
+                                <td>{{earning.amount | currency:"€ ":2}}</td>
+                                <td><em>{{earning.description}}</em></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

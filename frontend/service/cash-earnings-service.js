@@ -22,7 +22,7 @@
                 //TODO: implement add function
             },
             list: function() {
-                return $http.get("/cash-earnings");
+                return $http.get("/daily-cash-earnings");
             },
             delete: function() {
                 //TODO: implement delete function

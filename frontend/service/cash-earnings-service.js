@@ -18,8 +18,8 @@
      */
     module.factory("CashEarnings", function CustomerFactory($http, $routeParams) {
         return {
-            add: function() {
-                //TODO: implement add function
+            add: function(item) {
+                return $http.post("/daily-cash-earnings", item);
             },
             list: function() {
                 return $http.get("/daily-cash-earnings");

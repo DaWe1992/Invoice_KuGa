@@ -11,6 +11,7 @@ var http = require("http");
 var colors = require("colors");
 var express = require("express");
 var favicon = require("serve-favicon");
+var bodyParser = require("body-parser");
 var stormpath = require("express-stormpath");
 
 var app = express();
@@ -25,6 +26,9 @@ app.use(function(req, res, next) {
     console.log(colors.yellow(req.method + "\t" + req.url));
     next();
 });
+
+app.use(bodyParser.json()); // Support JSON encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // Support encoded bodies
 
 // Configure stormpath
 app.use(stormpath.init(app, {

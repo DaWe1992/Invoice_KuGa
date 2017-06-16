@@ -6,6 +6,7 @@
   "author": "Daniel Wehner",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.17.2",
     "colors": "^1.1.2",
     "express": "^4.14.0",
     "express-stormpath": "^3.1.3",

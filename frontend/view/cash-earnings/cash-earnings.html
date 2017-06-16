@@ -14,9 +14,9 @@
                 <div class="form-group">
                     <label for="date">Datum:</label>
                     <div class="dropdown">
-                        <a class="dropdown-toggle" id="dropdown" role="button" data-toggle="dropdown" data-target=".dropdown" href="">
+                        <a id="dropdown" class="dropdown-toggle" role="button" data-toggle="dropdown" data-target=".dropdown" href="">
                             <div class="input-group">
-                                <input id="date" class="form-control" type="text" data-ng-model="date">
+                                <input id="date" class="form-control" type="text" data-ng-model="date" required>
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                             </div>
                         </a>
@@ -33,19 +33,23 @@
                         id="amount"
                         class="form-control"
                         type="text"
-                        ng-model="customer.address"
-                        ng-disabled="readOnly"
+                        ng-model="amount"
                         required
                     >
                 </div>
                 <div class="form-group">
-                    <label for="comment">Bemerkung:</label>
-                    <textarea id="comment" class="form-control" rows="5"></textarea>
+                    <label for="description">Bemerkung:</label>
+                    <textarea
+                        id="description"
+                        class="form-control"
+                        rows="5"
+                        ng-model="description">
+                    </textarea>
                 </div>
             </div>
             <div class="panel-footer">
                 <div class="pull-right">
-                    <a class="btn btn-default" ng-click="addCashEarning">
+                    <a class="btn btn-default" ng-click="addCashEarning()">
                         <span class="glyphicon glyphicon-floppy-disk"></span>
                         Einnahme speichern
                     </a>

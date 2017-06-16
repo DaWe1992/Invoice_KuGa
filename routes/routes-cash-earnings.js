@@ -33,4 +33,28 @@ module.exports = function(app) {
         });
     });
 
+    /**
+     * Adds a new cash earning.
+     * @name /daily-cash-earnings
+     */
+    app.post("/daily-cash-earnings", function(req, res) {
+        var item = req.body;
+        var sql = "INSERT INTO cash_earnings (ce_date, ce_amount, ce_description) " +
+                  "VALUES ('" + item.date + "', '" + item.amount + "', '" + item.description + "')" +
+                  "RETURNING ce_id AS id, ce_date AS date, ce_amount AS amount, ce_description AS description;";
+
+        db.query(sql, function(err, result) {
+            if(err) {
+                return res.status(500).json({
+                    "success": false,
+                    "err": err
+                });
+            }
+
+            return res.status(200).json({
+                "success": true,
+                "data": result
+            });
+        });
+    });
 };

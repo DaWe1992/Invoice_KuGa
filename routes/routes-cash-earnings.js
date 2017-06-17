@@ -42,7 +42,7 @@ module.exports = function(app) {
         var item = req.body;
         var sql = "INSERT INTO cash_earnings (ce_date, ce_amount, ce_description) " +
                   "VALUES ('" + item.date + "', '" + item.amount + "', '" + item.description + "')" +
-                  "RETURNING ce_id AS id, ce_date AS date, ce_amount AS amount, ce_description AS description;";
+                  "RETURNING ce_id AS id, to_char(ce_date, 'YYYY-MM-DD') AS date, ce_amount AS amount, ce_description AS description;";
 
         db.query(sql, function(err, result) {
             if(err) {

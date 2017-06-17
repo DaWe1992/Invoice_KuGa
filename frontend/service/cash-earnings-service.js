@@ -24,8 +24,8 @@
             list: function() {
                 return $http.get("/daily-cash-earnings");
             },
-            delete: function() {
-                //TODO: implement delete function
+            delete: function(id) {
+                return $http.delete("/daily-cash-earnings/" + id);
             }
         };
     });

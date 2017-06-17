@@ -94,8 +94,8 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
 
 **GET:**
 
-- `http://<host>:8080/statistics/revbymonth?name=value`:  
-  Returns the revenue statistics grouped by months.  
+- `http://<host>:8080/statistics/evt-rev-by-month?name=value`:  
+  Returns the event revenue statistics grouped by months.  
 
   **Query parameters:**
 
@@ -103,8 +103,8 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
   | ------- | ------------ | ------------------------------------------------------------- |
   | *gross* | true, false  | true := returns gross revenues, false := returns net revenues |   
 
-- `http://<host>:8080/statistics/revbycustomer?name=value`:   
-  Returns the revenue statistics grouped by customers.  
+- `http://<host>:8080/statistics/evt-rev-by-customer?name=value`:   
+  Returns the event revenue statistics grouped by customers.  
 
   **Query parameters:**  
 
@@ -112,6 +112,26 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
   | ------- | ------------ | ------------------------------------------------------------- |
   | *gross* | true, false  | true := returns gross revenues, false := returns net revenues |
   | *limit* | integer      | limits the number of result rows to *limit* (default: 10)     |
+
+- `http://<host>:8080/statistics/ce-rev:  
+  Returns the cash earnings revenue.
+
+### Cash Earnings Endpoints
+
+**GET:**
+
+- `http://<host>:8080/daily-cash-earnings`:  
+  Returns a lits of all cash earnings.
+
+**POST:**
+
+- `http://<host>:8080/daily-cash-earnings`:  
+  Adds a new cash earning.
+
+**DELETE:**
+
+- `http://<host>:8080/daily-cash-earnings/:id`:  
+  Deletes the cash earning with id `id`.
 
 ## Debugging Node.js Backend
 

@@ -57,4 +57,27 @@ module.exports = function(app) {
             });
         });
     });
+
+    /**
+     * Deletes a cash earning by id.
+     * @name /daily-cash-earnings/:id
+     * @param id (obligatory)
+     */
+    app.delete("/daily-cash-earnings/:id", function(req, res) {
+        var id = req.params.id;
+        var sql = "DELETE FROM cash_earnings WHERE ce_id = '" + id + "';";
+
+        db.query(sql, function(err, result) {
+            if(err) {
+                return res.status(500).json({
+                    "success": false,
+                    "err": err
+                });
+            }
+
+            return res.status(200).json({
+                "success": true
+            });
+        });
+    });
 };

@@ -16,12 +16,12 @@
                     <div class="dropdown">
                         <a id="dropdown" class="dropdown-toggle" role="button" data-toggle="dropdown" data-target=".dropdown" href="">
                             <div class="input-group">
-                                <input id="date" class="form-control" type="text" data-ng-model="date" required>
+                                <input id="date" class="form-control" type="text" ng-model="new.date" required>
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                             </div>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <datetimepicker data-ng-model="date"
+                            <datetimepicker ng-model="new.date"
                                             data-datetimepicker-config="{ dropdownSelector: '#dropdown', startView:'day', minView:'day' }">
                             </datetimepicker>
                         </ul>
@@ -33,7 +33,7 @@
                         id="amount"
                         class="form-control"
                         type="text"
-                        ng-model="amount"
+                        ng-model="new.amount"
                         required
                     >
                 </div>
@@ -43,7 +43,7 @@
                         id="description"
                         class="form-control"
                         rows="5"
-                        ng-model="description">
+                        ng-model="new.description">
                     </textarea>
                 </div>
             </div>
@@ -71,6 +71,7 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th><b>Datum</b></th>
                                 <th><b>Betrag</b></th>
                                 <th><b>Bemerkung</b></th>
@@ -78,7 +79,12 @@
                         </thead>
                         <tbody>
                             <tr class="table-row" ng-repeat="earning in earnings">
-                                <td><b>{{earning.date | date:"shortDate"}}</b></td>
+                                <td>
+                                    <a class="btn btn-xs btn-danger" ng-click="deleteCashEarning(earning.id)">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+                                </td>
+                                <td><b>{{earning.date | date:"yyyy-MM-dd"}}</b></td>
                                 <td>{{earning.amount | currency:"€ ":2}}</td>
                                 <td><em>{{earning.description}}</em></td>
                             </tr>

@@ -19,16 +19,22 @@
      * cash earnings page.
      */
     module.controller("CashEarningsController",
-    ["$scope", "$filter", "$log", "CashEarnings", "Dialog",
-    function($scope, $filter, $log, CashEarnings, Dialog) {
-        $scope.date;
-        $scope.amount;
-        $scope.description;
-        $scope.earnings;
+    ["$scope", "$filter", "CashEarnings", "Dialog",
+    function($scope, $filter, CashEarnings, Dialog) {
 
-        // Format date "dd.MM.yyyy"
-        $scope.$watch("date", function(newDate) {
-            $scope.date = $filter("date")(newDate, "yyyy-MM-dd");
+        $scope.earnings = [];
+
+        $scope.new = {
+            "date": "",
+            "amount": "",
+            "description": ""
+        };
+
+        // Format date "yyyy-MM-dd" in input form
+        $scope.$watch(function($scope) {
+            return $scope.new.date;
+        }, function(newDate) {
+            $scope.new.date = $filter("date")(newDate, "yyyy-MM-dd");
         });
 
         /**
@@ -48,18 +54,38 @@
          * which is saved in the $scope.new variable.
          */
         $scope.addCashEarning = function() {
-            CashEarnings.add({
-                "date": $scope.date,
-                "amount": $scope.amount,
-                "description": $scope.description
-            })
-            .success(function(res) {
-                $log.info(res.data.rows[0]);
+            if(!$scope.new.description) $scope.new.description = "";
+            CashEarnings.add($scope.new).success(function(res) {
                 $scope.earnings.push(res.data.rows[0]);
             })
             .error(function() {
                 Dialog.errBox();
             });
+        };
+
+        /**
+         * Deletes a cash earning by id.
+         * @param id
+         */
+        $scope.deleteCashEarning = function(id) {
+            Dialog.confirmBox(
+                "Einnahme löschen?",
+                "Möchten Sie diese Einnahme unwiderruflich wirklich löschen?",
+                function() { //yesOption
+                    CashEarnings.delete(id).success(function(res) {
+                        // Delete cash earning from array
+                        var array = $scope.earnings.map(function(earning) {
+                            return earning.id;
+                        });
+                        var index = array.indexOf(id);
+
+                        $scope.earnings.splice(index, 1);
+                    })
+                    .error(function() {
+                        Dialog.errBox();
+                    });
+                }
+            )
         };
 
         $scope.getCashEarnings();

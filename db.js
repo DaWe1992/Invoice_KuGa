@@ -12,7 +12,7 @@ const conString = "postgres://postgres:admin@localhost:5432/db_invoice_kuga";
 module.exports = {
 
     /**
-     * Query the database.
+     * Queries the database.
      * @param sql
      * @param callback
      */

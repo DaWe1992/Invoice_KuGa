@@ -73,7 +73,7 @@
         $scope.deleteCashEarning = function(id) {
             Dialog.confirmBox(
                 "Einnahme löschen?",
-                "Möchten Sie diese Einnahme unwiderruflich wirklich löschen?",
+                "Möchten Sie diese Einnahme wirklich unwiderruflich löschen?",
                 function() { //yesOption
                     CashEarnings.delete(id).success(function(res) {
                         // Delete cash earning from array

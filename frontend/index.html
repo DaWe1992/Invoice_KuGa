@@ -87,7 +87,7 @@
                 <!-- Navbar items -->
                 <ul class="nav navbar-nav navbar-left">
                     <li id="tab_home" class="active">
-                        <a href="#" ng-click="switchTab('tab_home')">
+                        <a href="#/" ng-click="switchTab('tab_home')">
                             <span class="glyphicon glyphicon-home"></span>
                             Home
                         </a>
@@ -118,6 +118,12 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a>
+                            <span class="glyphicon glyphicon-knight"></span>
+                            {{user}}
+                        </a>
+                    </li>
                     <li>
                         <a class="btn" href="" ng-click="showPopup()">
                             <span class="glyphicon glyphicon-off"></span>

@@ -1,0 +1,78 @@
+<div>
+    <div class="col-sm-6">
+        <!-- Welcome tile -->
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <b>Willkommen</b>
+            </div>
+            <div class="panel-body">
+                <p>Hallo {{userName}}!<p>
+                <p>
+                    Mit diesem Programm kannst du ganz einfach <b>Kunden verwalten, Rechnungen schreiben</b>
+                    und sogar <b>Statistiken generieren</b>.
+                </p>
+                <p>
+                    Die verschiedenen Funktionen sind erreichbar, indem du auf den
+                    jeweiligen Tab in der Navigationsleiste klickst.<br/>
+                    Denke immer daran, dich <b>abzumelden</b>, wenn du fertig bist. So kannst du
+                    verhindern, dass dein Benutzerkonto von anderen benutzt wird.
+                </p>
+            </div>
+        </div>
+        <!-- Date/Time tile -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                </span><b>Datum und Uhrzeit</b>
+            </div>
+            <div class="panel-body">
+                <h2>
+                    <p>
+                        <span class="glyphicon glyphicon-calendar"></span>
+                        {{currDate}}
+                    </p>
+                    <p>
+                        <span class="glyphicon glyphicon-time"></span>
+                        {{currTime}}
+                    </p>
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <!-- Info tile -->
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <b>Meldungen</b>
+            </div>
+            <div class="panel-body">
+                <!-- Du sperrst gerade Datensatz xy + Button zum Entsperren? -->
+                <!-- Du hast noch keine Tageseinnahmen erfasst... -->
+            </div>
+        </div>
+        <!-- Problem tile -->
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <b>Gibt es Probleme?</b>
+            </div>
+            <div class="panel-body">
+                <div class="col-sm-5">
+                    <div class="img-container">
+                        <img src="../../image/maintenance.png"/>
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <p>
+                        Bei Problemen wenden Sie sich bitte an:<br/>
+                        <span class="glyphicon glyphicon-envelope"></span>
+                        <a href="mailto:daniel.wehner92@gmx.de"><b>daniel.wehner92@gmx.de</b></a>
+                    </p>
+                    <p>oder</p>
+                    <p>
+                        <span class="glyphicon glyphicon-phone"></span>
+                        <b>+49 160/8292152</b>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

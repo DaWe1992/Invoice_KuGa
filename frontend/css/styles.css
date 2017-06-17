@@ -33,7 +33,7 @@ body {
     border-color: #d43f3a !important;
 }
 
-/* Inputs and Buttons*/
+/* Inputs and Buttons */
 .custom-input-group-addon {
     width: 120px;
 }
@@ -71,6 +71,16 @@ body {
 .scrollable {
     overflow-y: scroll;
     max-height: 75vh;
+}
+
+/* Image Container */
+.img-container {
+    width: 100px;
+    height: 100px;
+}
+.img-container img {
+    width: 100%;
+    height: auto;
 }
 
 /* Colors */

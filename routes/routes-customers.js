@@ -28,6 +28,7 @@ module.exports = function(app) {
 
             return res.status(200).json({
                 "success": true,
+                "count": result.rows.length,
                 "data": result.rows
             });
         });

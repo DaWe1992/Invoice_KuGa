@@ -20,46 +20,45 @@
      */
     module.controller("StatsController",
     ["$scope", "Stats", function($scope, Stats) {
+
         $scope.chart = null;
 
-        // Create configuration for the charts
+        $scope.title = "Bitte Statistik auswählen...";
 
-        // Initialize emptry config object
-        $scope.config = {};
-
-        $scope.config.data = {
-            columns: []
-        };
-
-        // Grid config
-        $scope.config.grid = {
-            x: {show: false},
-            y: {show: true}
-        };
-
-        // Axis config
-        $scope.config.axis = {
-            x: {
-                type: "category",
-                categories: []
+        // Create default configuration for the charts
+        $scope.config = {
+            bindto: "#chartArea",
+            data: {
+                columns: [],
+                colors: {}
             },
-            y: {
-                label: {
-                    text: "Y Label",
-                    position: "outer-middle"
+            grid: {
+                x: {show: false},
+                y: {show: true}
+            },
+            axis: {
+                x: {
+                    type: "category",
+                    categories: [],
+                    tick: {
+                        rotate: 20,
+                        multiline: false,
+                        culling: {
+                            max: 10
+                        }
+                    }
+                },
+                y: {
+                    label: {
+                        text: "",
+                        position: "outer-middle"
+                    }
                 }
+            },
+            zoom: {
+                enabled: true
             }
         };
-
-        // Zoom config
-        $scope.config.zoom = {
-            enabled: true
-        };
-
-        // Binding
-        $scope.config.bindto = "#chartArea";
-
-        $scope.title = "Bitte Statistik auswählen...";
 
         /**
          * Creates chart that shows the event revenues
@@ -90,10 +89,11 @@
          */
         $scope.showChartEvtRevByCustomer = function() {
             $scope.title = "Umsatz nach Kunden (Veranstaltungen)";
+
             var config = $.extend(true, {}, $scope.config); // Clone object
-            config.data.types = {
-                Umsatz: "bar"
-            };
+            config.data.types = {Umsatz: "bar"};
+            config.data.colors = {Umsatz: "#ffa600"};
+            config.axis.y.label.text = "Umsatz in €";
 
             // Get the data
             Stats.getEvtRevByCustomer().success(function(res) {
@@ -103,9 +103,6 @@
 
                 data.unshift("Umsatz");
                 config.data.columns.push(data);
-                config.data.colors = {
-                    Umsatz: "#ffa600"
-                }
 
                 // Get labels for x-axis
                 var categories = res.data.map(function(item, index) {
@@ -113,7 +110,6 @@
                 });
 
                 config.axis.x.categories = categories;
-                config.axis.y.label.text = "Umsatz in €";
 
                 // Generate graph
                 c3.generate(config);
@@ -125,14 +121,15 @@
 
         /**
          * Creates chart that shows the
-         * cash earnings revenues
+         * cash earnings revenues.
          */
         $scope.showChartCeRev = function() {
             $scope.title = "Umsatz Kasseneinnahmen";
+
             var config = $.extend(true, {}, $scope.config); // Clone object
-            config.data.types = {
-                Umsatz: "area-spline"
-            };
+            config.data.types = {Umsatz: "area-spline"};
+            config.data.colors = {Umsatz: "#ffa600"};
+            config.axis.y.label.text = "Umsatz in €";
 
             // Get the data
             Stats.getCeRev().success(function(res) {
@@ -142,9 +139,6 @@
 
                 data.unshift("Umsatz");
                 config.data.columns.push(data);
-                config.data.colors = {
-                    Umsatz: "#ffa600"
-                }
 
                 // Get labels for x-axis
                 var categories = res.data.map(function(item, index) {
@@ -152,14 +146,6 @@
                 });
 
                 config.axis.x.categories = categories;
-                config.axis.x.tick = {
-                    rotate: 20,
-                    multiline: false,
-                    culling: {
-                        max: 10
-                    }
-                };
-                config.axis.y.label.text = "Umsatz in €";
 
                 // Generate graph
                 c3.generate(config);

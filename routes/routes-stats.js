@@ -31,19 +31,22 @@ module.exports = function(app) {
 
         var queryObject = url.parse(req.url,true).query;
 
-        var gross = queryObject.gross === "true" ? " * (1 + ipos_vat)" : "";
-        var limit = !isNaN(queryObject.limit) ? " LIMIT " + queryObject.limit : " LIMIT 10";
+        var gross = queryObject.gross === "true" ? "true" : "false";
+        var limit = !isNaN(queryObject.limit) ? queryObject.limit : "10";
+
+        var sqlGross = gross === "true" ? " * (1 + ipos_vat)" : "";
+        var sqlLimit = " LIMIT " + limit;
 
         // Get revenues by customer
         var sql = "SELECT customers.cust_id, customers.cust_firstname, customers.cust_lastname, " +
-                      "ROUND(SUM(invoice_positions.ipos_net_price * invoice_positions.ipos_qty" + gross + ")::numeric,2) AS evtrevenue " +
+                      "ROUND(SUM(invoice_positions.ipos_net_price * invoice_positions.ipos_qty" + sqlGross + ")::numeric,2) AS evtrevenue " +
                   "FROM ( " +
                       "invoices INNER JOIN customers " +
                       "ON invoices.inv_cust_id = customers.cust_id" +
                   ") INNER JOIN invoice_positions " +
                       "ON invoice_positions.ipos_inv_id = invoices.inv_id " +
                   "GROUP BY customers.cust_id " +
-                  "ORDER BY evtrevenue DESC" + limit + ";";
+                  "ORDER BY evtrevenue DESC" + sqlLimit + ";";
 
         db.query(sql, function(err, result) {
             if(err) {
@@ -55,7 +58,10 @@ module.exports = function(app) {
 
             return res.status(200).json({
                 "success": true,
-                "gross": queryObject.gross ? true : false,
+                "params": {
+                    "gross": gross,
+                    "limit": limit
+                },
                 "data": result.rows
             });
         });

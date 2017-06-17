@@ -56,6 +56,9 @@
         $scope.addCashEarning = function() {
             if(!$scope.new.description) $scope.new.description = "";
             CashEarnings.add($scope.new).success(function(res) {
+                $scope.new.date = "";
+                $scope.new.amount = "";
+                $scope.new.description = "";
                 $scope.earnings.push(res.data.rows[0]);
             })
             .error(function() {

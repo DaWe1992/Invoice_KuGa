@@ -69,10 +69,10 @@ app.use(stormpath.loginRequired, express.static(__dirname + "/frontend"));
 // Include routes
 console.log("Including routes...");
 
-require("./routes/routes-customer.js")(app);
-require("./routes/routes-invoice.js")(app);
+require("./routes/routes-customers.js")(app);
+require("./routes/routes-invoices.js")(app);
 require("./routes/routes-stats.js")(app);
-require("./routes/routes-test.js")(app);
+//require("./routes/routes-test.js")(app);
 require("./routes/routes-cash-earnings")(app);
 
 console.log(colors.green("Success.\n"));

@@ -15,7 +15,7 @@ module.exports = function(app) {
      * @name /cash-earnings
      */
     app.get("/daily-cash-earnings", function(req, res) {
-        var sql = "SELECT ce_id AS id, ce_date AS date, ce_amount AS amount, ce_description AS description " +
+        var sql = "SELECT ce_id AS id, to_char(ce_date, 'YYYY-MM-DD') AS date, ce_amount AS amount, ce_description AS description " +
                   "FROM cash_earnings;";
 
         db.query(sql, function(err, result) {

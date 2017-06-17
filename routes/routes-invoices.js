@@ -27,7 +27,7 @@ module.exports = function(app) {
     app.get("/invoices", function(req, res) {
 
         // Get a list of all invoices including their gross amounts
-        var sql = "SELECT inv_id AS id, inv_date AS date, inv_description AS description, (" +
+        var sql = "SELECT inv_id AS id, to_char(inv_date, 'YYYY-MM-DD') AS date, inv_description AS description, (" +
                       "SELECT SUM((ipos_qty * ipos_net_price) * (1 + ipos_vat)) " +
                       "FROM invoice_positions WHERE ipos_inv_id = inv_id" +
                   "), cust_address AS custaddress, cust_firstname AS custfirstname, cust_lastname AS custlastname, " +

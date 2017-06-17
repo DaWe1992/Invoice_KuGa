@@ -38,7 +38,7 @@ module.exports = function(app) {
         var sqlLimit = " LIMIT " + limit;
 
         // Get revenues by customer
-        var sql = "SELECT customers.cust_id, customers.cust_firstname, customers.cust_lastname, " +
+        var sql = "SELECT customers.cust_id AS id, customers.cust_firstname AS firstname, customers.cust_lastname AS lastname, " +
                       "ROUND(SUM(invoice_positions.ipos_net_price * invoice_positions.ipos_qty" + sqlGross + ")::numeric,2) AS evtrevenue " +
                   "FROM ( " +
                       "invoices INNER JOIN customers " +
@@ -72,7 +72,7 @@ module.exports = function(app) {
      * @name /statistics/ce-rev
      */
     app.get("/statistics/ce-rev", function(req ,res) {
-        var sql = "SELECT ce_amount AS cerevenue, ce_date AS date FROM cash_earnings " +
+        var sql = "SELECT ce_amount AS cerevenue, to_char(ce_date, 'YYYY-MM-DD') AS date FROM cash_earnings " +
                   "ORDER BY date DESC;";
 
         db.query(sql, function(err, result) {

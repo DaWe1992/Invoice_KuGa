@@ -106,7 +106,7 @@
 
                 // Get labels for x-axis
                 var categories = res.data.map(function(item, index) {
-                    return item.cust_firstname + " " + item.cust_lastname;
+                    return item.firstname + " " + item.lastname;
                 });
 
                 config.axis.x.categories = categories;

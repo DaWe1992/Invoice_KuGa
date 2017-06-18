@@ -23,7 +23,7 @@
     </div>
     <!-- Invoice list -->
     <div class="col-sm-8">
-        <div class="scrollable">
+        <div class="scrollable-large">
             <div ng-repeat="(lastname, invoices) in invoices | filter:filter.string | groupBy: 'custlastname'">
                 <div class="panel panel-default mySubheader">
                     <h3>{{lastname}}</h3>
@@ -52,15 +52,15 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <a class="btn btn-default" href="" ng-click="" ng-hide="readOnly">
+                        <a class="btn btn-default" href="" ng-click="">
                             <span class="glyphicon glyphicon-search"></span>
                             Details
                         </a>
-                        <a class="btn btn-default" href="" ng-click=informUser() ng-href="/invoices/{{invoice.id}}/print" ng-hide="readOnly">
+                        <a class="btn btn-default" href="" ng-click=informUser() ng-href="/invoices/{{invoice.id}}/print">
                             <span class="glyphicon glyphicon-print"></span>
                             Drucken
                         </a>
-                        <a class="btn btn-danger" href="" ng-click="" ng-hide="readOnly">
+                        <a class="btn btn-danger" href="" ng-click="">
                             <span class="glyphicon glyphicon-trash"></span>
                             Löschen
                         </a>

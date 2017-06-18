@@ -68,9 +68,13 @@ body {
     background-color: #ffebad !important;
     color: #000 !important;
 }
-.scrollable {
+.scrollable-large {
     overflow-y: scroll;
     max-height: 75vh;
+}
+.scrollable-small {
+    overflow-y: scroll;
+    max-height: 35vh;
 }
 
 /* Image Container */

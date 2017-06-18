@@ -10,12 +10,19 @@ var path = require("path");
 var http = require("http");
 var colors = require("colors");
 var express = require("express");
+var ft = require("feature-toggles");
 var favicon = require("serve-favicon");
 var bodyParser = require("body-parser");
 var stormpath = require("express-stormpath");
 
 var app = express();
 var port = 8080;
+
+// Feature toggles
+var toggles = {
+    feature1: true
+};
+ft.load(toggles);
 
 console.log("\nSETTING UP THE SERVER...");
 console.log("========================\n");
@@ -72,7 +79,7 @@ console.log("Including routes...");
 require("./routes/routes-customers.js")(app);
 require("./routes/routes-invoices.js")(app);
 require("./routes/routes-stats.js")(app);
-//require("./routes/routes-test.js")(app);
+require("./routes/routes-test.js")(app, ft);
 require("./routes/routes-cash-earnings")(app);
 
 console.log(colors.green("Success.\n"));

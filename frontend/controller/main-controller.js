@@ -21,6 +21,7 @@
     module.controller("MainController",
     ["$scope", "Dialog", "Session", function($scope, Dialog, Session) {
 
+        // Current user
         $scope.user;
 
         $scope.year = new Date().getFullYear();
@@ -55,8 +56,9 @@
             });
         };
 
-        Session.fullName(function(name) {
-            $scope.user = name;
+        // Load current user
+        Session.user().success(function(res) {
+            $scope.user = res.account;
         });
     }]);
 })();

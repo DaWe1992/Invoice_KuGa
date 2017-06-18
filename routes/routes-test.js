@@ -10,7 +10,7 @@ var fs = require("fs");
 var pdf = require("html-pdf");
 var mustache = require("mustache");
 
-module.exports = function(app) {
+module.exports = function(app, ft) {
 
     var data = {
         "customer": {
@@ -68,5 +68,17 @@ module.exports = function(app) {
                 stream.pipe(res);
             });
         });
+    });
+
+    app.get("/test-feature-toggle", function(req, res) {
+        var result = {
+            msg: "Feature1 inaktiv"
+        };
+
+        if(ft.isFeatureEnabled("feature1")) {
+            result.msg = "Feature1 aktiv";
+        }
+
+        return res.status(200).json(result);
     });
 };

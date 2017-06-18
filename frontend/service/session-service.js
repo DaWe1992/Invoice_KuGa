@@ -23,16 +23,6 @@
             },
             user: function() {
                 return $http.get("/me");
-            },
-            userName: function(callback) {
-                $http.get("/me").success(function(res) {
-                    callback(res.account.givenName);
-                });
-            },
-            fullName: function(callback) {
-                $http.get("/me").success(function(res) {
-                    callback(res.account.fullName);
-                });
             }
         };
     });

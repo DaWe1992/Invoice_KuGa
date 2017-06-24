@@ -52,23 +52,15 @@ module.exports = function(app) {
     });
 
     /**
-     * Prints a pdf document for the invoice specified.
-     * @name /invoices/:id/print
+     * Returns the invoice with the id specified.
+     * @name /invoices/:id
      * @param id (obligatory)
      */
-    app.get("/invoices/:id/print", function(req, res) {
+    app.get("/invoices/:id", function(req, res) {
         var id = req.params.id;
 
-        // Initialize empty object
-        var data = {};
-
-        // Load customer data
-        var sql = "SELECT customers.cust_address AS address, customers.cust_firstname AS firstname, customers.cust_lastname AS lastname, " +
-                      "customers.cust_street AS street, customers.cust_zip AS zip, customers.cust_city AS city " +
-                  "FROM customers INNER JOIN invoices ON customers.cust_id = invoices.inv_cust_id " +
-                  "WHERE invoices.inv_id = '" + id + "';"
-
-        db.query(sql, function(err, result) {
+        // Get the invoice data
+        getInvoiceById(id, function(data, err) {
             if(err) {
                 return res.status(500).json({
                     "success": false,
@@ -76,52 +68,85 @@ module.exports = function(app) {
                 });
             }
 
-            data.customer = result.rows[0];
+            return res.status(200).json({
+                "success": true,
+                "data": data
+            });
+        });
+    });
 
-            // Load invoice data
-            sql = "SELECT inv_id AS id, to_char(inv_date, 'DD.MM.YYYY') AS date FROM invoices WHERE inv_id = '" + id + "';";
+    /**
+     * Prints a pdf document for the invoice specified.
+     * @name /invoices/:id/print
+     * @param id (obligatory)
+     */
+    app.get("/invoices/:id/print", function(req, res) {
+        var id = req.params.id;
 
-            db.query(sql, function(err, result) {
-                if(err) {
-                    return res.status(500).json({
-                        "success": false,
-                        "err": err
-                    });
-                }
+        // Get the invoice data
+        getInvoiceById(id, function(data, err) {
+            if(err) {
+                return res.status(500).json({
+                    "success": false,
+                    "err": err
+                });
+            }
 
-                data.invoice = result.rows[0];
+            readAndRenderTemplate(data, function(html) {
 
-                // Load invoice positions
-                sql = "SELECT ipos_description AS pos, ipos_qty AS qty, ipos_net_price AS unitprice, " +
-                          "ROUND((ipos_qty * ipos_net_price)::numeric,2) AS net, ROUND(((ipos_qty * ipos_net_price) * ipos_vat)::numeric,2) AS vat, " +
-                          "ROUND(((ipos_qty * ipos_net_price) + ((ipos_qty * ipos_net_price) * ipos_vat))::numeric,2) AS gross " +
-                      "FROM invoice_positions " +
-                      "WHERE ipos_inv_id = '" + id + "';";
-
-                db.query(sql, function(err, result) {
-                    if(err) {
-                        return res.status(500).json({
-                            "success": false,
-                            "err": err
-                        });
-                    }
-
-                    data.invoice.positions = result.rows;
-
-                    readAndRenderTemplate(data, function(html) {
-
-                        // Create pdf and pipe it to the response stream
-                        pdf.create(html, pdf_options).toStream(function(err, stream) {
-                            res.setHeader("Content-type", "application/pdf");
-                            res.setHeader("Content-disposition", "attachment; filename=Rechnung_" + data.invoice.id + ".pdf");
-                            stream.pipe(res);
-                        });
-                    });
+                // Create pdf and pipe it to the response stream
+                pdf.create(html, pdf_options).toStream(function(err, stream) {
+                    res.setHeader("Content-type", "application/pdf");
+                    res.setHeader("Content-disposition", "attachment; filename=Rechnung_" + data.invoice.id + ".pdf");
+                    stream.pipe(res);
                 });
             });
         });
     });
 };
+
+/**
+ * Gets the data for the
+ * invoice specified.
+ * @param id
+ * @param callback
+ */
+function getInvoiceById(id, callback) {
+    // Initialize empty object
+    var data = {};
+
+    // Load customer data
+    var sql = "SELECT customers.cust_address AS address, customers.cust_firstname AS firstname, customers.cust_lastname AS lastname, " +
+                  "customers.cust_street AS street, customers.cust_zip AS zip, customers.cust_city AS city " +
+              "FROM customers INNER JOIN invoices ON customers.cust_id = invoices.inv_cust_id " +
+              "WHERE invoices.inv_id = '" + id + "';"
+
+    db.query(sql, function(err, result) {
+        if(err) callback(null, err);
+        data.customer = result.rows[0];
+
+        // Load invoice data
+        sql = "SELECT inv_id AS id, to_char(inv_date, 'DD.MM.YYYY') AS date FROM invoices WHERE inv_id = '" + id + "';";
+
+        db.query(sql, function(err, result) {
+            if(err) callback(null, err);
+            data.invoice = result.rows[0];
+
+            // Load invoice positions
+            sql = "SELECT ipos_description AS pos, ipos_qty AS qty, ipos_net_price AS unitprice, " +
+                      "ROUND((ipos_qty * ipos_net_price)::numeric,2) AS net, ROUND(((ipos_qty * ipos_net_price) * ipos_vat)::numeric,2) AS vat, " +
+                      "ROUND(((ipos_qty * ipos_net_price) + ((ipos_qty * ipos_net_price) * ipos_vat))::numeric,2) AS gross " +
+                  "FROM invoice_positions " +
+                  "WHERE ipos_inv_id = '" + id + "';";
+
+            db.query(sql, function(err, result) {
+                if(err) callback(null, err)
+                data.invoice.positions = result.rows;
+                callback(data, null);
+            });
+        });
+    });
+}
 
 /**
  * Reads and renders an HTML template

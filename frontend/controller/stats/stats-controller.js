@@ -23,11 +23,9 @@
 
         $scope.chart = null;
 
-        $scope.title = "Bitte Statistik auswählen...";
-
         // Create default configuration for the charts
         $scope.config = {
-            bindto: "#chartArea",
+            bindto: "#chart-area",
             data: {
                 columns: [],
                 colors: {}
@@ -65,7 +63,8 @@
          * by months.
          */
         $scope.showChartEvtRevByMonth = function() {
-            $scope.title = "Umsatz nach Monaten";
+            $scope.switch("", "chartEvtRevByMonth");
+
             var config = $.extend(true, {}, $scope.config); // Clone object
             config.data = {
                 columns: [
@@ -88,7 +87,7 @@
          * by customers.
          */
         $scope.showChartEvtRevByCustomer = function() {
-            $scope.title = "Umsatz nach Kunden (Veranstaltungen)";
+            $scope.switch("", "chartEvtRevByCustomer");
 
             var config = $.extend(true, {}, $scope.config); // Clone object
             config.data.types = {Umsatz: "bar"};
@@ -124,7 +123,7 @@
          * cash earnings revenues.
          */
         $scope.showChartCeRev = function() {
-            $scope.title = "Umsatz Kasseneinnahmen";
+            $scope.switch("", "chartCeRev");
 
             var config = $.extend(true, {}, $scope.config); // Clone object
             config.data.types = {Umsatz: "area-spline"};

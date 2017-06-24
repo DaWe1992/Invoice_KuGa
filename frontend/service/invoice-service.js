@@ -24,9 +24,9 @@
             list: function() {
                 return $http.get("/invoices");
             },
-            /*detail: function() {
+            detail: function() {
                 return $http.get("/invoices/" + $routeParams.inv_id);
-            },
+            }/*,
             delete: function() {
                 //TODO: implement delete function
             },

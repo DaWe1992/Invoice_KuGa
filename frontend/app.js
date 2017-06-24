@@ -19,6 +19,7 @@
         "CustomerDetail",
         "CustomerNew",
         "InvoiceList",
+        "InvoiceDetail",
         "CashEarnings",
         "Statistics",
         "ngRoute",
@@ -53,6 +54,10 @@
         .when("/invoices", {
             templateUrl: "./view/invoice/invoice-list.html",
             controller: "InvoiceListController"
+        })
+        .when("/invoices/:inv_id", {
+            templateUrl: "./view/invoice/invoice-detail.html",
+            controller: "InvoiceDetailController"
         })
         .when("/daily-cash-earnings", {
             templateUrl: "./view/cash-earnings/cash-earnings.html",

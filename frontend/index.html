@@ -62,10 +62,11 @@
         <script src="./controller/customer/customer-new-controller.js"></script>
         <script src="./controller/cash-earnings/cash-earnings-controller.js"></script>
         <script src="./controller/invoice/invoice-list-controller.js"></script>
+        <script src="./controller/invoice/invoice-detail-controller.js"></script>
         <script src="./controller/stats/stats-controller.js"></script>
 
         <!-- custom styles -->
-        <!-- <link href="./css/slate_min.css" rel="stylesheet"> -->
+        <!--<link href="./css/slate_min.css" rel="stylesheet">-->
         <link href="./css/styles.css" rel="stylesheet">
         <link rel="stylesheet" href="/node_modules/angular-bootstrap-datetimepicker/src/css/datetimepicker.css"/>
     </head>
@@ -87,31 +88,31 @@
                 <!-- Navbar items -->
                 <ul class="nav navbar-nav navbar-left">
                     <li id="tab_home" class="active">
-                        <a href="#/" ng-click="switchTab('tab_home')">
+                        <a href="#/" ng-click="switch('nav', 'tab_home')">
                             <span class="glyphicon glyphicon-home"></span>
                             Home
                         </a>
                     </li>
                     <li id="tab_customers">
-                        <a href="#/customers" ng-click="switchTab('tab_customers')">
+                        <a href="#/customers" ng-click="switch('nav', 'tab_customers')">
                             <span class="glyphicon glyphicon-user"></span>
                             Kunden
                         </a>
                     </li>
                     <li id="tab_invoices">
-                        <a href="#/invoices" ng-click="switchTab('tab_invoices')">
+                        <a href="#/invoices" ng-click="switch('nav', 'tab_invoices')">
                             <span class="glyphicon glyphicon-eur"></span>
                             Rechnungen
                         </a>
                     </li>
                     <li id="tab_daily_cash_earnings">
-                        <a href="#/daily-cash-earnings" ng-click="switchTab('tab_daily_cash_earnings')">
+                        <a href="#/daily-cash-earnings" ng-click="switch('nav', 'tab_daily_cash_earnings')">
                             <span class="glyphicon glyphicon-piggy-bank"></span>
                             Kasseneinnahmen
                         </a>
                     </li>
                     <li id="tab_stats">
-                        <a href="#/statistics" ng-click="switchTab('tab_stats')">
+                        <a href="#/statistics" ng-click="switch('nav', 'tab_stats')">
                             <span class="glyphicon glyphicon-stats"></span>
                             Statistiken
                         </a>

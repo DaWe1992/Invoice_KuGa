@@ -1,0 +1,36 @@
+<div class="scrollable-large">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div>
+                <b>Rechnungspositionen</b>
+            </div>
+        </div>
+        <div id="table-invoice-positions" class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Beschreibung</th>
+                        <th>Menge</th>
+                        <th>Einzel</th>
+                        <th>Gesamt (n)</th>
+                        <th>MwSt</th>
+                        <th>Gesamt (b)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-row" ng-repeat="position in invoice.positions">
+                        <td>{{position.pos}}</td>
+                        <td>{{position.qty}}</td>
+                        <td>{{position.unitprice | currency:"€ ":2}}</td>
+                        <td>{{position.net | currency:"€ ":2}}</td>
+                        <td>{{position.vat | currency:"€ ":2}}</td>
+                        <td>{{position.gross | currency:"€ ":2}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</div>

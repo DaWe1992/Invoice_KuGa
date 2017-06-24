@@ -16,7 +16,7 @@
     /**
      * Service for the customers.
      */
-    module.factory("CashEarnings", function CustomerFactory($http, $routeParams) {
+    module.factory("CashEarnings", function CustomerFactory($http) {
         return {
             add: function(item) {
                 return $http.post("/daily-cash-earnings", item);

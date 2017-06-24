@@ -16,7 +16,7 @@
      /**
       * Service for the stats.
       */
-      module.factory("Stats", function StatsFactory($http, $routeParams) {
+      module.factory("Stats", function StatsFactory($http) {
           return {
               getEvtRevByMonth: function() {
                   return $http.get("/statistics/evt-rev-by-month");

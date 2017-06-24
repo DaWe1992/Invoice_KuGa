@@ -44,11 +44,12 @@
         /**
          * Adds the .active class to the selected tab
          * and removes the class if another tab is selected.
-         * @param sel_tab_id
+         * @param items
+         * @param sel_item_id
          */
-        $scope.switchTab = function(sel_tab_id) {
-            $(".navbar-left li").each(function() {
-                if($(this).attr("id") === sel_tab_id) {
+        $scope.switch = function(items, sel_item_id) {
+            $(items === "nav" ? ".navbar-left li" : ".nav-pills li").each(function() {
+                if($(this).attr("id") === sel_item_id) {
                     $(this).addClass("active");
                 } else {
                     $(this).removeClass("active");

@@ -1,37 +1,33 @@
 <div>
     <div class="col-sm-12">
-        <div class="panel panel-default myHeader">
-            <h2><span class="glyphicon glyphicon-stats"></span> Statistiken</h2>
+        <div class="myHeader">
+            Statistiken
         </div>
     </div>
-    <!-- Sidebar -->
-    <div class="col-sm-3">
-        <!-- Actions -->
-        <div class="list-group">
-            <p class="list-group-item active"><b>Auswertungen...</b></p>
-            <p class="list-group-item active subitem"><b>...für Veranstaltungen</b></p>
-            <a class="list-group-item" href="" ng-click="showChartEvtRevByMonth()">
-                <span class="glyphicon glyphicon-calendar"></span>
-                Umsatz nach Monaten
-            </a>
-            <a class="list-group-item" href="" ng-click="showChartEvtRevByCustomer()">
-                <span class="glyphicon glyphicon-user"></span>
-                Umsatz nach Kunden
-            </a>
-            <p class="list-group-item active subitem"><b>...für Tageseinnahmen</b></p>
-            <a class="list-group-item" href="" ng-click="showChartCeRev()">
-                <span class="glyphicon glyphicon-piggy-bank"></span>
-                Umsatz Tageseinnahmen
-            </a>
-        </div>
-    </div>
-    <!-- Statistics -->
-    <div class="col-sm-9">
-        <div class="panel panel-default mySubheader">
-            <h3>{{title}}</h3>
-        </div>
-        <div id="chart-container">
-            <div id="chartArea">Hier gibt's noch nichts zu sehen...</div>
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <ul class="nav nav-pills">
+                    <li id="chartEvtRevByMonth" role="presentation" class="inactive">
+                        <a href="" ng-click="showChartEvtRevByMonth()">
+                            <span class="glyphicon glyphicon-calendar"></span> Umsatz nach Monaten
+                        </a>
+                    </li>
+                    <li id="chartEvtRevByCustomer" role="presentation" class="inactive">
+                        <a href="" ng-click="showChartEvtRevByCustomer()">
+                            <span class="glyphicon glyphicon-user"></span> Umsatz nach Kunden
+                        </a>
+                    </li>
+                    <li id="chartCeRev" role="presentation" class="inactive">
+                        <a href="" ng-click="showChartCeRev()">
+                            <span class="glyphicon glyphicon-piggy-bank"></span> Umsatz Tageseinnahmen
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div id="chart-container" class="panel-body">
+                <div id="chart-area">Bitte Statistik auswählen...</div>
+            </div>
         </div>
     </div>
 </div>

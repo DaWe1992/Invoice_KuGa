@@ -67,7 +67,7 @@ app.use(stormpath.init(app, {
 }));
 
 // Serve favicon
-app.use(favicon(path.join(__dirname, "frontend", "image", "favicon.ico")));
+app.use(favicon(path.join(__dirname, "frontend", "img", "favicon.ico")));
 
 // Serve static files in frontend folder
 app.use(stormpath.loginRequired, express.static(__dirname + "/frontend"));

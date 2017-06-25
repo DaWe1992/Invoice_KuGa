@@ -5,7 +5,7 @@
             type="text"
             class="form-control"
             ng-model="invoice.id"
-            ng-disabled="readOnly"
+            disabled
         >
     </div>
     <br/>
@@ -28,6 +28,7 @@
             ng-disabled="readOnly"
         >
     </div>
+    <br/>
     <div class="well">
         {{customer.address}}<br/>
         {{customer.firstname}} {{customer.lastname}}<br/>

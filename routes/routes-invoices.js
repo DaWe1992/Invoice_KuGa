@@ -142,9 +142,41 @@ function getInvoiceById(id, callback) {
             db.query(sql, function(err, result) {
                 if(err) callback(null, err)
                 data.invoice.positions = result.rows;
-                callback(data, null);
+
+                // Calculate the sums
+                getSums(data.invoice.positions, function(sums) {
+                    data.invoice.sums = sums;
+                    callback(data, null);
+                });
             });
         });
+    });
+}
+
+/**
+ * Calculates the sums of the invoice.
+ * @param positions
+ * @param callback
+ */
+function getSums(positions, callback) {
+    var sumNet = 0;
+    var sumVat1 = 0; // 7%
+    var sumVat2 = 0; // 19%
+    var sumGross = 0;
+
+    // loop over positions
+    positions.forEach(function(pos) {
+        sumNet += Number(pos.net);
+        sumGross += Number(pos.gross);
+        sumVat1 += (pos.vatrate === "0.07" ? Number(pos.vat) : 0);
+        sumVat2 += (pos.vatrate === "0.19" ? Number(pos.vat) : 0);
+    });
+
+    callback({
+        net: sumNet.toFixed(2),
+        gross: sumGross.toFixed(2),
+        vat1: sumVat1.toFixed(2),
+        vat2: sumVat2.toFixed(2)
     });
 }
 

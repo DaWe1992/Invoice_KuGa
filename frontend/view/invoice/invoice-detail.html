@@ -6,9 +6,14 @@
     </div>
     <div class="col-sm-12">
         <div class="well well-sm">
-            <a class="btn btn-default" href="" ng-click=informUser() ng-href="/invoices/{{invoice.id}}/print">
+            <a class="btn btn-default" href="" ng-click="informUser()" ng-href="/invoices/{{invoice.id}}/print">
                 <span class="glyphicon glyphicon-print"></span>
                 Drucken
+            </a>
+            <a class="btn btn-default" href="" ng-click="toggleReadWrite()">
+                <span class="glyphicon glyphicon-eye-open"></span>
+                <span class="glyphicon glyphicon-resize-horizontal"></span>
+                <span class="glyphicon glyphicon-pencil"></span>
             </a>
             <a class="btn btn-danger" href="" ng-click="">
                 <span class="glyphicon glyphicon-trash"></span>

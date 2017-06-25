@@ -63,7 +63,7 @@
         };
 
         /**
-         * Toggles read/write mode
+         * Toggles read/write mode.
          */
         $scope.toggleReadWrite = function() {
             if($scope.readOnly) {

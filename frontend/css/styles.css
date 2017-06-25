@@ -115,6 +115,11 @@ body {
     background-color: #b8dff5 !important;
 }
 
+/* Forms */
+.form-inline > * {
+   margin: 5px 3px;
+}
+
 /* Form validation */
 input.ng-invalid.ng-dirty {
     background-color: pink;
@@ -131,7 +136,7 @@ input.ng-invalid.ng-dirty {
     text-align: center !important;
 }
 
-/* Table cell text align for invoice positions*/
+/* Table cell text align for invoice positions */
 #table-invoice-positions th, td {
     text-align: right;
 }
@@ -159,13 +164,6 @@ input.ng-invalid.ng-dirty {
 }
 
 /* Charts */
-/*#chart-container {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-top: 10px;
-    padding: 20px;
-}*/
 .inactive {
     background-color: #ddd !important;
     border-radius: 5px !important;

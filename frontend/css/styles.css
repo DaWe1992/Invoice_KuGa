@@ -1,6 +1,6 @@
 /* Body */
 body {
-    background: url(../img/coffee_beans_wallpaper_2.jpg) fixed;
+    background: url(../img/coffee_beans_wallpaper_8.jpg) fixed;
     /* background-color: #545556; */
     background-size: cover;
 }
@@ -46,8 +46,12 @@ body {
 .ngdialog-button-primary {
     background-color: #ffca5c !important;
 }
+.ngdialog-heading {
+    border-bottom: 1px solid #000 !important;
+    margin-bottom: 20px !important;
+}
 
-/* Page Header */
+/* Header */
 .page-header {
     padding: 9px !important;
     border-bottom: 1px solid #000 !important;
@@ -107,6 +111,9 @@ body {
 .fg-success {
     color: #3c763d;
 }
+.info-dark {
+    background-color: #b8dff5 !important;
+}
 
 /* Form validation */
 input.ng-invalid.ng-dirty {
@@ -122,6 +129,14 @@ input.ng-invalid.ng-dirty {
 }
 #table-customers td {
     text-align: center !important;
+}
+
+/* Table cell text align for invoice positions*/
+#table-invoice-positions th, td {
+    text-align: right;
+}
+.left-align {
+    text-align: left !important;
 }
 
 /* Table sorting */

@@ -6,12 +6,13 @@
             </div>
         </div>
         <div id="table-invoice-positions" class="table-responsive">
-            <table class="table table-hover">
+            <table class="table table-hover table-bordered">
                 <thead>
-                    <tr>
-                        <th>Beschreibung</th>
+                    <tr class="active">
+                        <th class="left-align">Beschreibung</th>
                         <th>Menge</th>
                         <th>Einzel</th>
+                        <th>MwSt %</th>
                         <th>Gesamt (n)</th>
                         <th>MwSt</th>
                         <th>Gesamt (b)</th>
@@ -19,18 +20,48 @@
                 </thead>
                 <tbody>
                     <tr class="table-row" ng-repeat="position in invoice.positions">
-                        <td>{{position.pos}}</td>
+                        <td class="left-align">{{position.pos}}</td>
                         <td>{{position.qty}}</td>
                         <td>{{position.unitprice | currency:"€ ":2}}</td>
+                        <td>{{position.vatrate}}</td>
                         <td>{{position.net | currency:"€ ":2}}</td>
                         <td>{{position.vat | currency:"€ ":2}}</td>
                         <td>{{position.gross | currency:"€ ":2}}</td>
                     </tr>
+                    <tr class="info">
+                        <th></th><th></th>
+                        <th></th>
+                        <th>Summe netto</th>
+                        <th>{{sums.net | currency:"€ ":2}}</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr class="info">
+                        <th></th><th></th>
+                        <th></th>
+                        <th>MwSt 7%</th>
+                        <th></th>
+                        <th>{{sums.vat1 | currency:"€ ":2}}</th>
+                        <th></th>
+                    </tr>
+                    <tr class="info">
+                        <th></th><th></th>
+                        <th></th>
+                        <th>MwSt 19%</th>
+                        <th></th>
+                        <th>{{sums.vat2 | currency:"€ ":2}}</th>
+                        <th></th>
+                    </tr>
+                    <tr class="info-dark">
+                        <th></th><th></th>
+                        <th></th>
+                        <th>Summe brutto</th>
+                        <th></th>
+                        <th></th>
+                        <th><span style="border-bottom: 3px double;">{{sums.gross | currency:"€ ":2}}</span></th>
+                    </tr>
                 </tbody>
             </table>
-        </div>
-        <div>
-            
         </div>
     </div>
 </div>

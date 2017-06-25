@@ -61,8 +61,8 @@
                 $scope.new.description = "";
                 $scope.earnings.push(res.data.rows[0]);
             })
-            .error(function() {
-                Dialog.errBox();
+            .error(function(res) {
+                Dialog.errBox(res.err);
             });
         };
 

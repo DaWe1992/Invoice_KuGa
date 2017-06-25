@@ -100,13 +100,22 @@
              * Displays a general error popup.
              * @returns {Window|*}
              */
-            errBox: function() {
+            errBox: function(err) {
                 var scope = $rootScope.$new(true);
 
-                scope.title = "Fehler :'(";
-                scope.body = "Bei der Verarbeitung ist ein Fehler aufgetreten. " +
-                "Bitte versuchen Sie es später erneut. Falls das Problem weiterhin besteht, " +
-                "wenden Sie sich bitte an <b>daniel.wehner92@gmx.de</b> bzw. <b>0160/8292152</b>.";
+                // Produce error text
+                var errText = "";
+
+                if(err) {
+                    for(var property in err) {
+                        errText += property + ": " + err[property] + "<br/>";
+                    }
+                }
+
+                scope.title = "Fehler!";
+                scope.body = "Bei der Verarbeitung ist ein Fehler aufgetreten.<br/>" +
+                    "Bitte versuchen Sie es später erneut." +
+                    "<br/><br/><b>Beschreibung:</b><br/>" + (errText ? errText : "Keine");
 
                 scope.okOption = function() {
                     ngDialog.close();

@@ -10,6 +10,7 @@
             <table class="table table-hover table-bordered">
                 <thead>
                     <tr class="active">
+                        <th ng-hide="readOnly"></th>
                         <th class="left-align">Beschreibung</th>
                         <th>Menge</th>
                         <th>Einzel</th>
@@ -21,28 +22,33 @@
                 </thead>
                 <tbody>
                     <tr class="table-row" ng-repeat="position in invoice.positions">
+                        <td class="btn-cell-danger" ng-hide="readOnly">
+                            <a class="btn btn-danger table-btn-danger" ng-click="">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </td>
                         <td class="left-align">{{position.pos}}</td>
                         <td>{{position.qty}}</td>
                         <td>{{position.unitprice | currency:"€ ":2}}</td>
-                        <td>{{position.vatrate}}</td>
+                        <td>{{position.vatrate | percentage:0}}</td>
                         <td>{{position.net | currency:"€ ":2}}</td>
                         <td>{{position.vat | currency:"€ ":2}}</td>
                         <td>{{position.gross | currency:"€ ":2}}</td>
                     </tr>
                     <tr class="info">
-                        <th></th><th></th><th></th><th>Summe netto</th>
+                        <th ng-hide="readOnly"></th><th></th><th></th><th></th><th>Summe netto</th>
                         <th>{{invoice.sums.net | currency:"€ ":2}}</th><th></th><th></th>
                     </tr>
                     <tr class="info">
-                        <th></th><th></th><th></th><th>MwSt 7%</th>
+                        <th ng-hide="readOnly"></th><th></th><th></th><th></th><th>MwSt 7%</th>
                         <th></th><th>{{invoice.sums.vat1 | currency:"€ ":2}}</th><th></th>
                     </tr>
                     <tr class="info">
-                        <th></th><th></th><th></th><th>MwSt 19%</th>
+                        <th ng-hide="readOnly"></th><th></th><th></th><th></th><th>MwSt 19%</th>
                         <th></th><th>{{invoice.sums.vat2 | currency:"€ ":2}}</th><th></th>
                     </tr>
                     <tr class="info-dark">
-                        <th></th><th></th><th></th>
+                        <th ng-hide="readOnly"></th><th></th><th></th><th></th>
                         <th>Summe brutto</th>
                         <th></th><th></th>
                         <th>

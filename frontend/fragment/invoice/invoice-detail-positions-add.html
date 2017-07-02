@@ -6,14 +6,16 @@
         <input
             type="text"
             class="form-control"
+            ng-model="newPos.pos"
             required
         >
     </div>
-    <div class="input-group col-xl-2 col-lg-2 col-sm-12 col-xs-12">
+    <div class="input-group col-xl-3 col-lg-3 col-sm-12 col-xs-12">
         <span class="input-group-addon custom-input-group-addon"><b>Menge</b></span>
         <input
             type="text"
             class="form-control"
+            ng-model="newPos.qty"
             required
         >
     </div>
@@ -22,17 +24,19 @@
         <input
             type="text"
             class="form-control"
+            ng-model="newPos.unitprice"
             required
         >
     </div>
-    <div class="radio">
-        <label><input type="radio" name="optradio"> 7%</label>
-    </div>
-    <div class="radio">
-        <label><input type="radio" name="optradio"> 19%</label>
+    <div class="input-group col-xl-1 col-lg-1 col-sm-12 col-xs-12">
+        <select class="form-control" ng-model="newPos.vatrate">
+            <option>0.00</option>
+            <option>0.07</option>
+            <option>0.19</option>
+        </select>
     </div>
     <br/>
-    <a class="btn btn-default" href="" ng-click="showOverlay()" href="">
+    <a class="btn btn-default" href="" ng-click="addPos()" href="">
         <span class="glyphicon glyphicon-plus"></span>
     </a>
 </form>

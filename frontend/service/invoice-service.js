@@ -26,6 +26,9 @@
             },
             detail: function() {
                 return $http.get("/invoices/" + $routeParams.inv_id);
+            },
+            addPos: function(item) {
+                return $http.post("/invoices/" + $routeParams.inv_id + "/positions", item)
             }/*,
             delete: function() {
                 //TODO: implement delete function

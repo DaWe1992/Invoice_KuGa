@@ -34,8 +34,8 @@
                 $scope.customer = res.data.customer;
                 $scope.contacts = res.data.contacts;
             })
-            .error(function() {
-                Dialog.errBox();
+            .error(function(res) {
+                Dialog.errBox(res.err);
             });
         };
 
@@ -52,8 +52,8 @@
                     Session.user().success(function(res) {
                         if(res.account.email === user) $scope.readOnly = false;
                     })
-                    .error(function() {
-                        Dialog.errBox();
+                    .error(function(res) {
+                        Dialog.errBox(res.err);
                     });
                 }
             })
@@ -78,20 +78,20 @@
                         Customer.lock().success(function() {
                             $scope.readOnly = false;
                         })
-                        .error(function() {
-                            Dialog.errBox();
+                        .error(function(res) {
+                            Dialog.errBox(res.err);
                         });
                     }
                 })
-                .error(function() {
-                    Dialog.errBox();
+                .error(function(res) {
+                    Dialog.errBox(res.err);
                 });
             } else {
                 Customer.unlock().success(function() {
                     $scope.readOnly = true;
                 })
-                .error(function() {
-                    Dialog.errBox();
+                .error(function(res) {
+                    Dialog.errBox(res.err);
                 });
             }
         };

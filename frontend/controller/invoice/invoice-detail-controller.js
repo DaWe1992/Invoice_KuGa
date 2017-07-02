@@ -24,6 +24,13 @@
        $scope.customer;
        $scope.readOnly = true;
 
+       $scope.newPos = {
+           "pos": "",
+           "qty": "",
+           "unitprice": "",
+           "vatrate": ""
+       };
+
        /**
         * Gets the invoice detail data.
         * The id of the invoice is read from the URL.
@@ -33,8 +40,24 @@
                $scope.invoice = res.data.invoice;
                $scope.customer = res.data.customer;
            })
-           .error(function(err) {
-               Dialog.errBox();
+           .error(function(res) {
+               Dialog.errBox(res.err);
+           });
+       };
+
+       /**
+        * Adds a position to the invoice.
+        * The id of the invoice is read from the URL.
+        */
+       $scope.addPos = function() {
+           Invoice.addPos($scope.newPos).success(function(res) {
+               $scope.newPos.pos = "";
+               $scope.newPos.qty = "";
+               $scope.newPos.unitprice = "";
+               $scope.newPos.vatrate = "";
+           })
+           .error(function(res) {
+               Dialog.errBox(res.err);
            });
        };
 

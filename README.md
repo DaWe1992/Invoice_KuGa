@@ -88,7 +88,13 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
   Returns the invoice with id `id`.
 - `http://<host>:8080/invoices/:id/print`:  
   Creates pdf for the invoice with id `id`.
+- `http://<host>:8080/invoices/:id/positions`:  
+  Returns all invoice positions for the invoice with id `id`.
 
+**POST:**
+
+- `http://<host>:8080/invoices/:id/positions`:  
+  Adds a new invoice position to the invoice with id `id`.
 
 ### Statistics Endpoints
 

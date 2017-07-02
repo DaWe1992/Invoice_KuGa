@@ -39,8 +39,8 @@
            Invoice.list().success(function(res) {
                $scope.invoices = res.data;
            })
-           .error(function() {
-               Dialog.errBox();
+           .error(function(res) {
+               Dialog.errBox(res.err);
            });
        };
 

@@ -50,6 +50,18 @@ body {
     border-bottom: 1px solid #000 !important;
     margin-bottom: 20px !important;
 }
+.table-btn-danger {
+    height: 100% !important;
+    width: 100% !important;
+    border-radius: 0px !important;
+    border: 0px !important;
+}
+.table-btn-danger:hover {
+    background-color: #d9534f !important;
+}
+.table-btn-danger:active {
+    background-color: #d9534f !important;
+}
 
 /* Header */
 .page-header {
@@ -134,6 +146,10 @@ input.ng-invalid.ng-dirty {
 }
 #table-customers td {
     text-align: center !important;
+}
+.btn-cell-danger {
+    padding: 0px !important;
+    background-color: #d9534f;
 }
 
 /* Table cell text align for invoice positions */

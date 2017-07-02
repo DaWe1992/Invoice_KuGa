@@ -39,8 +39,8 @@
             Customer.list().success(function(res) {
                 $scope.customers = res.data;
             })
-            .error(function() {
-                Dialog.errBox();
+            .error(function(res) {
+                Dialog.errBox(res.err);
             });
         };
 

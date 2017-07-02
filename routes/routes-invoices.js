@@ -103,6 +103,41 @@ module.exports = function(app) {
             });
         });
     });
+
+    /**
+     * Gets all positions for the invoice specified.
+     * @name /invoices/:id/positions
+     * @param id (obligatory)
+     */
+    app.get("/invoices/:id/positions", function(req, res) {
+
+    });
+
+    /**
+     * Adds a new position for the invoice specified.
+     * @name /invoices/:id/positions
+     * @param id (obligatory)
+     */
+    app.post("/invoices/:id/positions", function(req, res) {
+        var id = req.params.id;
+        var item = req.body;
+        var sql = "INSERT INTO invoice_positions (ipos_inv_id, ipos_description, ipos_qty, ipos_net_price, ipos_vat) " +
+                  "VALUES ('" + id + "', '" + item.pos + "', '" + item.qty + "', '" + item.unitprice + "', '" + item.vatrate + "');";
+
+        db.query(sql, function(err, result) {
+            if(err) {
+                return res.status(500).json({
+                    "success": false,
+                    "err": err
+                });
+            }
+
+            return res.status(200).json({
+                "success": true,
+                "data": data
+            });
+        });
+    });
 };
 
 /**

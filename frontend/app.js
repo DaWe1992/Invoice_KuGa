@@ -81,6 +81,17 @@
     });
 
     /**
+     * Format numbers as percentages.
+     */
+    app.filter("percentage", ["$filter", function($filter) {
+        return function(input, decimals) {
+            var percentage = $filter("number")(input * 100, decimals);
+            percentage = percentage.toString().replace(/(\.[0-9]*?)0+$/, "$1").replace(/\.$/, "");
+            return percentage + " %";
+        };
+    }]);
+
+    /**
      * This code is executed as soon as
      * the application is running.
      */

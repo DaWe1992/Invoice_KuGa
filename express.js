@@ -70,7 +70,9 @@ app.use(stormpath.init(app, {
 app.use(favicon(path.join(__dirname, "frontend", "img", "favicon.ico")));
 
 // Serve static files in frontend folder
-app.use(stormpath.loginRequired, express.static(__dirname + "/frontend"));
+app.use(stormpath.loginRequired, express.static(
+    __dirname + "/frontend" + (process.argv[2] === "sapui5" ? "_sapui5" : "")
+));
 
 // **** ROUTES ****
 // Include routes

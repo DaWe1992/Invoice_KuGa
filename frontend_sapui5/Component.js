@@ -6,23 +6,24 @@
 sap.ui.define([
     "sap/ui/core/UIComponent",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/model/resource/ResourceModel"
-], function (UIComponent, JSONModel, ResourceModel) {
+    "sap/ui/model/resource/ResourceModel",
+    "com/danielwehner/invoicekuga/controller/HelloDialog"
+], function (UIComponent, JSONModel, ResourceModel, HelloDialog) {
     "use strict";
 
     return UIComponent.extend("com.danielwehner.invoicekuga.Component", {
-        metadata : {
-            manifest : "json"
+        metadata: {
+            manifest: "json"
         },
 
-        init : function () {
+        init: function () {
             // call the init function of the parent
             UIComponent.prototype.init.apply(this, arguments);
 
             // set data model
             var oData = {
-                recipient : {
-                    name : "World"
+                recipient: {
+                    name: "World"
                 }
             };
 
@@ -35,6 +36,13 @@ sap.ui.define([
             });
 
             this.setModel(i18nModel, "i18n");
+
+            // set dialog
+            this._helloDialog = new HelloDialog(this.getRootControl());
+        },
+
+        openHelloDialog: function() {
+            this._helloDialog.open();
         }
     });
 });

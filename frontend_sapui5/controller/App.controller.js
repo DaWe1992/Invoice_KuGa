@@ -10,5 +10,8 @@
 
      return Controller.extend("com.danielwehner.invoicekuga.controller.App", {
 
+         onOpenDialog: function() {
+             this.getOwnerComponent().openHelloDialog();
+         }
      });
  });

@@ -6,8 +6,15 @@
     <App class="myAppDemoWT">
         <pages>
             <Page title="{i18n>homePageTitle}">
+                <headerContent>
+    				<Button
+    					icon="sap-icon://hello-world"
+    					press="onOpenDialog"
+                    />
+				</headerContent>
                 <content>
                     <mvc:XMLView viewName="com.danielwehner.invoicekuga.view.HelloPanel"/>
+                    <mvc:XMLView viewName="com.danielwehner.invoicekuga.view.InvoiceList"/>
                 </content>
             </Page>
         </pages>

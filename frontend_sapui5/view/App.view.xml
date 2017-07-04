@@ -1,22 +1,58 @@
-<mvc:View
-    controllerName="com.danielwehner.invoicekuga.controller.App"
-    xmlns="sap.m"
-    xmlns:mvc="sap.ui.core.mvc"
-    displayBlock="true">
-    <App class="myAppDemoWT">
-        <pages>
-            <Page title="{i18n>homePageTitle}">
-                <headerContent>
-    				<Button
-    					icon="sap-icon://hello-world"
-    					press="onOpenDialog"
-                    />
-				</headerContent>
-                <content>
-                    <mvc:XMLView viewName="com.danielwehner.invoicekuga.view.HelloPanel"/>
-                    <mvc:XMLView viewName="com.danielwehner.invoicekuga.view.InvoiceList"/>
-                </content>
-            </Page>
-        </pages>
-    </App>
-</mvc:View>
+<core:View controllerName="com.danielwehner.invoicekuga.controller.App" height="100%" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:tnt="sap.tnt" xmlns:mvc="sap.ui.core.mvc">
+    <tnt:ToolPage id="toolPage" height="100%">
+        <tnt:header>
+            <tnt:ToolHeader>
+                <Button
+                    id="sideNavigationToggleButton" icon="sap-icon://menu2"
+                    type="Transparent" press="onSideNavButtonPress">
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="NeverOverflow"/>
+					</layoutData>
+				</Button>
+				<ToolbarSpacer width="20px"/>
+				<!--<Button text="File" type="Transparent">
+					<layoutData>
+						<OverflowToolbarLayoutData priority="Low"/>
+					</layoutData>
+				</Button>-->
+				<tnt:ToolHeaderUtilitySeparator/>
+				<ToolbarSpacer>
+					<layoutData>
+						<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
+					</layoutData>
+				</ToolbarSpacer>
+				<Button text="Daniel Wehner" type="Transparent" press="">
+					<layoutData>
+						<OverflowToolbarLayoutData priority="NeverOverflow"/>
+					</layoutData>
+				</Button>
+			</tnt:ToolHeader>
+		</tnt:header>
+		<tnt:sideContent>
+            <tnt:SideNavigation expanded="true" itemSelect="onItemSelect">
+				<tnt:NavigationList>
+					<tnt:NavigationListItem text="{i18n>navi_customers}" icon="sap-icon://customer" key="page_customers"/>
+                    <tnt:NavigationListItem text="{i18n>navi_invoices}" icon="sap-icon://travel-expense-report" key="page_invoices"/>
+                    <tnt:NavigationListItem text="{i18n>navi_earnings}" icon="sap-icon://money-bills" key="page_earnings"/>
+                    <tnt:NavigationListItem text="{i18n>navi_statistics}" icon="sap-icon://area-chart" key="page_statistics"/>
+				</tnt:NavigationList>
+				<tnt:fixedItem>
+					<tnt:NavigationList>
+						<tnt:NavigationListItem text="Daniel Wehner 2017" icon="sap-icon://badge" enabled="false"/>
+					</tnt:NavigationList>
+				</tnt:fixedItem>
+			</tnt:SideNavigation>
+		</tnt:sideContent>
+		<tnt:mainContents>
+			<NavContainer id="pageContainer" height="100%">
+				<pages>
+					<ScrollContainer
+                        id="page_customers" horizontal="false"
+                        vertical="true" height="100%">
+						<mvc:XMLView viewName="com.danielwehner.invoicekuga.view.Customer" height="100%"/>
+					</ScrollContainer>
+				</pages>
+			</NavContainer>
+		</tnt:mainContents>
+	</tnt:ToolPage>
+</core:View>

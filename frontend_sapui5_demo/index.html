@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta charset="utf-8">
-        <title>Invoice KuGa</title>
+        <title>Hello World App</title>
         <script
             id="sap-ui-bootstrap"
             src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
@@ -17,9 +17,11 @@
         </script>
         <script>
             sap.ui.getCore().attachInit(function () {
-                new sap.ui.core.ComponentContainer({
-                    name: "com.danielwehner.invoicekuga",
-                    height: "100%"
+                new sap.m.Shell({
+                    app: new sap.ui.core.ComponentContainer({
+                        name: "com.danielwehner.invoicekuga",
+                        height: "100%"
+                    })
                 }).placeAt("content");
             });
       </script>

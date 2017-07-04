@@ -5,8 +5,8 @@
         "id": "com.danielwehner.invoicekuga",
         "type": "application",
         "i18n": "i18n/i18n.properties",
-        "title": "{{app_title}}",
-        "description": "{{app_description}}",
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
         "applicationVersion": {
             "version": "1.0.0"
         }
@@ -38,6 +38,10 @@
                 "settings": {
                     "bundleName": "com.danielwehner.invoicekuga.i18n.i18n"
                 }
+            },
+            "invoice": {
+                "type": "sap.ui.model.json.JSONModel",
+                "uri": "Invoices.json"
             }
         },
         "resources": {

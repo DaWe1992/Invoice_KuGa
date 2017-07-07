@@ -104,6 +104,8 @@
 				"id": aModel[index].id
 			};
 
+            // TODO: find a way to refresh the detail view
+            // without having to load the placholder view again
             this._getSplitContObj().toDetail(this.createId("detail-placeholder"), "show");
 			this._getSplitContObj().toDetail(
 				this.createId("detail"), "slide", oData // data to be transferred to the detail page

@@ -17,6 +17,12 @@
 						<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
 					</layoutData>
 				</ToolbarSpacer>
+				<Label text="{i18n>App.title}"/>
+				<ToolbarSpacer>
+					<layoutData>
+						<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
+					</layoutData>
+				</ToolbarSpacer>
 				<Button text="Daniel Wehner" type="Transparent" press="">
 					<layoutData>
 						<OverflowToolbarLayoutData priority="NeverOverflow"/>

@@ -1,0 +1,65 @@
+<mvc:View controllerName="com.danielwehner.invoicekuga.controller.customer.Customer" height="100%"
+	xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <ScrollContainer horizontal="false" vertical="true" height="100%">
+		<SplitContainer id="splitContainer" height="100%" initialMaster="master" initialDetail="detail-placeholder">
+			<masterPages>
+				<Page id="master" height="100%" title="{i18n>Customer.page.list.title}" icon="sap-icon://action" class="sapUiStdPage" showHeader="true">
+					<subHeader>
+						<Toolbar>
+							<SearchField liveChange="onSearch" width="100%"/>
+						</Toolbar>
+					</subHeader>
+					<content>
+						<List id="customerList" height="100%" itemPress="onListItemPress" items="{path: '/'}">
+							<items>
+								<CustomListItem type="Navigation" custom:to="detail">
+									<HBox>
+										<core:Icon src="sap-icon://customer" size="2rem" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" />
+										<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
+											<Label text="{id}" class="text-blue"/>
+											<Label text="{address}"/>
+											<Label text="{firstname} {lastname}"/>
+										</VBox>
+									</HBox>
+								</CustomListItem>
+							</items>
+						</List>
+					</content>
+					<footer>
+						<Toolbar>
+							<content>
+								<ToolbarSpacer>
+									<layoutData>
+										<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
+									</layoutData>
+								</ToolbarSpacer>
+								<Button icon="sap-icon://add" press="handleToggleClick"></Button>
+							</content>
+						</Toolbar>
+					</footer>
+				</Page>
+			</masterPages>
+			<detailPages>
+				<Page id="detail-placeholder" height="100%" title="{i18n>Customer.page.details.title}" class="sapUiStdPage"/>
+				<Page id="detail" height="100%" title="{i18n>Customer.page.details.title}" class="sapUiStdPage sapUiResponsiveContentPadding">
+					<content>
+						<mvc:XMLView viewName="com.danielwehner.invoicekuga.view.customer.CustomerDetail" height="100%"/>
+					</content>
+					<footer>
+						<Toolbar>
+							<content>
+								<ToolbarSpacer>
+									<layoutData>
+										<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
+									</layoutData>
+								</ToolbarSpacer>
+								<Button text="{i18n>Misc.save}" type="Accept" press=""></Button>
+								<Button text="{i18n>Misc.delete}" type="Reject" press=""></Button>
+							</content>
+						</Toolbar>
+					</footer>
+				</Page>
+			</detailPages>
+		</SplitContainer>
+	</ScrollContainer>
+</mvc:View>

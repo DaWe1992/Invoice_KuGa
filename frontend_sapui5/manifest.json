@@ -5,8 +5,8 @@
         "id": "com.danielwehner.invoicekuga",
         "type": "application",
         "i18n": "i18n/i18n.properties",
-        "title": "{{app_title}}",
-        "description": "{{app_description}}",
+        "title": "{{App.title}}",
+        "description": "{{App.description}}",
         "applicationVersion": {
             "version": "1.0.0"
         }
@@ -46,6 +46,45 @@
                     "uri": "css/style.css"
                 }
             ]
-        }
+        },
+		"routing": {
+			 "config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "com.danielwehner.invoicekuga.view",
+				"controlId": "container",
+				"controlAggregation": "pages",
+				"transition": "slide",
+				"bypassed": {
+					"target": "notFound"
+				}
+			 },
+			 "routes": [
+				{
+					"pattern": "",
+					"name": "home",
+					"target": "home"
+				},
+				{
+					"pattern": "customers",
+					"name": "customers",
+					"target": "customers"
+				}
+			],
+			 "targets": {
+				"home": {
+				   "viewName": "Home",
+				   "viewLevel": 1
+				},
+				"notFound": {
+				   "viewName": "NotFound",
+				   "viewLevel": 2
+				},
+				"customers": {
+					"viewName": "customer.Customer",
+					"viewLevel": 1
+				}
+			}
+		}
     }
 }

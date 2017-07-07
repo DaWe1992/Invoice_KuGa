@@ -1,14 +1,15 @@
 /**
- * App controller.
+ * AppController.
  * 04.07.2017
+ *
  * @author Daniel Wehner
  */
 sap.ui.define([
-    "sap/ui/core/mvc/Controller"
-], function(Controller) {
+    "com/danielwehner/invoicekuga/controller/BaseController"
+], function(BaseController) {
     "use strict";
 
-    return Controller.extend("com.danielwehner.invoicekuga.controller.App", {
+    return BaseController.extend("com.danielwehner.invoicekuga.controller.App", {
 
         /**
          * Toggles side bar navigation.
@@ -19,6 +20,13 @@ sap.ui.define([
             var sideExpanded = toolPage.getSideExpanded();
 
 			toolPage.setSideExpanded(!toolPage.getSideExpanded());
-        }
+        },
+		
+		/**
+		 * Navigates to the customer page.
+		 */
+		onNavToCustomers: function() {
+			this.getRouter().navTo("customers");
+		}
     });
 });

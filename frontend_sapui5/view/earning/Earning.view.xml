@@ -1,0 +1,44 @@
+<mvc:View controllerName="com.danielwehner.invoicekuga.controller.earning.Earning" height="100%"
+	xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core">
+	<Page title="{i18n>Earning.page.title}">
+		<subHeader>
+			<Toolbar>
+				<SearchField/>
+			</Toolbar>
+		</subHeader>
+		<content>
+			<List
+				items="{path: '/'}"
+				growing="true"
+				growingThreshold="5"
+				growingScrollToLoad="false">
+				<ObjectListItem
+		            title="{description}"
+					intro="{date}"
+					icon="sap-icon://money-bills"
+		            number="{
+						parts: [{path: 'amount'}],
+						type: 'sap.ui.model.type.Currency',
+						formatOptions: {
+							showMeasure: false
+						}
+					}"
+		        	numberState="Success"
+					numberUnit="EUR"
+				/>
+			</List>
+		</content>
+		<footer>
+			<Toolbar>
+				<content>
+					<ToolbarSpacer>
+						<layoutData>
+							<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
+						</layoutData>
+					</ToolbarSpacer>
+					<Button icon="sap-icon://add" press="onOpenAddEarningDialog"/>
+				</content>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

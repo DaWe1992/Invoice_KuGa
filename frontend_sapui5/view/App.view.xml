@@ -10,6 +10,15 @@
                         <OverflowToolbarLayoutData priority="NeverOverflow"/>
 					</layoutData>
 				</Button>
+				<Image
+					src="../img/sap.png"
+					densityAware="false"
+					height="30px"
+					width="55px">
+					<layoutData>
+						<FlexItemData growFactor="1" />
+					</layoutData>
+				</Image>
 				<ToolbarSpacer width="20px"/>
 				<tnt:ToolHeaderUtilitySeparator/>
 				<ToolbarSpacer>
@@ -23,7 +32,7 @@
 						<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
 					</layoutData>
 				</ToolbarSpacer>
-				<Button text="Daniel Wehner" type="Transparent" press="">
+				<Button text="Daniel Wehner" type="Transparent" press="handleUserNamePress">
 					<layoutData>
 						<OverflowToolbarLayoutData priority="NeverOverflow"/>
 					</layoutData>
@@ -35,7 +44,7 @@
 				<tnt:NavigationList>
 					<tnt:NavigationListItem text="{i18n>Navi.customers}" icon="sap-icon://customer" select="onNavToCustomers"/>
                     <tnt:NavigationListItem text="{i18n>Navi.invoices}" icon="sap-icon://travel-expense-report"/>
-                    <tnt:NavigationListItem text="{i18n>Navi.earnings}" icon="sap-icon://money-bills"/>
+                    <tnt:NavigationListItem text="{i18n>Navi.earnings}" icon="sap-icon://money-bills" select="onNavToEarnings"/>
                     <tnt:NavigationListItem text="{i18n>Navi.statistics}" icon="sap-icon://area-chart"/>
 				</tnt:NavigationList>
 			</tnt:SideNavigation>

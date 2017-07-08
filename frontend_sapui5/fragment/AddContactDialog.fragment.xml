@@ -1,0 +1,47 @@
+<core:FragmentDefinition
+    xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout"	xmlns:form="sap.ui.layout.form">
+    <Dialog
+        id="addContactDialog"
+        title="{i18n>AddContact.title}">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <form:SimpleForm editable="true" layout="ResponsiveGridLayout"
+                    labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false"
+                    emptySpanXL="4" emptySpanL="3" emptySpanM="2" emptySpanS="0"
+                    columnsXL="1" columnsL="1" columnsM="1"
+                    singleContainerFullSize="false" >
+                    <form:content>
+                        <Label text="{i18n>Customer.contact.type}"/>
+                        <Select id="contactType" selectedKey="phone">
+        					<items>
+        						<core:Item text="{i18n>Customer.contact.types.phone}" key="phone"/>
+        						<core:Item text="{i18n>Customer.contact.types.mobile}" key="mobile"/>
+        						<core:Item text="{i18n>Customer.contact.types.email}" key="email"/>
+                                <core:Item text="{i18n>Customer.contact.types.fax}" key="fax"/>
+                                <core:Item text="{i18n>Customer.contact.types.web}" key="web"/>
+        					</items>
+        				</Select>
+                        <Label text="{i18n>Customer.contact.data}"/>
+                        <Input value=""/>
+                        <Label text="{i18n>Customer.contact.comments}"/>
+                        <TextArea value="" rows="4"/>
+                    </form:content>
+                </form:SimpleForm>
+            </VBox>
+        </content>
+        <beginButton>
+            <Button
+                text="{i18n>Misc.save}"
+                press="onSaveNewContact"
+                type="Accept"
+            />
+        </beginButton>
+        <endButton>
+            <Button
+                text="{i18n>Misc.cancel}"
+                press="onCancelDialog"
+                type="Reject"
+            />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

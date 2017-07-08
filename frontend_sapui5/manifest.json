@@ -69,20 +69,29 @@
 					"pattern": "customers",
 					"name": "customers",
 					"target": "customers"
-				}
+				},
+                {
+                    "pattern": "daily-cash-earnings",
+                    "name": "earnings",
+                    "target": "earnings"
+                }
 			],
 			 "targets": {
 				"home": {
 				   "viewName": "Home",
 				   "viewLevel": 1
 				},
-				"notFound": {
-				   "viewName": "NotFound",
-				   "viewLevel": 2
-				},
 				"customers": {
 					"viewName": "customer.Customer",
 					"viewLevel": 1
+				},
+                "earnings": {
+                    "viewName": "earning.Earning",
+                    "viewLevel": 1
+                },
+                "notFound": {
+				   "viewName": "NotFound",
+				   "viewLevel": 2
 				}
 			}
 		}

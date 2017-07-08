@@ -18,6 +18,8 @@
                     <form:content>
                         <Label text="{i18n>Customer.id}"/>
                         <Input value="{/customer/id}"/>
+						<Label text="{i18n>Customer.address}"/>
+                        <Input value="{/customer/address}"/>
                         <Label text="{i18n>Customer.firstname} / {i18n>Customer.lastname}"/>
                         <Input value="{/customer/firstname}"/>
                         <Input value="{/customer/lastname}">
@@ -45,7 +47,7 @@
 				<core:Icon src="sap-icon://address-book" size="1.5rem"/>
 				<Title text="{i18n>Customer.panel.contacts.title}"/>
 				<ToolbarSpacer/>
-				<Button icon="sap-icon://add"/>
+				<Button icon="sap-icon://add" press="onOpenAddContactDialog"/>
 			</Toolbar>
 		</headerToolbar>
         <content>
@@ -55,19 +57,19 @@
 				visibleRowCount="7">
 				<table:columns>
 					<table:Column>
-						<Label text="Contact Type"/>
+						<Label text="{i18n>Customer.contact.type}"/>
 						<table:template>
 							<Text text="{type}"/>
 						</table:template>
 					</table:Column>
                     <table:Column>
-						<Label text="Contact"/>
+						<Label text="{i18n>Customer.contact.data}"/>
 						<table:template>
 							<Text text="{data}"/>
 						</table:template>
 					</table:Column>
                     <table:Column>
-						<Label text="Comments"/>
+						<Label text="{i18n>Customer.contact.comments}"/>
 						<table:template>
 							<Text text="{comments}"/>
 						</table:template>

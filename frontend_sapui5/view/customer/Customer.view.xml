@@ -3,7 +3,7 @@
     <ScrollContainer horizontal="false" vertical="true" height="100%">
 		<SplitContainer id="splitContainer" height="100%" initialMaster="master" initialDetail="detail-placeholder">
 			<masterPages>
-				<Page id="master" height="100%" title="{i18n>Customer.page.list.title}" icon="sap-icon://action" class="sapUiStdPage" showHeader="true">
+				<Page id="master" height="100%" title="{i18n>Customer.page.master.title}" icon="sap-icon://action" class="sapUiStdPage" showHeader="true">
 					<subHeader>
 						<Toolbar>
 							<SearchField liveChange="onSearch" width="100%"/>
@@ -14,7 +14,7 @@
 							<items>
 								<CustomListItem type="Navigation" custom:to="detail">
 									<HBox>
-										<core:Icon src="sap-icon://customer" size="2rem" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" />
+										<core:Icon src="sap-icon://customer" size="2rem" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"/>
 										<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
 											<Label text="{id}" class="text-blue"/>
 											<Label text="{address}"/>
@@ -41,7 +41,7 @@
 			</masterPages>
 			<detailPages>
 				<Page id="detail-placeholder" height="100%" title="{i18n>Customer.page.details.title}" class="sapUiStdPage"/>
-				<Page id="detail" height="100%" title="{i18n>Customer.page.details.title}" class="sapUiStdPage sapUiResponsiveContentPadding">
+				<Page id="detail" height="100%" title="{i18n>Customer.page.detail.title}" class="sapUiStdPage sapUiResponsiveContentPadding">
 					<content>
 						<mvc:XMLView viewName="com.danielwehner.invoicekuga.view.customer.CustomerDetail" height="100%"/>
 					</content>

@@ -15,7 +15,9 @@ sap.ui.define([
         /**
          * Constructor.
          */
-        constructor: function() {},
+        constructor: function() {
+            this._http = new Http();
+        },
 
         /**
          * Gets all customers from the backend
@@ -24,7 +26,18 @@ sap.ui.define([
          * @param error (callback in case of error)
          */
         getCustomers: function(success, error) {
-            new Http().perform("GET", "/customers", success, error);
+            this._http.perform("GET", "/customers", success, error);
+        },
+
+        /**
+         * Gets a specific customer by id.
+         *
+         * @param id (customer id)
+         * @param success (callback in case of success)
+         * @param error (callback in case of error)
+         */
+        getCustomer: function(id, success, error) {
+            this._http.perform("GET", "/customers/" + id, success, error);
         }
     });
 });

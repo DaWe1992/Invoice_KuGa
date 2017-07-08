@@ -18,18 +18,34 @@
 
 		/**
 		 * onInit function.
+         * Loads the customer data (customer list) and registers
+         * the navigation event listener
+         * which is triggered when a list item is pressed.
 		 */
 		onInit: function() {
+
+            // load customer list data
             this._getCustomers();
 
-			// get reference to detail page
-			var detailPage = this._getSplitContObj().getDetailPages()[1];
+            // get reference to detail page
+			var detailPage = this.byId("splitContainer").getDetailPages()[1];
 
-			// add listener which sets the JSONModel for the detail page
 			detailPage.addEventDelegate({
+
+                /**
+                 * Loads the customer detail data
+                 * and creats a JSONModel before the detail page
+                 * is shown.
+                 */
 				onBeforeShow: function(oEvent) {
-					var oModel = new JSONModel(oEvent.data); // store the data
-					detailPage.setModel(oModel);
+                    new CustomerService().getCustomer(oEvent.data.id,
+                    function(res) {
+                        var oModel = new JSONModel(res.data); // store the data
+    					detailPage.setModel(oModel);
+                    },
+                    function(res) {
+                        // add error handling
+                    });
 				}
 			});
 		},
@@ -39,7 +55,7 @@
 		 * TODO: This should be done in the view!
 		 */
 		onAfterRendering: function() {
-			var oSplitCont = this._getSplitContObj();
+			var oSplitCont = this.byId("splitContainer");
 			var ref = oSplitCont.getDomRef() && oSplitCont.getDomRef().parentNode;
 
 			// set all parent elements to 100% height
@@ -100,46 +116,29 @@
             var index = oCtx.getPath().substring(1);
             var aModel = oCtx.getModel().getData();
 
-			var oData = {
-				"id": aModel[index].id
-			};
-
-            // TODO: find a way to refresh the detail view
-            // without having to load the placholder view again
-            this._getSplitContObj().toDetail(this.createId("detail-placeholder"), "show");
-			this._getSplitContObj().toDetail(
-				this.createId("detail"), "slide", oData // data to be transferred to the detail page
+            var oSplitCont = this.byId("splitContainer");
+            oSplitCont.toDetail(this.createId("detail-placeholder"), "show");
+			oSplitCont.toDetail(
+				this.createId("detail"), "slide", {
+    				"id": aModel[index].id // data to be transferred to the detail page
+    			}
 			);
 		},
-
-		/**
-		 * Helper method to retrieve the split container component.
-		 *
-		 * @return
-		 */
-		_getSplitContObj: function() {
-			var result = this.byId("splitContainer");
-
-			if(!result) {
-				jQuery.sap.log.error("split container object cannot be found");
-			}
-
-			return result;
-		},
-
+        
         /**
          * Gets the customers from the server
          * and creates a JSONModel which is then placed in the view.
          */
         _getCustomers: function() {
-            var customerService = new CustomerService();
             var oView = this.getView();
 
             // get customers
-            customerService.getCustomers(function(res) {
+            new CustomerService().getCustomers(function(res) {
                 var oModel = new JSONModel(res.data);
                 oView.setModel(oModel);
-            }, function(res) {});
+            }, function(res) {
+                // add error handling
+            });
         }
 	});
  });

@@ -38,17 +38,18 @@ This is what the `package.json` file looks like (example):
 }
 ```
 
-Repeat this procedure in the `frontend` folder of the application to install the frontend dependencies.
+Repeat this procedure in the `frontend` (Angular frontend) folder of the application to install the frontend dependencies.
+You also have to install `PostgreSQL` which will be used as a database. In order to avoid any errors when connecting to the database make sure you change the connection string in the `db.js` file accordingly.
 
 ## Start the Application
 
-In order to start the application, go to the root folder of the application and run the following command:
+In order to start the application, go to the root folder of the application and run the following command (if the `sapui5` parameter is specified the `SAPUI5` frontend will be loaded):
 
 ```
-node express.js
+node express.js [sapui5]
 ```
 
-or
+or (loads the `SAPUI5` frontend by default)
 
 ```
 npm start

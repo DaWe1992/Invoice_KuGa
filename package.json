@@ -17,7 +17,7 @@
     "serve-favicon": "^2.3.0"
   },
   "scripts": {
-    "start": "node express.js",
+    "start": "node express.js sapui5",
     "test": "node-debug express.js"
   }
 }

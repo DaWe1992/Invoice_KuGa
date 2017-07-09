@@ -5,8 +5,9 @@
  * @author Daniel Wehner
  */
 sap.ui.define([
-    "sap/ui/base/Object"
-], function(UI5Object) {
+    "sap/ui/base/Object",
+    "sap/ui/model/json/JSONModel"
+], function(UI5Object, JSONModel) {
 	"use strict";
 
 	return UI5Object.extend("com.danielwehner.invoicekuga.controller.customer.AddContactDialog", {
@@ -32,12 +33,22 @@ sap.ui.define([
 
                 // create a controller for the fragment
                 var oFragmentController = {
+
+                    /**
+                     * Closes the AddContactDialog without any action.
+                     */
                     onCancelDialog: function() {
                         oDialog.close();
                     },
 
+                    /**
+                     * Saves the new contact
+                     * and closes the AddContactDialog.
+                     */
                     onSaveNewContact: function() {
                         // do post request
+
+                        oDialog.close();
                     }
                 };
 
@@ -47,6 +58,17 @@ sap.ui.define([
                     "com.danielwehner.invoicekuga.fragment.AddContactDialog",
                     oFragmentController
                 );
+
+                // add data model for fragment
+                var oModel = new JSONModel({
+                    "contact": {
+                        "type": "",
+                        "data": "",
+                        "comments": ""
+                    }
+                });
+                oDialog.setModel(oModel);
+
                 // connect dialog to the root view of this component (models, lifecycle)
                 oView.addDependent(oDialog);
             }

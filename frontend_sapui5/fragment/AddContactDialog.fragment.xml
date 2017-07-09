@@ -22,7 +22,7 @@
         					</items>
         				</Select>
                         <Label text="{i18n>Customer.contact.data}"/>
-                        <Input value=""/>
+                        <Input value="{/contact/data}"/>
                         <Label text="{i18n>Customer.contact.comments}"/>
                         <TextArea value="" rows="4"/>
                     </form:content>

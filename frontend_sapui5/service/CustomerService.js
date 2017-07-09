@@ -38,6 +38,10 @@ sap.ui.define([
          */
         getCustomer: function(id, success, error) {
             this._http.perform("GET", "/customers/" + id, success, error);
+        },
+
+        addContact: function(oContact) {
+            this._http.perform("POST", "/customers/" + id + "/contacts", success, error);
         }
     });
 });

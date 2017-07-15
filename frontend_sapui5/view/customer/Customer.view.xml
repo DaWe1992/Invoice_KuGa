@@ -7,14 +7,14 @@
 	<SplitContainer
 		id="splitContainer"
 		height="100%"
-		initialMaster="master"
-		initialDetail="placeholder">
+		initialMaster="customer-master"
+		initialDetail="customer-placeholder">
 
 		<!-- Master pages -->
 		<masterPages>
 			<!-- Customer list page -->
 			<Page
-				id="master"
+				id="customer-master"
 				height="100%"
 				title="{i18n>Customer.page.master.title}"
 				icon="sap-icon://action"
@@ -26,7 +26,6 @@
 					</Toolbar>
 				</subHeader>
 				<content>
-
 					<!-- Customer list -->
 					<List
 						id="customerList"
@@ -58,25 +57,29 @@
 									<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
 								</layoutData>
 							</ToolbarSpacer>
-							<Button icon="sap-icon://add" press="handleToggleClick"></Button>
+							<Button icon="sap-icon://add" press="onAddCustomer"></Button>
 						</content>
 					</Toolbar>
 				</footer>
 			</Page>
 		</masterPages>
-
+		<!-- *********************************************************************************************** -->
 		<!-- Detail pages -->
 		<detailPages>
 			<!-- Placeholder page -->
 			<Page
-				id="placeholder"
+				id="customer-placeholder"
 				height="100%"
 				title="{i18n>Customer.page.detail.title}"
-				class="sapUiStdPage"
-			/>
+				class="sapUiStdPage">
+				<content></content>
+				<footer>
+					<Toolbar/>
+				</footer>
+			</Page>
 			<!-- Customer detail page -->
 			<Page
-				id="detail"
+				id="customer-detail"
 				height="100%"
 				title="{i18n>Customer.page.detail.title}"
 				class="sapUiStdPage sapUiResponsiveContentPadding">
@@ -93,6 +96,29 @@
 							</ToolbarSpacer>
 							<Button text="{i18n>Misc.save}" type="Accept" press=""></Button>
 							<Button text="{i18n>Misc.delete}" type="Reject" press=""></Button>
+						</content>
+					</Toolbar>
+				</footer>
+			</Page>
+			<Page
+				id="customer-new"
+				height="100%"
+				title="{i18n>Customer.page.detail.new.title}"
+				class="sapUiStdPage">
+				<content>
+					<mvc:XMLView viewName="com.danielwehner.invoicekuga.view.customer.CustomerNew" height="100%"/>
+				</content>
+				<footer>
+					<Toolbar>
+						<content>
+							<ToolbarSpacer/>
+							<Button
+								id="btnSaveNewCustomer"
+								text="{i18n>Misc.save}"
+								press="onNewCustomerSave"
+								type="Accept"
+								visible="false"
+							/>
 						</content>
 					</Toolbar>
 				</footer>

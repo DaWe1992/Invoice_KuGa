@@ -7,7 +7,8 @@
 sap.ui.define([
     "com/danielwehner/invoicekuga/controller/BaseController",
     "com/danielwehner/invoicekuga/controller/customer/AddContactDialog",
-], function(BaseController, AddContactDialog) {
+    "sap/ui/model/json/JSONModel"
+], function(BaseController, AddContactDialog, JSONModel) {
     "use strict";
 
     return BaseController.extend("com.danielwehner.invoicekuga.controller.customer.CustomerDetail", {
@@ -17,6 +18,10 @@ sap.ui.define([
          */
         onInit: function() {
             this._addContactDialog = new AddContactDialog(this.getView());
+
+            this.getView().setModel(new JSONModel({
+                "enabled": false
+            }), "settings");
         },
 
         /**

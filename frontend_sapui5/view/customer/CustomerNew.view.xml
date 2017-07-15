@@ -1,0 +1,104 @@
+<mvc:View
+	controllerName="com.danielwehner.invoicekuga.controller.customer.CustomerNew"
+    height="100%"
+	xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
+    xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form">
+
+    <Wizard
+        id="customerWizard"
+		complete="onWizardComplete">
+
+        <!-- Add customer head data -->
+		<WizardStep
+            id="customerHeadStep"
+			title="{i18n>Customer.page.detail.new.wizard.step.customer.head}"
+			validated="false"
+            activate="validateCustomerHeadStep">
+
+            <form:SimpleForm id="customerForm" editable="true" layout="ResponsiveGridLayout"
+                labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false"
+                emptySpanXL="4" emptySpanL="3" emptySpanM="2" emptySpanS="0"
+                columnsXL="1" columnsL="1" columnsM="1"
+                singleContainerFullSize="false">
+                <form:content>
+                    <Label text="{i18n>Customer.address}" required="true"/>
+                    <Input id="address" value="{/address}"
+                        valueState="{validation>/addressState}"
+                        liveChange="validateCustomerHeadStep"
+                    />
+                    <Label text="{i18n>Customer.firstname}"/>
+                    <Input id="firstname" value="{/firstname}"/>
+                    <Label text="{i18n>Customer.lastname}" required="true"/>
+                    <Input id="lastname" value="{/lastname}"
+                        valueState="{validation>/lastnameState}"
+                        liveChange="validateCustomerHeadStep"
+                    />
+                    <Label text="{i18n>Customer.street}" required="true"/>
+                    <Input id="street" value="{/street}"
+                        valueState="{validation>/streetState}"
+                        liveChange="validateCustomerHeadStep"
+                    />
+                    <Label text="{i18n>Customer.zip}" required="true"/>
+                    <Input id="zip" value="{/zip}"
+                        valueState="{validation>/zipState}"
+                        liveChange="validateCustomerHeadStep"
+                    />
+                    <Label text="{i18n>Customer.city}" required="true"/>
+                    <Input id="city" value="{/city}"
+                        valueState="{validation>/cityState}"
+                        liveChange="validateCustomerHeadStep"
+                    />
+                </form:content>
+            </form:SimpleForm>
+		</WizardStep>
+		<!-- ********************************************************************************** -->
+        <!-- Add customer contacts -->
+		<WizardStep
+            id="customerContactStep"
+			validated="false"
+			title="{i18n>Customer.page.detail.new.wizard.step.customer.contacts}"
+			activate="onWizardComplete">
+
+            <form:SimpleForm id="customerContactsForm" editable="true" layout="ResponsiveGridLayout"
+                labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false"
+                emptySpanXL="4" emptySpanL="3" emptySpanM="2" emptySpanS="0"
+                columnsXL="1" columnsL="1" columnsM="1"
+                singleContainerFullSize="false">
+
+                <form:content>
+                    <Label text="{i18n>Customer.contact.type}" required="true"/>
+                    <Input id="contactType" value=""/>
+                    <Label text="{i18n>Customer.contact.data}" required="true"/>
+                    <Input id="contactData" value=""/>
+                    <Label text="{i18n>Customer.contact.comments}"/>
+                    <Input id="contactComments" value=""/>
+                    <Button icon="sap-icon://add" press="onContactAdd">
+                        <layoutData>
+                            <layout:GridData span="XL1 L1 M1 S1"/>
+                        </layoutData>
+                    </Button>
+                </form:content>
+            </form:SimpleForm>
+            <Table
+                items="{/contacts}"
+                inset="false">
+                <columns>
+                    <Column><Text text="{i18n>Customer.contact.type}"/></Column>
+					<Column><Text text="{i18n>Customer.contact.data}"/></Column>
+					<Column minScreenWidth="Desktop">
+						<Text text="{i18n>Customer.contact.comments}"/>
+					</Column>
+                </columns>
+                <items>
+					<ColumnListItem>
+						<cells>
+							<Text text="{type}"/>
+							<Text text="{data}"/>
+							<Text text="{comments}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+            </Table>
+		</WizardStep>
+	</Wizard>
+</mvc:View>

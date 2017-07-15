@@ -20,9 +20,9 @@ sap.ui.define([
          * Sets the content density class for the app.
          */
         onInit: function() {
-            this.getView().addStyleClass(
+            /*this.getView().addStyleClass(
                 this.getOwnerComponent().getContentDensityClass()
-            );
+            );*/
         },
 
         /**

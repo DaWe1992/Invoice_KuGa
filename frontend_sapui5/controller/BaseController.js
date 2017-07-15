@@ -31,6 +31,15 @@ sap.ui.define([
 		},
 
 		/**
+		 * Returns the event bus.
+		 *
+		 * @return
+		 */
+		getEvtBus: function() {
+			return sap.ui.getCore().getEventBus();
+		},
+
+		/**
 		 * Navigates back to the previous view. If there
 		 * is no previous view, the "Home" view is displayed.
 		 *

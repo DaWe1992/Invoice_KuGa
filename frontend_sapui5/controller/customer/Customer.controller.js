@@ -51,6 +51,12 @@
                     });
 				}
 			});
+
+            // make the save button visible
+            this.getEvtBus().subscribe("channelNewCustomer", "wizardFinished", function() {
+                var oSaveButton = oView.byId("btnSaveNewCustomer");
+                oSaveButton.setVisible(true);
+            }, this);
 		},
 
 		/**
@@ -99,7 +105,7 @@
             // determine which page is currently displayed and continue accordingly
             if(oCurrentDetailPage.getId().indexOf("detail") === -1) {
                 oSplitContainer.toDetail(
-                    this.createId("detail"), "slide", {
+                    this.createId("customer-detail"), "slide", {
                         "id": oData.id
                     }
                 );
@@ -109,6 +115,29 @@
                     oCurrentDetailPage.setModel(oModel);
                 });
             }
+        },
+
+        /**
+         * Navigates to the customer-new page.
+         *
+         * @param oEvent
+         */
+        onAddCustomer: function(oEvent) {
+            var oSplitContainer = this.getView().byId("splitContainer");
+            oSplitContainer.toDetail(this.createId("customer-new"), "slide");
+        },
+
+        /**
+         * Tells the CustomerNew controller to
+         * save the new customer.
+         *
+         * @param oEvent
+         */
+        onNewCustomerSave: function(oEvent) {
+            this.getView().byId("splitContainer").toDetail(
+                this.createId("customer-placeholder")
+            );
+            this.getEvtBus().publish("channelNewCustomer", "saveCustomer");
         },
 
         /**

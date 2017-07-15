@@ -10,9 +10,11 @@
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
     "com/danielwehner/invoicekuga/service/CustomerService",
-    "jquery.sap.global"
-], function(BaseController, JSONModel, Filter, FilterOperator, CustomerService, jQuery) {
+    "sap/m/MessageBox"
+], function(BaseController, JSONModel, Filter, FilterOperator, CustomerService, MessageBox) {
     "use strict";
+
+    var self;
 
  	return BaseController.extend("com.danielwehner.invoicekuga.controller.customer.Customer", {
 
@@ -23,14 +25,19 @@
          * which is triggered when a list item is pressed.
 		 */
 		onInit: function() {
+            self = this;
+            var oView = this.getView();
 
             // load customer list data
-            this._getCustomers();
+            this._getCustomers(function(data) {
+                var oModel = new JSONModel(data);
+                oView.setModel(oModel);
+            });
 
             // get reference to detail page
-			var detailPage = this.byId("splitContainer").getDetailPages()[1];
+			var oDetailPage = this.byId("splitContainer").getDetailPages()[1];
 
-			detailPage.addEventDelegate({
+			oDetailPage.addEventDelegate({
 
                 /**
                  * Loads the customer detail data
@@ -38,43 +45,12 @@
                  * is shown.
                  */
 				onBeforeShow: function(oEvent) {
-                    new CustomerService().getCustomer(oEvent.data.id,
-                    function(res) {
-                        var oModel = new JSONModel(res.data); // store the data
-    					detailPage.setModel(oModel);
-                    },
-                    function(res) {
-                        // add error handling
+                    self._getCustomer(oEvent.data.id, function(data) {
+                        var oModel = new JSONModel(data); // store the data
+    					oDetailPage.setModel(oModel);
                     });
 				}
 			});
-		},
-
-		/**
-		 * onAfterRendering function.
-		 * TODO: This should be done in the view!
-		 */
-		onAfterRendering: function() {
-			var oSplitCont = this.byId("splitContainer");
-			var ref = oSplitCont.getDomRef() && oSplitCont.getDomRef().parentNode;
-
-			// set all parent elements to 100% height
-			if(ref && !ref._sapui5_heightFixed) {
-				ref._sapui5_heightFixed = true;
-
-				while(ref && ref !== document.documentElement) {
-					var $ref = jQuery(ref);
-
-					if($ref.attr("data-sap-ui-root-content")) {
-						break;
-					}
-
-					if(!ref.style.height) {
-						ref.style.height = "100%";
-					}
-					ref = ref.parentNode;
-				}
-			}
 		},
 
 		/**
@@ -104,40 +80,64 @@
 			binding.filter(aFilters, "Application");
 		},
 
-		/**
-		 * Navigates to the detail page. Before doing so
-		 * it is determined which list item was pressed and the
-		 * data is passed to the detail view accordingly.
-		 *
+        /**
+		 * Displays the detail data of the customer.
+         * If the detail view currently is not displayed the
+		 * split container first navigates to that page else it simply updates the detail view with the new data.
+         *
 		 * @param oEvent
 		 */
-		onListItemPress: function(oEvent) {
-            var oCtx = oEvent.getParameters().listItem.getBindingContext();
-            var index = oCtx.getPath().substring(1);
-            var aModel = oCtx.getModel().getData();
+        onItemPress: function(oEvent) {
+            // get the data of the item pressed
+            var sPath = oEvent.getSource().getBindingContext().getPath();
+            var oData = this.getView().getModel().getProperty(sPath);
 
-            var oSplitCont = this.byId("splitContainer");
-            oSplitCont.toDetail(this.createId("detail-placeholder"), "show");
-			oSplitCont.toDetail(
-				this.createId("detail"), "slide", {
-    				"id": aModel[index].id // data to be transferred to the detail page
-    			}
-			);
-		},
-        
+            // determine the current detail page
+            var oSplitContainer = this.getView().byId("splitContainer");
+            var oCurrentDetailPage = oSplitContainer.getCurrentDetailPage();
+
+            // determine which page is currently displayed and continue accordingly
+            if(oCurrentDetailPage.getId().indexOf("detail") === -1) {
+                oSplitContainer.toDetail(
+                    this.createId("detail"), "slide", {
+                        "id": oData.id
+                    }
+                );
+            } else {
+                this._getCustomer(oData.id, function(data) {
+                    var oModel = new JSONModel(data); // store the data
+                    oCurrentDetailPage.setModel(oModel);
+                });
+            }
+        },
+
         /**
          * Gets the customers from the server
          * and creates a JSONModel which is then placed in the view.
+         *
+         * @param fCallback
          */
-        _getCustomers: function() {
-            var oView = this.getView();
-
-            // get customers
+        _getCustomers: function(fCallback) {
             new CustomerService().getCustomers(function(res) {
-                var oModel = new JSONModel(res.data);
-                oView.setModel(oModel);
+                fCallback(res.data);
             }, function(res) {
-                // add error handling
+                MessageBox.error(this.getResBundle().getText("Misc.error.data.load"));
+            });
+        },
+
+        /**
+         * Gets the customer by id from the server.
+         *
+         * @param id (customer id)
+         * @param fCallback
+         */
+        _getCustomer: function(id, fCallback) {
+            new CustomerService().getCustomer(id,
+            function(res) {
+                fCallback(res.data);
+            },
+            function(res) {
+                MessageBox.error(this.getResBundle().getText("Misc.error.data.load"));
             });
         }
 	});

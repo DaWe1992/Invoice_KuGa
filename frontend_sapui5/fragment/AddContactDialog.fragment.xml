@@ -1,15 +1,20 @@
 <core:FragmentDefinition
-    xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout"	xmlns:form="sap.ui.layout.form">
+    xmlns="sap.m" xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form">
+
     <Dialog
         id="addContactDialog"
         title="{i18n>AddContact.title}">
+
+        <!-- New contact form -->
         <content>
             <VBox class="sapUiSmallMargin">
                 <form:SimpleForm editable="true" layout="ResponsiveGridLayout"
                     labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false"
                     emptySpanXL="4" emptySpanL="3" emptySpanM="2" emptySpanS="0"
                     columnsXL="1" columnsL="1" columnsM="1"
-                    singleContainerFullSize="false" >
+                    singleContainerFullSize="false">
+
                     <form:content>
                         <Label text="{i18n>Customer.contact.type}"/>
                         <Select id="contactType" selectedKey="phone">
@@ -26,9 +31,12 @@
                         <Label text="{i18n>Customer.contact.comments}"/>
                         <TextArea value="" rows="4"/>
                     </form:content>
+
                 </form:SimpleForm>
             </VBox>
         </content>
+
+        <!-- Buttons -->
         <beginButton>
             <Button
                 text="{i18n>Misc.save}"
@@ -44,4 +52,5 @@
             />
         </endButton>
     </Dialog>
+
 </core:FragmentDefinition>

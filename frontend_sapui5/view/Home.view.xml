@@ -1,8 +1,11 @@
-<mvc:View controllerName="com.danielwehner.invoicekuga.controller.Home"
+<mvc:View
+	controllerName="com.danielwehner.invoicekuga.controller.Home"
 	xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+
 	<Page class="sapUiResponsiveContentPadding">
 		<content>
 			<Label text="Home View"/>
 		</content>
 	</Page>
+
 </mvc:View>

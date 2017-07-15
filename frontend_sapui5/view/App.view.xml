@@ -1,6 +1,12 @@
-<core:View controllerName="com.danielwehner.invoicekuga.controller.App" height="100%"
-	xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:tnt="sap.tnt" xmlns:mvc="sap.ui.core.mvc">
+<core:View
+	controllerName="com.danielwehner.invoicekuga.controller.App"
+	height="100%"
+	xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core" xmlns:tnt="sap.tnt">
+
     <tnt:ToolPage id="toolPage" height="100%">
+
+		<!-- ToolPage header -->
         <tnt:header>
             <tnt:ToolHeader>
                 <Button
@@ -16,7 +22,7 @@
 					height="30px"
 					width="55px">
 					<layoutData>
-						<FlexItemData growFactor="1" />
+						<FlexItemData growFactor="1"/>
 					</layoutData>
 				</Image>
 				<ToolbarSpacer width="20px"/>
@@ -39,8 +45,10 @@
 				</Button>
 			</tnt:ToolHeader>
 		</tnt:header>
+
+		<!-- Toolpage sidecontent -->
 		<tnt:sideContent>
-            <tnt:SideNavigation expanded="true" itemSelect="onItemSelect">
+            <tnt:SideNavigation expanded="{= !${device>/system/phone}}" itemSelect="onItemSelect">
 				<tnt:NavigationList>
 					<tnt:NavigationListItem text="{i18n>Navi.customers}" icon="sap-icon://customer" select="onNavToCustomers"/>
                     <tnt:NavigationListItem text="{i18n>Navi.invoices}" icon="sap-icon://travel-expense-report"/>
@@ -49,10 +57,13 @@
 				</tnt:NavigationList>
 			</tnt:SideNavigation>
 		</tnt:sideContent>
+
+		<!-- Main contents of the app -->
 		<tnt:mainContents>
 			<NavContainer id="container" height="100%">
 				<!-- Here goes the content (loaded by router) -->
 			</NavContainer>
 		</tnt:mainContents>
+
 	</tnt:ToolPage>
 </core:View>

@@ -6,7 +6,7 @@
  */
 sap.ui.define([
     "com/danielwehner/invoicekuga/controller/BaseController",
-    "com/danielwehner/invoicekuga/controller/customer/AddContactDialog"
+    "com/danielwehner/invoicekuga/controller/customer/AddContactDialog",
 ], function(BaseController, AddContactDialog) {
     "use strict";
 

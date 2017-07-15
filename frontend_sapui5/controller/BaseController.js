@@ -9,9 +9,9 @@ sap.ui.define([
 	"sap/ui/core/routing/History"
 ], function(Controller, History) {
 	"use strict";
-	
+
 	return Controller.extend("com.danielwehner.invoicekuga.controller.BaseController", {
-		
+
 		/**
 		 * Returns the router instance.
 		 *
@@ -20,7 +20,16 @@ sap.ui.define([
 		getRouter: function() {
 			return sap.ui.core.UIComponent.getRouterFor(this);
 		},
-		
+
+		/**
+		 * Returns the resource bundle.
+		 *
+		 * @return
+		 */
+		getResBundle: function() {
+			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
+		},
+
 		/**
 		 * Navigates back to the previous view. If there
 		 * is no previous view, the "Home" view is displayed.
@@ -30,9 +39,9 @@ sap.ui.define([
 		onNavBack: function(oEvent) {
 			var oHistory = History.getInstance();
 			var sPreviousHash = oHistory.getPreviousHash();
-			
+
 			if(sPreviousHash !== undefined) {
-				window.history.go(-1);
+				window.history.go(-1); // go back one element in history
 			} else {
 				this.getRouter().navTo("appHome", {}, true /* no history */);
 			}

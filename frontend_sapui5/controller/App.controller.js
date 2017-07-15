@@ -16,6 +16,16 @@ sap.ui.define([
     return BaseController.extend("com.danielwehner.invoicekuga.controller.App", {
 
         /**
+         * onInit function.
+         * Sets the content density class for the app.
+         */
+        onInit: function() {
+            this.getView().addStyleClass(
+                this.getOwnerComponent().getContentDensityClass()
+            );
+        },
+
+        /**
          * Toggles side bar navigation.
          */
         onSideNavButtonPress: function() {
@@ -23,6 +33,7 @@ sap.ui.define([
             var toolPage = sap.ui.getCore().byId(viewId + "--toolPage");
             var sideExpanded = toolPage.getSideExpanded();
 
+            // toggle side navigation
 			toolPage.setSideExpanded(!toolPage.getSideExpanded());
         },
 
@@ -33,7 +44,7 @@ sap.ui.define([
          * @param oEvent
          */
         handleUserNamePress: function(oEvent) {
-			var popover = new Popover({
+			var oPopover = new Popover({
                 showHeader: false,
 				placement: sap.m.PlacementType.Bottom,
 				content: [
@@ -52,7 +63,7 @@ sap.ui.define([
 				]
 			}).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
 
-			popover.openBy(oEvent.getSource());
+			oPopover.openBy(oEvent.getSource());
 		},
 
         /**

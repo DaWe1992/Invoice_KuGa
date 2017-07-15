@@ -21,19 +21,35 @@ sap.ui.define([
          *
          * @param reqMethod (GET, POST, PUT, DELETE, ...)
          * @param reqUrl (REST endpoint)
-         * @param success (callback in case of success)
-         * @param error (callback in case of error)
+         * @param fSccess (callback in case of success)
+         * @param fError (callback in case of error)
          */
-        perform: function(reqMethod, reqUrl, success, error) {
+        perform: function(reqMethod, reqUrl, fSccess, fError) {
             $.ajax({
                 url: reqUrl,
                 method: reqMethod,
                 statusCode: {
-                    200: function(res) {success(res)},
-                    400: function(res) {error(res)},
-                    500: function(res) {error(res)}
+                    200: function(res) {fSccess(res)},
+                    400: function(res) {fError(res)},
+                    500: function(res) {fError(res)}
                 }
             });
+        },
+
+        performGet: function() {
+
+        },
+
+        performPost: function() {
+
+        },
+
+        performPut: function() {
+
+        },
+
+        performDelete: function() {
+
         }
     });
 });

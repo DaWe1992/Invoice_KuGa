@@ -8,8 +8,9 @@ sap.ui.define([
     "com/danielwehner/invoicekuga/controller/BaseController",
     "com/danielwehner/invoicekuga/service/EarningService",
     "com/danielwehner/invoicekuga/controller/earning/AddEarningDialog",
-    "sap/ui/model/json/JSONModel"
-], function(BaseController, EarningService, AddEarningDialog, JSONModel) {
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageBox"
+], function(BaseController, EarningService, AddEarningDialog, JSONModel, MessageBox) {
     "use strict";
 
     return BaseController.extend("com.danielwehner.invoicekuga.controller.earning.Earning", {
@@ -20,22 +21,11 @@ sap.ui.define([
          */
         onInit: function() {
             // get all earnings
-            this._getEarnings();
-            this._addEarningDialog = new AddEarningDialog(this.getView());
-        },
-
-        /**
-         * Gets the daily cash earnings.
-         */
-        _getEarnings: function() {
-            var oView = this.getView();
-
-            new EarningService().getEarnings(function(res) {
-                var oModel = new JSONModel(res.data);
+            this._getEarnings(function(data) {
+                var oModel = new JSONModel(data);
                 oView.setModel(oModel);
-            }, function(res) {
-                // add error handling
             });
+            this._addEarningDialog = new AddEarningDialog(this.getView());
         },
 
         /**
@@ -43,6 +33,21 @@ sap.ui.define([
          */
         onOpenAddEarningDialog: function() {
             this._addEarningDialog.open();
+        },
+
+        /**
+         * Gets the daily cash earnings.
+         *
+         * @param fCallback
+         */
+        _getEarnings: function(fCallback) {
+            var oView = this.getView();
+
+            new EarningService().getEarnings(function(res) {
+                fCallback(res.data);
+            }, function(res) {
+                MessageBox.error(this.getResBundle().getText("Misc.error.data.load"));
+            });
         }
     });
 });

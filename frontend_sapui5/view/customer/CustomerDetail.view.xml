@@ -1,47 +1,61 @@
-<mvc:View controllerName="com.danielwehner.invoicekuga.controller.customer.CustomerDetail"
-	xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout"
-	xmlns:form="sap.ui.layout.form" xmlns:table="sap.ui.table">
-	<Panel expandable="true" expanded="true">
+<mvc:View
+	controllerName="com.danielwehner.invoicekuga.controller.customer.CustomerDetail"
+	xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core"
+	xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form">
+
+	<!-- Customer head data -->
+	<Panel
+		expandable="{device>/system/phone}"
+		expanded="{= !${device>/system/phone}}"
+		backgroundDesign="Transparent">
+
 		<headerToolbar>
 			<Toolbar height="3rem">
 				<core:Icon src="sap-icon://business-card" size="1.5rem"/>
 				<Title text="{i18n>Customer.panel.address.title}"/>
 			</Toolbar>
 		</headerToolbar>
+
+		<!-- Customer form -->
         <content>
-            <VBox class="sapUiSmallMargin">
-                <form:SimpleForm editable="true" layout="ResponsiveGridLayout"
-                    labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false"
-                    emptySpanXL="4" emptySpanL="3" emptySpanM="2" emptySpanS="0"
-                    columnsXL="1" columnsL="1" columnsM="1"
-                    singleContainerFullSize="false" >
-                    <form:content>
-                        <Label text="{i18n>Customer.id}"/>
-                        <Input value="{/customer/id}"/>
-						<Label text="{i18n>Customer.address}"/>
-                        <Input value="{/customer/address}"/>
-                        <Label text="{i18n>Customer.firstname} / {i18n>Customer.lastname}"/>
-                        <Input value="{/customer/firstname}"/>
-                        <Input value="{/customer/lastname}">
-                            <layoutData>
-                                <layout:GridData span="XL1 L2 M4 S12"/>
-                            </layoutData>
-                        </Input>
-                        <Label text="{i18n>Customer.street}"/>
-                        <Input value="{/customer/street}"/>
-                        <Label text="{i18n>Customer.zip} / {i18n>Customer.city}"/>
-                        <Input value="{/customer/zip}">
-                            <layoutData>
-                                <layout:GridData span="XL1 L2 M2 S12"/>
-                            </layoutData>
-                        </Input>
-                        <Input value="{/customer/city}"/>
-                    </form:content>
-                </form:SimpleForm>
-            </VBox>
+            <form:SimpleForm editable="true" layout="ResponsiveGridLayout"
+                labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false"
+                emptySpanXL="4" emptySpanL="3" emptySpanM="2" emptySpanS="0"
+                columnsXL="1" columnsL="1" columnsM="1"
+                singleContainerFullSize="false">
+
+                <form:content>
+                    <Label text="{i18n>Customer.id}"/>
+                    <Input value="{/customer/id}"/>
+					<Label text="{i18n>Customer.address}"/>
+                    <Input value="{/customer/address}"/>
+                    <Label text="{i18n>Customer.firstname} / {i18n>Customer.lastname}"/>
+                    <Input value="{/customer/firstname}"/>
+                    <Input value="{/customer/lastname}">
+                        <layoutData>
+                            <layout:GridData span="XL1 L2 M4 S12"/>
+                        </layoutData>
+                    </Input>
+                    <Label text="{i18n>Customer.street}"/>
+                    <Input value="{/customer/street}"/>
+                    <Label text="{i18n>Customer.zip} / {i18n>Customer.city}"/>
+                    <Input value="{/customer/zip}">
+                        <layoutData>
+                            <layout:GridData span="XL1 L2 M2 S12"/>
+                        </layoutData>
+                    </Input>
+                    <Input value="{/customer/city}"/>
+                </form:content>
+            </form:SimpleForm>
         </content>
     </Panel>
-	<Panel expandable="true" expanded="true">
+
+	<!-- Customer contacts -->
+	<Panel
+		expandable="{device>/system/phone}"
+		expanded="{= !${device>/system/phone}}"
+		backgroundDesign="Transparent">
+
 		<headerToolbar>
 			<Toolbar height="3rem">
 				<core:Icon src="sap-icon://address-book" size="1.5rem"/>
@@ -50,32 +64,34 @@
 				<Button icon="sap-icon://add" press="onOpenAddContactDialog"/>
 			</Toolbar>
 		</headerToolbar>
+
         <content>
-            <table:Table
-				rows="{/contacts}"
-				selectionMode="MultiToggle"
-				visibleRowCount="7">
-				<table:columns>
-					<table:Column>
-						<Label text="{i18n>Customer.contact.type}"/>
-						<table:template>
+			<!-- Contact table -->
+			<Table
+				items="{
+					path: '/contacts',
+					sorter: {
+						path: 'type'
+					}
+				}"
+				inset="false">
+				<columns>
+					<Column><Text text="{i18n>Customer.contact.type}"/></Column>
+					<Column><Text text="{i18n>Customer.contact.data}"/></Column>
+					<Column minScreenWidth="Desktop">
+						<Text text="{i18n>Customer.contact.comments}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
 							<Text text="{type}"/>
-						</table:template>
-					</table:Column>
-                    <table:Column>
-						<Label text="{i18n>Customer.contact.data}"/>
-						<table:template>
 							<Text text="{data}"/>
-						</table:template>
-					</table:Column>
-                    <table:Column>
-						<Label text="{i18n>Customer.contact.comments}"/>
-						<table:template>
 							<Text text="{comments}"/>
-						</table:template>
-					</table:Column>
-				</table:columns>
-			</table:Table>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
         </content>
     </Panel>
 </mvc:View>

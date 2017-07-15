@@ -1,11 +1,16 @@
 <core:FragmentDefinition
-    xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout"	xmlns:form="sap.ui.layout.form">
+    xmlns="sap.m" xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form">
+
     <Dialog
         id="addEarningDialog"
         title="{i18n>AddEarning.title}">
         <content>
 
         </content>
+        
+        <!-- Buttons -->
         <beginButton>
             <Button
                 text="{i18n>Misc.save}"
@@ -21,4 +26,5 @@
             />
         </endButton>
     </Dialog>
+
 </core:FragmentDefinition>

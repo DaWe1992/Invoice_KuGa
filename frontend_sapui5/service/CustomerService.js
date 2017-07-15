@@ -22,26 +22,34 @@ sap.ui.define([
         /**
          * Gets all customers from the backend
          *
-         * @param success (callback in case of success)
-         * @param error (callback in case of error)
+         * @param fSuccess (callback in case of success)
+         * @param fError (callback in case of error)
          */
-        getCustomers: function(success, error) {
-            this._http.perform("GET", "/customers", success, error);
+        getCustomers: function(fSuccess, fError) {
+            this._http.perform("GET", "/customers", fSuccess, fError);
         },
 
         /**
          * Gets a specific customer by id.
          *
          * @param id (customer id)
-         * @param success (callback in case of success)
-         * @param error (callback in case of error)
+         * @param fSuccess (callback in case of success)
+         * @param fError (callback in case of error)
          */
-        getCustomer: function(id, success, error) {
-            this._http.perform("GET", "/customers/" + id, success, error);
+        getCustomer: function(id, fSuccess, fError) {
+            this._http.perform("GET", "/customers/" + id, fSuccess, fError);
         },
 
-        addContact: function(oContact) {
-            this._http.perform("POST", "/customers/" + id + "/contacts", success, error);
+        /**
+         * Adds a contact to the customer.
+         *
+         * @param id (customer id)
+         * @param oContact (contact object)
+         * @param fSuccess (callback in case of success)
+         * @param fError (callback in case of error)
+         */
+        addContact: function(id, oContact, fSuccess, fError) {
+            this._http.perform("POST", "/customers/" + id + "/contacts", fSuccess, fError);
         }
     });
 });

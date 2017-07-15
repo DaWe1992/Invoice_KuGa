@@ -20,7 +20,8 @@ sap.ui.define([
          * Loads the cash earnings.
          */
         onInit: function() {
-            // get all earnings
+            var oView = this.getView();
+            
             this._getEarnings(function(data) {
                 var oModel = new JSONModel(data);
                 oView.setModel(oModel);
@@ -41,8 +42,6 @@ sap.ui.define([
          * @param fCallback
          */
         _getEarnings: function(fCallback) {
-            var oView = this.getView();
-
             new EarningService().getEarnings(function(res) {
                 fCallback(res.data);
             }, function(res) {

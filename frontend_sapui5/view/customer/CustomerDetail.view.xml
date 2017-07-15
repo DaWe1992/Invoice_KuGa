@@ -33,7 +33,7 @@
                     <Input value="{/customer/firstname}"/>
                     <Input value="{/customer/lastname}">
                         <layoutData>
-                            <layout:GridData span="XL1 L2 M4 S12"/>
+                            <layout:GridData span="XL1 L3 M4 S12"/>
                         </layoutData>
                     </Input>
                     <Label text="{i18n>Customer.street}"/>

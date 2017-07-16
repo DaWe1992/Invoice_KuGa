@@ -3,6 +3,7 @@
  * 04.07.2017
  *
  * @author Daniel Wehner
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
  sap.ui.define([
 	"com/danielwehner/invoicekuga/controller/BaseController",
@@ -70,20 +71,20 @@
 
 			// create the filter
 			if(sQuery && sQuery.length > 0) {
-				var filter = new Filter({
+				var oFilter = new Filter({
                     filters: [
                         new Filter("firstname", FilterOperator.Contains, sQuery),
                         new Filter("lastname", FilterOperator.Contains, sQuery)
                     ],
                     and: false
                 });
-				aFilters.push(filter);
+				aFilters.push(oFilter);
 			}
 
 			// apply the filter
-			var list = this.getView().byId("customerList");
-			var binding = list.getBinding("items");
-			binding.filter(aFilters, "Application");
+			var oList = this.getView().byId("customerList");
+			var oBinding = oList.getBinding("items");
+			oBinding.filter(aFilters, "Application");
 		},
 
         /**
@@ -150,7 +151,7 @@
             new CustomerService().getCustomers(function(res) {
                 fCallback(res.data);
             }, function(res) {
-                MessageBox.error(this.getResBundle().getText("Misc.error.data.load"));
+                MessageBox.error(this.getTextById("Misc.error.data.load"));
             });
         },
 
@@ -166,7 +167,7 @@
                 fCallback(res.data);
             },
             function(res) {
-                MessageBox.error(this.getResBundle().getText("Misc.error.data.load"));
+                MessageBox.error(this.getTextById("Misc.error.data.load"));
             });
         }
 	});

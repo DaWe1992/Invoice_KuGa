@@ -3,6 +3,7 @@
  * 07.07.2017
  *
  * @author Daniel Wehner
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
 sap.ui.define([
     "sap/ui/base/Object"
@@ -19,15 +20,15 @@ sap.ui.define([
         /**
          * Performs an AJAX request.
          *
-         * @param reqMethod (GET, POST, PUT, DELETE, ...)
-         * @param reqUrl (REST endpoint)
+         * @param sReqMethod (GET, POST, PUT, DELETE, ...)
+         * @param sReqUrl (REST endpoint)
          * @param fSccess (callback in case of success)
          * @param fError (callback in case of error)
          */
-        perform: function(reqMethod, reqUrl, fSccess, fError) {
+        perform: function(sReqMethod, sReqUrl, fSccess, fError) {
             $.ajax({
-                url: reqUrl,
-                method: reqMethod,
+                url: sReqUrl,
+                method: sReqMethod,
                 statusCode: {
                     200: function(res) {fSccess(res)},
                     400: function(res) {fError(res)},

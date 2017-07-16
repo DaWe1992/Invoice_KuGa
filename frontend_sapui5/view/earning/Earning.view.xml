@@ -21,10 +21,11 @@
 					intro="{date}"
 					icon="sap-icon://money-bills"
 		            number="{
-						parts: [{path: 'amount'}],
-						type: 'sap.ui.model.type.Currency',
+						path: 'amount',
+						type: 'sap.ui.model.type.Float',
 						formatOptions: {
-							showMeasure: false
+							minFractionDigits: 2,
+							maxFractionDigits: 2
 						}
 					}"
 		        	numberState="Success"

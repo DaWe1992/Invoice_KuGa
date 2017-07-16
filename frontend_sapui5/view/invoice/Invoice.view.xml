@@ -1,0 +1,162 @@
+<mvc:View
+	controllerName="com.danielwehner.invoicekuga.controller.invoice.Invoice"
+	height="100%"
+	xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core"
+	xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+    <SplitContainer
+		id="splitContainer"
+		height="100%"
+		initialMaster="invoice-master"
+		initialDetail="invoice-placeholder">
+		
+		<!-- *********************************************************************************************** -->
+		<!-- Master pages -->
+		<masterPages>
+			<!-- Invoice list page -->
+			<Page
+				id="invoice-master"
+				height="100%"
+				title="{i18n>Invoice.page.master.title}"
+				class="sapUiStdPage"
+				showHeader="true">
+				<subHeader>
+					<Toolbar>
+						<SearchField liveChange="onSearch" width="100%"/>
+					</Toolbar>
+				</subHeader>
+				<content>
+					<!-- Customer list -->
+					<List
+						id="invoiceList"
+						items="{
+							path: '/',
+							sorter: [
+								{
+									path: 'id',
+									descending: false
+								}
+							]
+						}"
+						height="100%">
+						<items>
+							<CustomListItem type="Navigation" press="onItemPress" custom:to="detail">
+								<HBox>
+									<core:Icon
+										src="sap-icon://travel-expense-report"
+										size="2rem"
+										class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom text-blue"
+									/>
+									<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
+										<Label text="{i18n>Invoice.id}: {id}" class="text-blue"/>
+										<Label text="{description}"/>
+										<Label text="{custlastname}, {
+											path: 'date',
+											type: 'sap.ui.model.type.Date',
+											formatOptions: {
+												source: {
+													pattern: 'dd.mm.yyyy'
+												},
+												style: 'medium'
+											}
+										}"/>
+										<!--<Label text="- - - - - - - - - - - - - - - - - - -"/>-->
+										<Label text="{i18n>Invoice.sum}:" class="sapUiSmallMarginTop"/>
+										<Label text="{
+											path: 'sum',
+											type: 'sap.ui.model.type.Float',
+											formatOptions: {
+												minFractionDigits: 2,
+												maxFractionDigits: 2
+											}
+										}" class="text-green text-large"/>
+									</VBox>
+								</HBox>
+							</CustomListItem>
+						</items>
+					</List>
+				</content>
+				<footer>
+					<Toolbar>
+						<content>
+							<ToolbarSpacer>
+								<layoutData>
+									<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
+								</layoutData>
+							</ToolbarSpacer>
+							<Button icon="sap-icon://add" press="onAddInvoice"></Button>
+						</content>
+					</Toolbar>
+				</footer>
+			</Page>
+		</masterPages>
+		<!-- *********************************************************************************************** -->
+		<!-- Detail pages -->
+		<detailPages>
+			<!-- Placeholder page -->
+			<Page
+				id="invoice-placeholder"
+				height="100%"
+				title="{i18n>Invoice.page.detail.title}"
+				class="sapUiStdPage">
+				<content>
+					<MessagePage
+						height="100%"
+						showHeader="false"
+						text="{i18n>Invoice.page.detail.messagepage.text}"
+						description="{i18n>Invoice.page.detail.messagepage.description}">
+					</MessagePage>
+				</content>
+				<footer>
+					<Toolbar/>
+				</footer>
+			</Page>
+			<!-- Invoice detail page -->
+			<Page
+				id="invoice-detail"
+				height="100%"
+				title="{i18n>Invoice.page.detail.title}"
+				class="sapUiStdPage sapUiResponsiveContentPadding">
+				<content>
+					<mvc:XMLView viewName="com.danielwehner.invoicekuga.view.invoice.InvoiceDetail" height="100%"/>
+				</content>
+				<footer>
+					<Toolbar>
+						<content>
+							<ToolbarSpacer>
+								<layoutData>
+									<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
+								</layoutData>
+							</ToolbarSpacer>
+							<Button text="{i18n>Misc.save}" type="Accept" press=""></Button>
+							<Button text="{i18n>Misc.delete}" type="Reject" press=""></Button>
+						</content>
+					</Toolbar>
+				</footer>
+			</Page>
+			<Page
+				id="invoice-new"
+				height="100%"
+				title="{i18n>Invoice.page.detail.new.title}"
+				class="sapUiStdPage">
+				<content>
+					<mvc:XMLView viewName="com.danielwehner.invoicekuga.view.invoice.InvoiceNew" height="100%"/>
+				</content>
+				<footer>
+					<Toolbar>
+						<content>
+							<ToolbarSpacer/>
+							<Button
+								id="btnSaveNewInvoice"
+								text="{i18n>Misc.save}"
+								press="onNewInvoiceSave"
+								type="Accept"
+								visible="false"
+							/>
+						</content>
+					</Toolbar>
+				</footer>
+			</Page>
+		</detailPages>
+	</SplitContainer>
+</mvc:View>

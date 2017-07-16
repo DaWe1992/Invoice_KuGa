@@ -3,6 +3,7 @@
  * 15.07.2017
  *
  * @author Daniel Wehner
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
 sap.ui.define([
     "com/danielwehner/invoicekuga/controller/BaseController",
@@ -48,7 +49,7 @@ sap.ui.define([
             this.getEvtBus().subscribe("channelNewCustomer", "saveCustomer", function() {
                 // TODO: perform POST request
                 MessageBox.success(
-                    self.getResBundle().getText("Misc.success.data.save")
+                    self.getTextById("Misc.success.data.save")
                 );
             });
         },

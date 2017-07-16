@@ -3,6 +3,7 @@
  * 08.07.2017
  *
  * @author Daniel Wehner
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
 sap.ui.define([
     "com/danielwehner/invoicekuga/controller/BaseController",
@@ -21,7 +22,7 @@ sap.ui.define([
          */
         onInit: function() {
             var oView = this.getView();
-            
+
             this._getEarnings(function(data) {
                 var oModel = new JSONModel(data);
                 oView.setModel(oModel);
@@ -45,7 +46,7 @@ sap.ui.define([
             new EarningService().getEarnings(function(res) {
                 fCallback(res.data);
             }, function(res) {
-                MessageBox.error(this.getResBundle().getText("Misc.error.data.load"));
+                MessageBox.error(this.getResBundle().getTextById("Misc.error.data.load"));
             });
         }
     });

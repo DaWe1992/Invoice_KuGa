@@ -3,14 +3,14 @@
  * 04.07.2017
  *
  * @author Daniel Wehner
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
 sap.ui.define([
     "com/danielwehner/invoicekuga/controller/BaseController",
     "com/danielwehner/invoicekuga/service/SessionService",
     "sap/m/Popover",
-	"sap/m/Button",
-    "sap/m/Label"
-], function(BaseController, SessionService, Popover, Button, Label) {
+	"sap/m/Button"
+], function(BaseController, SessionService, Popover, Button) {
     "use strict";
 
     return BaseController.extend("com.danielwehner.invoicekuga.controller.App", {
@@ -45,17 +45,18 @@ sap.ui.define([
          */
         handleUserNamePress: function(oEvent) {
 			var oPopover = new Popover({
-                showHeader: false,
+                showHeader: true,
+                title: this.getTextById("Misc.actions"),
 				placement: sap.m.PlacementType.Bottom,
 				content: [
                     new Button({
-                        text: "Nutzer",
+                        text: this.getTextById("App.user"),
                         icon: "sap-icon://notes",
                         type: sap.m.ButtonType.Transparent,
                         press: ""
                     }),
 					new Button({
-						text: "Logout",
+						text: this.getTextById("App.logout"),
                         icon: "sap-icon://log",
 						type: sap.m.ButtonType.Transparent,
                         press: this.logout
@@ -82,6 +83,13 @@ sap.ui.define([
 		onNavToCustomers: function() {
 			this.getRouter().navTo("customers");
 		},
+
+        /**
+         * Navigates to the invoice page.
+         */
+        onNavToInvoices: function() {
+            this.getRouter().navTo("invoices");
+        },
 
         /**
          * Navigates to the earnings page.

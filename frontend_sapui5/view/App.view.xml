@@ -25,8 +25,6 @@
 						<FlexItemData growFactor="1"/>
 					</layoutData>
 				</Image>
-				<ToolbarSpacer width="20px"/>
-				<tnt:ToolHeaderUtilitySeparator/>
 				<ToolbarSpacer>
 					<layoutData>
 						<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
@@ -49,12 +47,19 @@
 		<!-- Toolpage sidecontent -->
 		<tnt:sideContent>
             <tnt:SideNavigation expanded="{= !${device>/system/phone}}" itemSelect="onItemSelect">
-				<tnt:NavigationList>
-					<tnt:NavigationListItem text="{i18n>Navi.customers}" icon="sap-icon://customer" select="onNavToCustomers"/>
-                    <tnt:NavigationListItem text="{i18n>Navi.invoices}" icon="sap-icon://travel-expense-report"/>
-                    <tnt:NavigationListItem text="{i18n>Navi.earnings}" icon="sap-icon://money-bills" select="onNavToEarnings"/>
-                    <tnt:NavigationListItem text="{i18n>Navi.statistics}" icon="sap-icon://area-chart"/>
-				</tnt:NavigationList>
+				<tnt:item>
+					<tnt:NavigationList>
+						<tnt:NavigationListItem text="{i18n>Navi.customers}" icon="sap-icon://customer" select="onNavToCustomers"/>
+	                    <tnt:NavigationListItem text="{i18n>Navi.invoices}" icon="sap-icon://travel-expense-report" select="onNavToInvoices"/>
+	                    <tnt:NavigationListItem text="{i18n>Navi.earnings}" icon="sap-icon://money-bills" select="onNavToEarnings"/>
+	                    <tnt:NavigationListItem text="{i18n>Navi.statistics}" icon="sap-icon://area-chart"/>
+					</tnt:NavigationList>
+				</tnt:item>
+				<tnt:fixedItem>
+					<tnt:NavigationList>
+						<tnt:NavigationListItem text="{i18n>Navi.settings}" icon="sap-icon://action-settings" select=""/>
+					</tnt:NavigationList>
+				</tnt:fixedItem>
 			</tnt:SideNavigation>
 		</tnt:sideContent>
 

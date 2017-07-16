@@ -3,6 +3,7 @@
  * 04.07.2017
  *
  * @author Daniel Wehner
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
 sap.ui.define([
     "com/danielwehner/invoicekuga/controller/BaseController",

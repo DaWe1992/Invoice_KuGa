@@ -9,7 +9,8 @@
 		height="100%"
 		initialMaster="customer-master"
 		initialDetail="customer-placeholder">
-
+		
+		<!-- *********************************************************************************************** -->
 		<!-- Master pages -->
 		<masterPages>
 			<!-- Customer list page -->
@@ -17,7 +18,6 @@
 				id="customer-master"
 				height="100%"
 				title="{i18n>Customer.page.master.title}"
-				icon="sap-icon://action"
 				class="sapUiStdPage"
 				showHeader="true">
 				<subHeader>
@@ -37,7 +37,7 @@
 									<core:Icon
 										src="sap-icon://customer"
 										size="2rem"
-										class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+										class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom text-blue"
 									/>
 									<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
 										<Label text="{id}" class="text-blue"/>
@@ -72,7 +72,14 @@
 				height="100%"
 				title="{i18n>Customer.page.detail.title}"
 				class="sapUiStdPage">
-				<content></content>
+				<content>
+					<MessagePage
+						height="100%"
+						showHeader="false"
+						text="{i18n>Customer.page.detail.messagepage.text}"
+						description="{i18n>Customer.page.detail.messagepage.description}">
+					</MessagePage>
+				</content>
 				<footer>
 					<Toolbar/>
 				</footer>

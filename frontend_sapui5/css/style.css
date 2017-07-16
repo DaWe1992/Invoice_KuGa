@@ -3,3 +3,10 @@
 .text-blue {
     color: #427CAC;
 }
+.text-green {
+    color: #2B7D2B;
+}
+
+.text-large {
+    font-size: 1.5em;
+}

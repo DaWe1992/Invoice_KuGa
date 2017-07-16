@@ -3,6 +3,7 @@
  * 07.07.2017
  *
  * @author Daniel Wehner
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
@@ -28,6 +29,16 @@ sap.ui.define([
 		 */
 		getResBundle: function() {
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
+		},
+
+		/**
+		 * Returns the text for the id specified.
+		 *
+		 * @param sId (id of the text in i18n)
+		 * @return
+		 */
+		getTextById: function(sId) {
+			return this.getResBundle().getText(sId);
 		},
 
 		/**

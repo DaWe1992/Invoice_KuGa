@@ -75,6 +75,11 @@
 					"target": "customers"
 				},
                 {
+                    "pattern": "invoices",
+                    "name": "invoices",
+                    "target": "invoices"
+                },
+                {
                     "pattern": "daily-cash-earnings",
                     "name": "earnings",
                     "target": "earnings"
@@ -89,6 +94,10 @@
 					"viewName": "customer.Customer",
 					"viewLevel": 1
 				},
+                "invoices": {
+                    "viewName": "invoice.Invoice",
+                    "viewLevel": 1
+                },
                 "earnings": {
                     "viewName": "earning.Earning",
                     "viewLevel": 1

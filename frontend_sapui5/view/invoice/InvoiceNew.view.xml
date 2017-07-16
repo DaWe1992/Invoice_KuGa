@@ -1,0 +1,7 @@
+<mvc:View
+	controllerName="com.danielwehner.invoicekuga.controller.invoice.InvoiceNew"
+    height="100%"
+	xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
+    xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form">
+
+</mvc:View>

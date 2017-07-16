@@ -42,8 +42,10 @@
 
                 /**
                  * Loads the customer detail data
-                 * and creats a JSONModel before the detail page
+                 * and creates a JSONModel before the detail page
                  * is shown.
+                 *
+                 * @param oEvent
                  */
 				onBeforeShow: function(oEvent) {
                     self._getCustomer(oEvent.data.id, function(data) {

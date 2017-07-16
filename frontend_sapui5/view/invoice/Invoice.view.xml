@@ -9,7 +9,7 @@
 		height="100%"
 		initialMaster="invoice-master"
 		initialDetail="invoice-placeholder">
-		
+
 		<!-- *********************************************************************************************** -->
 		<!-- Master pages -->
 		<masterPages>
@@ -123,6 +123,7 @@
 				<footer>
 					<Toolbar>
 						<content>
+							<Button press="" icon="sap-icon://print"/>
 							<ToolbarSpacer>
 								<layoutData>
 									<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>

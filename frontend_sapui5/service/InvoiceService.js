@@ -28,6 +28,17 @@ sap.ui.define([
          */
         getInvoices: function(fSuccess, fError) {
             this._http.perform("GET", "/invoices", fSuccess, fError);
+        },
+
+        /**
+         * Gets a specific invoice by id.
+         *
+         * @param id (invoice id)
+         * @param fSuccess (callback in case of success)
+         * @param fError (callback in case of error)
+         */
+        getInvoice: function(id, fSuccess, fError) {
+            this._http.perform("GET", "/invoices/" + id, fSuccess, fError);
         }
     });
 });

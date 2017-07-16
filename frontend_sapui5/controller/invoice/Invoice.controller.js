@@ -30,9 +30,30 @@ sap.ui.define([
             self = this;
             var oView = this.getView();
 
+            // load invoice list data
             this._getInvoices(function(data) {
                 var oModel = new JSONModel(data);
                 oView.setModel(oModel);
+            });
+
+            // get reference to detail page
+            var oDetailPage = this.byId("splitContainer").getDetailPages()[1];
+
+            oDetailPage.addEventDelegate({
+
+                /**
+                 * Loads the invoice detail data
+                 * and creates a JSONModel before the detail page
+                 * is shown.
+                 *
+                 * @param oEvent
+                 */
+                onBeforeShow: function(oEvent) {
+                    self._getInvoice(oEvent.data.id, function(data) {
+                        var oModel = new JSONModel(data); // store the data
+                        oDetailPage.setModel(oModel);
+                    });
+                }
             });
         },
 
@@ -70,6 +91,28 @@ sap.ui.define([
          * @param oEvent
          */
         onItemPress: function(oEvent) {
+            // get the path of the item pressed
+            var sPath = oEvent.getSource().getBindingContext().getPath();
+            var oData = this.getView().getModel().getProperty(sPath);
+
+            // determine the current detail page
+            var oSplitContainer = this.getView().byId("splitContainer");
+            var oCurrentDetailPage = oSplitContainer.getCurrentDetailPage();
+
+            // determine which page is currently displayed and continue accordingly
+            if(oCurrentDetailPage.getId().indexOf("detail") === -1) {
+                oSplitContainer.toDetail(
+                    this.createId("invoice-detail"), "slide", {
+                        "id": oData.id
+                    }
+                );
+            } else {
+                this._getInvoice(oData.id, function(data) {
+                    var oModel = new JSONModel(data); // store the data
+                    oCurrentDetailPage.setModel(oModel);
+                });
+            }
+
             /*var oPopover = new Popover({
                 showHeader: true,
                 title: this.getTextById("Misc.actions"),
@@ -93,9 +136,9 @@ sap.ui.define([
             oPopover.openBy(oEvent.getSource());*/
         },
 
-        onInvoiceShow: function() {
+        /*onInvoiceShow: function() {
 
-        },
+        },*/
 
         /**
          * Prints the invoice and displays
@@ -128,6 +171,22 @@ sap.ui.define([
             new InvoiceService().getInvoices(function(res) {
                 fCallback(res.data);
             }, function(res) {
+                MessageBox.error(this.getTextById("Misc.error.data.load"));
+            });
+        },
+
+        /**
+         * Gets the invoice by id from the server.
+         *
+         * @param id (invoice id)
+         * @param fCallback
+         */
+        _getInvoice: function(id, fCallback) {
+            new InvoiceService().getInvoice(id,
+            function(res) {
+                fCallback(res.data);
+            },
+            function(res) {
                 MessageBox.error(this.getTextById("Misc.error.data.load"));
             });
         }

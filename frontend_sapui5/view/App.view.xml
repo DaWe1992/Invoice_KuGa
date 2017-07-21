@@ -52,7 +52,7 @@
 						<tnt:NavigationListItem text="{i18n>Navi.customers}" icon="sap-icon://customer" select="onNavToCustomers"/>
 	                    <tnt:NavigationListItem text="{i18n>Navi.invoices}" icon="sap-icon://travel-expense-report" select="onNavToInvoices"/>
 	                    <tnt:NavigationListItem text="{i18n>Navi.earnings}" icon="sap-icon://money-bills" select="onNavToEarnings"/>
-	                    <tnt:NavigationListItem text="{i18n>Navi.statistics}" icon="sap-icon://area-chart"/>
+	                    <tnt:NavigationListItem text="{i18n>Navi.statistics}" icon="sap-icon://area-chart" select="onNavToStatistics"/>
 					</tnt:NavigationList>
 				</tnt:item>
 				<tnt:fixedItem>

@@ -83,6 +83,11 @@
                     "pattern": "daily-cash-earnings",
                     "name": "earnings",
                     "target": "earnings"
+                },
+                {
+                    "pattern": "statistics",
+                    "name": "statistics",
+                    "target": "statistics"
                 }
 			],
 			 "targets": {
@@ -100,6 +105,11 @@
                 },
                 "earnings": {
                     "viewName": "earning.Earning",
+                    "viewLevel": 1
+                },
+                "statistics": {
+                    "viewName": "statistics.Statistics",
+                    "viewType": "JS",
                     "viewLevel": 1
                 },
                 "notFound": {

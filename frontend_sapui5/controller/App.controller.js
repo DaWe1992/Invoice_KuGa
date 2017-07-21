@@ -96,6 +96,13 @@ sap.ui.define([
          */
         onNavToEarnings: function() {
             this.getRouter().navTo("earnings");
+        },
+
+        /**
+         * Navigates to the statistics page.
+         */
+        onNavToStatistics: function() {
+            this.getRouter().navTo("statistics");
         }
     });
 });

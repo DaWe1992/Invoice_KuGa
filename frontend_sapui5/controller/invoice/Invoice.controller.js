@@ -12,11 +12,9 @@ sap.ui.define([
 	"sap/ui/model/FilterOperator",
     "com/danielwehner/invoicekuga/service/InvoiceService",
     "sap/m/MessageBox",
-    "sap/m/MessageToast",
-    "sap/m/Popover",
-    "sap/m/Button"
+    "sap/m/MessageToast"
 ], function(BaseController, JSONModel, Filter, FilterOperator,
-            InvoiceService, MessageBox, MessageToast, Popover, Button) {
+            InvoiceService, MessageBox, MessageToast) {
     "use strict";
 
     var self;
@@ -112,33 +110,7 @@ sap.ui.define([
                     oCurrentDetailPage.setModel(oModel);
                 });
             }
-
-            /*var oPopover = new Popover({
-                showHeader: true,
-                title: this.getTextById("Misc.actions"),
-                placement: sap.m.PlacementType.Right,
-                content: [
-                    new Button({
-                        text: this.getTextById("Invoice.page.master.popover.view"),
-                        icon: "sap-icon://display",
-                        type: sap.m.ButtonType.Transparent,
-                        press: this.onInvoiceShow
-                    }),
-                    new Button({
-                        text: this.getTextById("Invoice.page.master.popover.print"),
-                        icon: "sap-icon://print",
-                        type: sap.m.ButtonType.Transparent,
-                        press: this.onInvoicePrint
-                    })
-                ]
-            }).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
-
-            oPopover.openBy(oEvent.getSource());*/
         },
-
-        /*onInvoiceShow: function() {
-
-        },*/
 
         /**
          * Prints the invoice and displays

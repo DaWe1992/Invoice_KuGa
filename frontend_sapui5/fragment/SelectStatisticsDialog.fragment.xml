@@ -1,0 +1,37 @@
+<core:FragmentDefinition
+    xmlns="sap.m" xmlns:core="sap.ui.core">
+
+    <SelectDialog
+        title="{i18n>SelectStatisticsDialog.title}"
+        confirm="onConfirmSelectStatisticsDialog">
+        <items>
+            <StandardListItem
+                title="{i18n>SelectStatisticsDialog.listitem.evtRevByMonth.title}"
+                description="{i18n>SelectStatisticsDialog.listitem.evtRevByMonth.description}"
+                info="evtRevByMonth"
+                icon="sap-icon://bar-chart"
+                iconDensityAware="false"
+                iconInset="false"
+                tpye="Active"
+            />
+            <StandardListItem
+                title="{i18n>SelectStatisticsDialog.listitem.evtRevByCustomer.title}"
+                description="{i18n>SelectStatisticsDialog.listitem.evtRevByCustomer.description}"
+                info="evtRevByCustomer"
+                icon="sap-icon://bar-chart"
+                iconDensityAware="false"
+                iconInset="false"
+                tpye="Active"
+            />
+            <StandardListItem
+                title="{i18n>SelectStatisticsDialog.listitem.ceRev.title}"
+                description="{i18n>SelectStatisticsDialog.listitem.ceRev.description}"
+                info="ceRev"
+                icon="sap-icon://area-chart"
+                iconDensityAware="false"
+                iconInset="false"
+                tpye="Active"
+            />
+        </items>
+    </SelectDialog>
+</core:FragmentDefinition>

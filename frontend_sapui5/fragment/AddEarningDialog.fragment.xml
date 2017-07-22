@@ -5,11 +5,11 @@
 
     <Dialog
         id="addEarningDialog"
-        title="{i18n>AddEarning.title}">
+        title="{i18n>AddEarningDialog.title}">
         <content>
 
         </content>
-        
+
         <!-- Buttons -->
         <beginButton>
             <Button

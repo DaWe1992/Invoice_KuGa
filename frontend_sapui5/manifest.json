@@ -109,7 +109,6 @@
                 },
                 "statistics": {
                     "viewName": "statistics.Statistics",
-                    "viewType": "JS",
                     "viewLevel": 1
                 },
                 "notFound": {

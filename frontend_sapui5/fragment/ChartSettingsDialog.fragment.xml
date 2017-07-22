@@ -1,0 +1,43 @@
+<core:FragmentDefinition
+    xmlns="sap.m" xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form">
+
+    <Dialog
+        id="chartSettingsDialog"
+        title="{i18n>ChartSettingsDialog.title}">
+        <content>
+            <form:SimpleForm editable="true" layout="ResponsiveGridLayout"
+                labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false"
+                emptySpanXL="4" emptySpanL="3" emptySpanM="2" emptySpanS="0"
+                columnsXL="1" columnsL="1" columnsM="1"
+                singleContainerFullSize="false">
+                <form:content>
+                    <core:Title text="{i18n>ChartSettingsDialog.grid.header}"/>
+                    <Label text="{i18n>ChartSettingsDialog.grid.x.label}"/>
+                    <Switch state="{settings>/gridX}"/>
+                    <Label text="{i18n>ChartSettingsDialog.grid.y.label}"/>
+                    <Switch state="{settings>/gridY}"/>
+                    <core:Title text="{i18n>ChartSettingsDialog.misc.header}"/>
+                    <Label text="{i18n>ChartSettingsDialog.zoom.label}"/>
+                    <Switch state="{settings>/zoom}"/>
+                    <Label text="{i18n>ChartSettingsDialog.culling.label}"/>
+                    <Input
+                        value="{settings>/culling}"
+        				type="Number"
+        				class="sapUiSmallMarginBottom"
+                    />
+                </form:content>
+            </form:SimpleForm>
+        </content>
+
+        <!-- Buttons -->
+        <endButton>
+            <Button
+                text="{i18n>Misc.ok}"
+                press="onSaveChartSettings"
+            />
+        </endButton>
+    </Dialog>
+
+</core:FragmentDefinition>

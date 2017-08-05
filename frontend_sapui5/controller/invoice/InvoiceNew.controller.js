@@ -21,15 +21,15 @@ sap.ui.define([
          */
         onInit: function() {
             self = this;
-            var d = new Date();
-            var currDate = d.getDate() + "." + (d.getMonth() + 1) + "." + d.getFullYear();
+            var oDate = new Date();
+            var sCurrDate = oDate.getDate() + "." + (oDate.getMonth() + 1) + "." + oDate.getFullYear();
             this._wizard = this.getView().byId("invoiceWizard");
 
             this._wizard.setModel(
                 new JSONModel({
                     "invoice": {
                         "description": "",
-                        "date": currDate,
+                        "date": sCurrDate,
                         "room": "",
                         "comments": "",
                         "positions": []

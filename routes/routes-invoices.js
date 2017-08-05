@@ -150,9 +150,9 @@ module.exports = function(app) {
  * invoice specified.
  *
  * @param id
- * @param callback
+ * @param fCallback
  */
-function getInvoiceById(id, callback) {
+function getInvoiceById(id, fCallback) {
     // Initialize empty object
     var data = {};
 
@@ -163,14 +163,14 @@ function getInvoiceById(id, callback) {
               "WHERE invoices.inv_id = '" + id + "';"
 
     db.query(sql, function(err, result) {
-        if(err) callback(null, err);
+        if(err) fCallback(null, err);
         data.customer = result.rows[0];
 
         // Load invoice data
         sql = "SELECT inv_id AS id, to_char(inv_date, 'DD.MM.YYYY') AS date FROM invoices WHERE inv_id = '" + id + "';";
 
         db.query(sql, function(err, result) {
-            if(err) callback(null, err);
+            if(err) fCallback(null, err);
             data.invoice = result.rows[0];
 
             // Load invoice positions
@@ -181,13 +181,13 @@ function getInvoiceById(id, callback) {
                   "WHERE ipos_inv_id = '" + id + "';";
 
             db.query(sql, function(err, result) {
-                if(err) callback(null, err)
+                if(err) fCallback(null, err)
                 data.invoice.positions = result.rows;
 
                 // Calculate the sums
                 getSums(data.invoice.positions, function(sums) {
                     data.invoice.sums = sums;
-                    callback(data, null);
+                    fCallback(data, null);
                 });
             });
         });
@@ -197,24 +197,24 @@ function getInvoiceById(id, callback) {
 /**
  * Calculates the sums of the invoice.
  *
- * @param positions
- * @param callback
+ * @param aPositions
+ * @param fCallback
  */
-function getSums(positions, callback) {
+function getSums(aPositions, fCallback) {
     var sumNet = 0;
     var sumVat1 = 0; // 7%
     var sumVat2 = 0; // 19%
     var sumGross = 0;
 
     // loop over positions
-    positions.forEach(function(pos) {
-        sumNet += Number(pos.net);
-        sumGross += Number(pos.gross);
-        sumVat1 += (pos.vatrate === "0.07" ? Number(pos.vat) : 0);
-        sumVat2 += (pos.vatrate === "0.19" ? Number(pos.vat) : 0);
+    aPositions.forEach(function(oPos) {
+        sumNet += Number(oPos.net);
+        sumGross += Number(oPos.gross);
+        sumVat1 += (oPos.vatrate === "0.07" ? Number(oPos.vat) : 0);
+        sumVat2 += (oPos.vatrate === "0.19" ? Number(oPos.vat) : 0);
     });
 
-    callback({
+    fCallback({
         net: sumNet.toFixed(2),
         gross: sumGross.toFixed(2),
         vat1: sumVat1.toFixed(2),
@@ -226,19 +226,18 @@ function getSums(positions, callback) {
  * Reads and renders an HTML template
  * with the data specified.
  *
- * @param data
- * @param callback
+ * @param oData
+ * @param fCallback
  */
-function readAndRenderTemplate(data, callback) {
+function readAndRenderTemplate(data, fCallback) {
     // Read template
-    fs.readFile("./template/invoice.html", "utf-8", function(err, template) {
-        var html;
-        var path;
+    fs.readFile("./template/invoice.html", "utf-8", function(err, oTemplate) {
+        var oHtml;
 
         // Render template with data
-        mustache.parse(template);
-        html = mustache.render(template, data);
+        mustache.parse(oTemplate);
+        oHtml = mustache.render(template, oData);
 
-        callback(html);
+        fCallback(oHtml);
     });
 }

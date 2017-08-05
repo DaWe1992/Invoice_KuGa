@@ -20,17 +20,19 @@ sap.ui.define([
         /**
          * Performs an AJAX request.
          *
+         * @deprecated
          * @param sReqMethod (GET, POST, PUT, DELETE, ...)
          * @param sReqUrl (REST endpoint)
-         * @param fSccess (callback in case of success)
+         * @param fSuccess (callback in case of success)
          * @param fError (callback in case of error)
          */
-        perform: function(sReqMethod, sReqUrl, fSccess, fError) {
+        perform: function(sReqMethod, sReqUrl, fSuccess, fError) {
             $.ajax({
                 url: sReqUrl,
                 method: sReqMethod,
                 statusCode: {
-                    200: function(res) {fSccess(res)},
+                    200: function(res) {fSuccess(res)},
+                    201: function(res) {fSuccess(res)},
                     400: function(res) {fError(res)},
                     500: function(res) {fError(res)}
                 }
@@ -41,8 +43,26 @@ sap.ui.define([
 
         },
 
-        performPost: function() {
-
+        /**
+         * Performs a AJAX POST request.
+         *
+         * @param sReqUrl (REST endpoint)
+         * @param oData (data to be posted)
+         * @param fSuccess (callback in case of success)
+         * @param fError (callback in case of error)
+         */
+        performPost: function(sReqUrl, oData, fSuccess, fError) {
+            $.ajax({
+                url: sReqUrl,
+                method: "POST",
+                data: oData,
+                statusCode: {
+                    200: function(res) {fSuccess(res)},
+                    201: function(res) {fSuccess(res)},
+                    400: function(res) {fError(res)},
+                    500: function(res) {fError(res)}
+                }
+            });
         },
 
         performPut: function() {

@@ -48,6 +48,7 @@ module.exports = function(app, ft) {
 
     /**
      * Renders the test template.
+     *
      * @name /test
      */
     app.get("/test", function(req, res) {

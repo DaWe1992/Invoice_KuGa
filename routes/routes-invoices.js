@@ -22,6 +22,7 @@ module.exports = function(app) {
 
     /**
      * Returns a list of all invoices.
+     *
      * @name /invoices
      */
     app.get("/invoices", function(req, res) {
@@ -53,6 +54,7 @@ module.exports = function(app) {
 
     /**
      * Returns the invoice with the id specified.
+     *
      * @name /invoices/:id
      * @param id (obligatory)
      */
@@ -77,6 +79,7 @@ module.exports = function(app) {
 
     /**
      * Prints a pdf document for the invoice specified.
+     *
      * @name /invoices/:id/print
      * @param id (obligatory)
      */
@@ -106,6 +109,7 @@ module.exports = function(app) {
 
     /**
      * Gets all positions for the invoice specified.
+     *
      * @name /invoices/:id/positions
      * @param id (obligatory)
      */
@@ -115,6 +119,7 @@ module.exports = function(app) {
 
     /**
      * Adds a new position for the invoice specified.
+     *
      * @name /invoices/:id/positions
      * @param id (obligatory)
      */
@@ -143,6 +148,7 @@ module.exports = function(app) {
 /**
  * Gets the data for the
  * invoice specified.
+ *
  * @param id
  * @param callback
  */
@@ -190,6 +196,7 @@ function getInvoiceById(id, callback) {
 
 /**
  * Calculates the sums of the invoice.
+ *
  * @param positions
  * @param callback
  */
@@ -218,6 +225,7 @@ function getSums(positions, callback) {
 /**
  * Reads and renders an HTML template
  * with the data specified.
+ *
  * @param data
  * @param callback
  */

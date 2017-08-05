@@ -42,6 +42,17 @@ sap.ui.define([
         },
 
         /**
+         * Adds a customer.
+         *
+         * @param oData (customer data to be sent to the server)
+         * @param fSuccess (callback in case of success)
+         * @param fError (callback in case of error)
+         */
+        addCustomer: function(oData, fSuccess, fError) {
+            this._http.performPost("/customers", oData, fSuccess, fError);
+        },
+
+        /**
          * Adds a contact to the customer.
          *
          * @param id (customer id)

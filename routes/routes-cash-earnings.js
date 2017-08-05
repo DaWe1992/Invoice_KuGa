@@ -12,6 +12,7 @@ module.exports = function(app) {
 
     /**
      * Returns a list of all cash-earnings.
+     *
      * @name /cash-earnings
      */
     app.get("/daily-cash-earnings", function(req, res) {
@@ -37,12 +38,14 @@ module.exports = function(app) {
 
     /**
      * Adds a new cash earning.
+     *
      * @name /daily-cash-earnings
+     * @param earning (in body, obligatory)
      */
     app.post("/daily-cash-earnings", function(req, res) {
-        var item = req.body;
+        var earning = req.body;
         var sql = "INSERT INTO cash_earnings (ce_date, ce_amount, ce_description) " +
-                  "VALUES ('" + item.date + "', '" + item.amount + "', '" + item.description + "')" +
+                  "VALUES ('" + earning.date + "', '" + earning.amount + "', '" + earning.description + "')" +
                   "RETURNING ce_id AS id, to_char(ce_date, 'YYYY-MM-DD') AS date, ce_amount AS amount, ce_description AS description;";
 
         db.query(sql, function(err, result) {
@@ -53,7 +56,7 @@ module.exports = function(app) {
                 });
             }
 
-            return res.status(200).json({
+            return res.status(201).json({
                 "success": true,
                 "data": result
             });
@@ -62,6 +65,7 @@ module.exports = function(app) {
 
     /**
      * Deletes a cash earning by id.
+     *
      * @name /daily-cash-earnings/:id
      * @param id (obligatory)
      */

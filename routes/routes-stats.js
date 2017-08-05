@@ -13,6 +13,7 @@ module.exports = function(app) {
 
     /**
      * Returns the event revenues grouped by month.
+     *
      * @name /statistics/evtrevbymonth
      */
     app.get("/statistics/evt-rev-by-month", function(req, res) {
@@ -23,6 +24,7 @@ module.exports = function(app) {
 
     /**
      * Returns the event revenues grouped by customers.
+     *
      * @name /statistics/evtrevbycustomer
      * @param gross (if true, gross prices are returned, else net prices)
      * @param limit (limits the number of result rows)
@@ -69,6 +71,7 @@ module.exports = function(app) {
 
     /**
      * Returns the cash earnings revenues.
+     *
      * @name /statistics/ce-rev
      */
     app.get("/statistics/ce-rev", function(req ,res) {

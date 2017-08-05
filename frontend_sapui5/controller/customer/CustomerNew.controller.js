@@ -8,8 +8,9 @@
 sap.ui.define([
     "com/danielwehner/invoicekuga/controller/BaseController",
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageBox"
-], function(BaseController, JSONModel, MessageBox) {
+    "sap/m/MessageBox",
+    "com/danielwehner/invoicekuga/service/CustomerService"
+], function(BaseController, JSONModel, MessageBox, CustomerService) {
     "use strict";
 
     var self;
@@ -47,9 +48,19 @@ sap.ui.define([
             );
 
             this.getEvtBus().subscribe("channelNewCustomer", "saveCustomer", function() {
-                // TODO: perform POST request
-                MessageBox.success(
-                    self.getTextById("Misc.success.data.save")
+                // persist the new customer in the database
+                new CustomerService().addCustomer(
+                    self._wizard.getModel().getData(),
+                    function(res) {
+                        MessageBox.success(
+                            self.getTextById("Misc.success.data.save") + " " + res.data.id
+                        );
+                    },
+                    function(res) {
+                        MessageBox.error(
+                            self.getTextbyId("Misc.error.data.send")
+                        );
+                    }
                 );
             });
         },

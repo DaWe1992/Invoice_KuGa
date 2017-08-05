@@ -14,7 +14,7 @@ sap.ui.define([
 
     var self;
 
-    BaseController.extend("com.danielwehner.invoicekuga.controller.customer.CustomerNew", {
+    return BaseController.extend("com.danielwehner.invoicekuga.controller.customer.CustomerNew", {
 
         /**
          * onInit function.
@@ -61,17 +61,17 @@ sap.ui.define([
          */
         validateCustomerHeadStep: function() {
             var oView = this.getView();
-            var sAddress = oView.byId("address").getValue();
-            var sLastname = oView.byId("lastname").getValue();
-            var sStreet = oView.byId("street").getValue();
-            var sZip = oView.byId("zip").getValue();
-            var sCity = oView.byId("city").getValue();
+            var sAddress = oView.byId("newCustomerAddress").getValue();
+            var sLastname = oView.byId("newCustomerLastname").getValue();
+            var sStreet = oView.byId("newCustomerStreet").getValue();
+            var sZip = oView.byId("newCustomerZip").getValue();
+            var sCity = oView.byId("newCustomerCity").getValue();
 
             if(sAddress.length === 0 || sLastname.length === 0 ||
             sStreet.length === 0 || sZip.length === 0 || sCity.length === 0) {
-                this._wizard.invalidateStep(this.getView().byId("customerHeadStep"));
+                this._wizard.invalidateStep(oView.byId("customerHeadStep"));
             } else {
-                this._wizard.validateStep(this.getView().byId("customerHeadStep"));
+                this._wizard.validateStep(oView.byId("customerHeadStep"));
             }
         },
 
@@ -88,16 +88,11 @@ sap.ui.define([
             var oInputData = oView.byId("contactData");
             var oInputComments = oView.byId("contactComments");
 
-            // get value of input controls
-            var sType = oInputType.getValue();
-            var sData = oInputData.getValue();
-            var sComments = oInputComments.getValue();
-
             // create contact object
             var oContact = {
-                type: sType,
-                data: sData,
-                comments: sComments
+                type: oInputType.getValue(),
+                data: oInputData.getValue(),
+                comments: oInputComments.getValue()
             };
 
             // add contact to model

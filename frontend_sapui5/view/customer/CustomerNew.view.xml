@@ -22,29 +22,29 @@
                 singleContainerFullSize="false">
                 <form:content>
                     <Label text="{i18n>Customer.address}" required="true"/>
-                    <Input id="address" value="{/address}"
+                    <Input id="newCustomerAddress" value="{/address}"
                         valueState="{validation>/addressState}"
                         liveChange="validateCustomerHeadStep"
                     />
                     <Label text="{i18n>Customer.firstname}"/>
-                    <Input id="firstname" value="{/firstname}"/>
+                    <Input id="newCustomerFirstname" value="{/firstname}"/>
                     <Label text="{i18n>Customer.lastname}" required="true"/>
-                    <Input id="lastname" value="{/lastname}"
+                    <Input id="newCustomerLastname" value="{/lastname}"
                         valueState="{validation>/lastnameState}"
                         liveChange="validateCustomerHeadStep"
                     />
                     <Label text="{i18n>Customer.street}" required="true"/>
-                    <Input id="street" value="{/street}"
+                    <Input id="newCustomerStreet" value="{/street}"
                         valueState="{validation>/streetState}"
                         liveChange="validateCustomerHeadStep"
                     />
                     <Label text="{i18n>Customer.zip}" required="true"/>
-                    <Input id="zip" value="{/zip}"
+                    <Input id="newCustomerZip" value="{/zip}"
                         valueState="{validation>/zipState}"
                         liveChange="validateCustomerHeadStep"
                     />
                     <Label text="{i18n>Customer.city}" required="true"/>
-                    <Input id="city" value="{/city}"
+                    <Input id="newCustomerCity" value="{/city}"
                         valueState="{validation>/cityState}"
                         liveChange="validateCustomerHeadStep"
                     />

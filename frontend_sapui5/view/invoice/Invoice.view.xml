@@ -61,7 +61,8 @@
 											}
 										}"/>
 										<!--<Label text="- - - - - - - - - - - - - - - - - - -"/>-->
-										<Label text="{i18n>Invoice.sum}:" class="sapUiSmallMarginTop"/>
+										<!--<Label text="{i18n>Invoice.sum}:" class="sapUiSmallMarginTop"/>-->
+										<Label text="" class="sapUiTinyMarginTop"/>
 										<Label text="{
 											path: 'sum',
 											type: 'sap.ui.model.type.Float',

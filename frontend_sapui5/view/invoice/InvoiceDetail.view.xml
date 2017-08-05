@@ -5,7 +5,7 @@
 
 	<!-- Invoice head data -->
 	<Panel
-		expandable="{device>/system/phone}"
+		expandable="true"
 		expanded="{= !${device>/system/phone}}"
 		backgroundDesign="Transparent">
 
@@ -18,78 +18,76 @@
 
 		<!-- Invoice form -->
 		<content>
-			<VBox class="sapUiSmallMargin">
-				<form:SimpleForm editable="true" layout="ResponsiveGridLayout"
-					labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12"
-					adjustLabelSpan="false"
-					emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"
-					columnsXL="2" columnsL="2" columnsM="2"
-					singleContainerFullSize="false" >
-					<form:content>
-						<!-- Invoice head data -->
-						<core:Title text="{i18n>Invoice.form.section.head}"/>
-						<Label text="{i18n>Invoice.id}"/>
-						<Input value="{/invoice/id}"/>
-						<Label text="{i18n>Invoice.description}"/>
-						<Input value="{/invoice/description}"/>
-						<Label text="{i18n>Invoice.date}"/>
-						<DatePicker
-							value="{/invoice/date}"
-							valueFormat="yyyy-MM-dd"
-							displayFormat="long"
-						/>
-						<Label text="{i18n>Invoice.room}"/>
-						<Select id="invoiceRoom" selectedKey="{/invoice/room}">
-        					<items>
-        						<core:Item text="{i18n>Invoice.room.rossini}" key="rossini"/>
-        						<core:Item text="{i18n>Invoice.room.littmann}" key="littmann"/>
-        					</items>
-        				</Select>
-						<Label text="{i18n>Invoice.comments}"/>
-						<Input value="{/invoice/comments}"/>
+			<form:SimpleForm editable="true" layout="ResponsiveGridLayout"
+				labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12"
+				adjustLabelSpan="false"
+				emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"
+				columnsXL="2" columnsL="2" columnsM="2"
+				singleContainerFullSize="false" >
+				<form:content>
+					<!-- Invoice head data -->
+					<core:Title text="{i18n>Invoice.form.section.head}"/>
+					<Label text="{i18n>Invoice.id}"/>
+					<Input value="{/invoice/id}"/>
+					<Label text="{i18n>Invoice.description}"/>
+					<Input value="{/invoice/description}"/>
+					<Label text="{i18n>Invoice.date}"/>
+					<DatePicker
+						value="{/invoice/date}"
+						valueFormat="yyyy-MM-dd"
+						displayFormat="long"
+					/>
+					<Label text="{i18n>Invoice.room}"/>
+					<Select id="invoiceRoom" selectedKey="{/invoice/room}">
+    					<items>
+    						<core:Item text="{i18n>Invoice.room.rossini}" key="rossini"/>
+    						<core:Item text="{i18n>Invoice.room.littmann}" key="littmann"/>
+    					</items>
+    				</Select>
+					<Label text="{i18n>Invoice.comments}"/>
+					<Input value="{/invoice/comments}"/>
 
-						<!-- ************************************************************ -->
-						<!-- Invoice customer data -->
-						<core:Title text="{i18n>Invoice.form.section.customer}"/>
-						<Label text="{i18n>Customer.id}"/>
-	                    <Input value="{/id}" enabled="{settings>/enabled}"/>
-						<Label text="{i18n>Customer.address}"/>
-	                    <Input value="{/customer/address}" enabled="false"/>
-	                    <Label text="{i18n>Customer.firstname} / {i18n>Customer.lastname}"/>
-	                    <Input value="{/customer/firstname}" enabled="false"/>
-	                    <Input value="{/customer/lastname}" enabled="false">
-	                        <layoutData>
-	                            <layout:GridData span="XL1 L4 M6 S12"/>
-	                        </layoutData>
-	                    </Input>
-	                    <Label text="{i18n>Customer.street}"/>
-	                    <Input value="{/customer/street}" enabled="false"/>
-	                    <Label text="{i18n>Customer.zip} / {i18n>Customer.city}"/>
-	                    <Input value="{/customer/zip}" enabled="false">
-	                        <layoutData>
-	                            <layout:GridData span="XL1 L3 M4 S12"/>
-	                        </layoutData>
-	                    </Input>
-	                    <Input value="{/customer/city}" enabled="false"/>
-					</form:content>
-				</form:SimpleForm>
-			</VBox>
+					<!-- ************************************************************ -->
+					<!-- Invoice customer data -->
+					<core:Title text="{i18n>Invoice.form.section.customer}"/>
+					<Label text="{i18n>Customer.id}"/>
+                    <Input value="{/customer/id}" enabled="{settings>/enabled}"/>
+					<Label text="{i18n>Customer.address}"/>
+                    <Input value="{/customer/address}" enabled="false"/>
+                    <Label text="{i18n>Customer.firstname} / {i18n>Customer.lastname}"/>
+                    <Input value="{/customer/firstname}" enabled="false"/>
+                    <Input value="{/customer/lastname}" enabled="false">
+                        <layoutData>
+                            <layout:GridData span="XL1 L4 M6 S12"/>
+                        </layoutData>
+                    </Input>
+                    <Label text="{i18n>Customer.street}"/>
+                    <Input value="{/customer/street}" enabled="false"/>
+                    <Label text="{i18n>Customer.zip} / {i18n>Customer.city}"/>
+                    <Input value="{/customer/zip}" enabled="false">
+                        <layoutData>
+                            <layout:GridData span="XL1 L3 M4 S12"/>
+                        </layoutData>
+                    </Input>
+                    <Input value="{/customer/city}" enabled="false"/>
+				</form:content>
+			</form:SimpleForm>
 		</content>
 	</Panel>
 
 	<!-- ************************************************************ -->
 	<!-- Invoice positions -->
 	<Panel
-		expandable="{device>/system/phone}"
-		expanded="{= !${device>/system/phone}}"
-		backgroundDesign="Transparent">
+		expandable="true"
+		expanded="false"
+		backgroundDesign="Transparent"
+		class="sapUiNoContentPadding">
 
 		<headerToolbar>
 			<Toolbar height="3rem">
 				<core:Icon src="sap-icon://sales-order-item" size="1.5rem"/>
 				<Title text="{i18n>Invoice.panel.positions.title}"/>
 				<ToolbarSpacer/>
-				<!--<Button icon="sap-icon://add" press="onOpenAddContactDialog"/>-->
 			</Toolbar>
 		</headerToolbar>
 
@@ -103,17 +101,25 @@
 				growing="true"
 				growingThreshold="3">
 				<columns>
-					<Column><Text text="{i18n>Invoice.positions.pos}"/></Column>
-					<Column><Text text="{i18n>Invoice.positions.quantity}"/></Column>
-					<Column minScreenWidth="Desktop">
+					<Column width="40%"><Text text="{i18n>Invoice.positions.pos}"/></Column>
+					<Column width="10%" hAlign="End">
+						<Text text="{i18n>Invoice.positions.quantity}"/>
+					</Column>
+					<Column width="10%" minScreenWidth="Desktop" hAlign="End">
 						<Text text="{i18n>Invoice.positions.unitprice}"/>
 					</Column>
-					<Column><Text text="{i18n>Invoice.positions.net}"/></Column>
-					<Column minScreenWidth="Desktop">
+					<Column width="10%" hAlign="End">
+						<Text text="{i18n>Invoice.positions.net}"/>
+					</Column>
+					<Column width="10%" minScreenWidth="Desktop" hAlign="End">
 						<Text text="{i18n>Invoice.positions.vatrate}"/>
 					</Column>
-					<Column><Text text="{i18n>Invoice.positions.vat}"/></Column>
-					<Column><Text text="{i18n>Invoice.positions.gross}"/></Column>
+					<Column width="10%" hAlign="End">
+						<Text text="{i18n>Invoice.positions.vat}"/>
+					</Column>
+					<Column width="10%" hAlign="End">
+						<Text text="{i18n>Invoice.positions.gross}"/>
+					</Column>
 				</columns>
 				<items>
 					<ColumnListItem>
@@ -148,43 +154,43 @@
 					</ColumnListItem>
 				</items>
 			</Table>
-
-			<!-- ************************************************************ -->
-			<!-- Sums -->
-			<HBox class="sapUiSmallMarginTop" width="100%">
-				<VBox class="sapUiSmallMarginEnd">
-                    <Label text="{i18n>Invoice.positions.sums.net}"/>
-					<Input enabled="false" value="{
-						path: '/invoice/sums/net',
-						type: 'sap.ui.model.type.Float',
-						formatOptions: {minFractionDigits: 2, maxFractionDigits: 2}
-					}"/>
-				</VBox>
-				<VBox class="sapUiSmallMarginEnd">
-					<Label text="{i18n>Invoice.positions.sums.vat1}"/>
-					<Input enabled="false" value="{
-						path: '/invoice/sums/vat1',
-						type: 'sap.ui.model.type.Float',
-						formatOptions: {minFractionDigits: 2, maxFractionDigits: 2}
-					}"/>
-				</VBox>
-				<VBox class="sapUiSmallMarginEnd">
-					<Label text="{i18n>Invoice.positions.sums.vat2}"/>
-					<Input enabled="false" value="{
-						path: '/invoice/sums/vat2',
-						type: 'sap.ui.model.type.Float',
-						formatOptions: {minFractionDigits: 2, maxFractionDigits: 2}
-					}"/>
-				</VBox>
-				<VBox class="sapUiSmallMarginEnd">
-					<Label text="{i18n>Invoice.positions.sums.gross}"/>
-					<Input enabled="false" value="{
-						path:'/invoice/sums/gross',
-						type: 'sap.ui.model.type.Float',
-						formatOptions: {minFractionDigits: 2, maxFractionDigits: 2}
-					}"/>
-				</VBox>
-			</HBox>
 		</content>
 	</Panel>
+
+	<!-- ************************************************************ -->
+	<!-- Sums -->
+	<HBox class="sapUiSmallMarginTop" width="100%">
+		<VBox class="sapUiSmallMarginEnd">
+			<Label text="{i18n>Invoice.positions.sums.net}"/>
+			<Input enabled="false" value="{
+				path: '/invoice/sums/net',
+				type: 'sap.ui.model.type.Float',
+				formatOptions: {minFractionDigits: 2, maxFractionDigits: 2}
+			}"/>
+		</VBox>
+		<VBox class="sapUiSmallMarginEnd">
+			<Label text="{i18n>Invoice.positions.sums.vat1}"/>
+			<Input enabled="false" value="{
+				path: '/invoice/sums/vat1',
+				type: 'sap.ui.model.type.Float',
+				formatOptions: {minFractionDigits: 2, maxFractionDigits: 2}
+			}"/>
+		</VBox>
+		<VBox class="sapUiSmallMarginEnd">
+			<Label text="{i18n>Invoice.positions.sums.vat2}"/>
+			<Input enabled="false" value="{
+				path: '/invoice/sums/vat2',
+				type: 'sap.ui.model.type.Float',
+				formatOptions: {minFractionDigits: 2, maxFractionDigits: 2}
+			}"/>
+		</VBox>
+		<VBox class="sapUiSmallMarginEnd">
+			<Label text="{i18n>Invoice.positions.sums.gross}"/>
+			<Input enabled="false" value="{
+				path:'/invoice/sums/gross',
+				type: 'sap.ui.model.type.Float',
+				formatOptions: {minFractionDigits: 2, maxFractionDigits: 2}
+			}"/>
+		</VBox>
+	</HBox>
 </mvc:View>

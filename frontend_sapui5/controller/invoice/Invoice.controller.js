@@ -127,7 +127,8 @@ sap.ui.define([
         },
 
         onAddInvoice: function() {
-
+            var oSplitContainer = this.getView().byId("splitContainer");
+            oSplitContainer.toDetail(this.createId("invoice-new"), "slide");
         },
 
         onNewInvoiceSave: function() {

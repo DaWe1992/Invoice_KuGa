@@ -4,6 +4,8 @@
  * It wraps the db connection and query process.
  */
 
+ "use strict";
+
 // import necessary modules
 var pg = require("pg");
 

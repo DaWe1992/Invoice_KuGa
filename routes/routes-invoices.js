@@ -61,7 +61,7 @@ module.exports = function(app) {
     app.post("/invoices", function(req, res) {
         var oInvoice = req.body;
 
-        // validate the data received
+        // Validate the data received
         if(!validate(oInvoice)) {
             return res.status(400).json({
                 "success": false,
@@ -69,7 +69,7 @@ module.exports = function(app) {
             });
         }
 
-        // generate new invoice id
+        // Generate new invoice id
         getNewInvoiceId(function(sInvoiceId) {
             var sql = "INSERT INTO invoices (" +
                 "inv_id, " +
@@ -99,11 +99,11 @@ module.exports = function(app) {
                     });
                 }
 
-                // check if invoice positions were provided
+                // Check if invoice positions were provided
                 if(oInvoice.invoice.positions) {
-                    // positions were provided
+                    // Positions were provided
                 } else {
-                    // positions were not provided
+                    // Positions were not provided
                     return res.status(201).json({
                         "success": true,
                         "data": {
@@ -319,11 +319,11 @@ function getNewInvoiceId(fCallback) {
         var sYear = sMaxId.substring(0, 4);
         var iIncr = parseInt(sMaxId.substring(4, sMaxId.length));
 
-        // first invoice in new year
+        // First invoice in new year
         if(sCurrYear !== sYear) {
             fCallback(sCurrYear + "001", null);
         }
-        // just another invoice in the same year
+        // Just another invoice in the same year
         else {
             fCallback(sYear + padZero(++iIncr, 3), null);
         }

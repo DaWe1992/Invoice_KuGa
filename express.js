@@ -7,6 +7,7 @@
   * TODO Backend:
   * Error log
   * Refactoring: Naming variables (hungarian notation)
+  * Upper/Lower case in comments
   */
 
 "use strict";

@@ -44,7 +44,7 @@ module.exports = function(app) {
     app.post("/customers", function(req, res) {
         var oCustomer = req.body;
 
-        // validate the data received
+        // Validate the data received
         if(!validate(oCustomer)) {
             return res.status(400).json({
                 "success": false,
@@ -52,7 +52,7 @@ module.exports = function(app) {
             });
         }
 
-        // generate new customer id
+        // Generate new customer id
         getNewCustomerId(oCustomer.zip, function(sCustomerId) {
             var sql = "INSERT INTO customers (" +
                 "cust_id, " +
@@ -84,10 +84,10 @@ module.exports = function(app) {
                     });
                 }
 
-                // check if contact were provided
+                // Check if contact were provided
                 if(oCustomer.contacts) {
-                    // contact were provided
-                    // add customer contacts
+                    // Contact were provided
+                    // Add customer contacts
                     sql = "INSERT INTO customer_contacts (" +
                         "cuco_customer, " +
                         "cuco_contact_type, " +
@@ -104,11 +104,11 @@ module.exports = function(app) {
                         "),";
                     }
 
-                    // remove last comma
+                    // Remove last comma
                     sql = sql.substring(0, sql.length - 1);
                     sql += ";";
 
-                    // save customer contacts in database
+                    // Save customer contacts in database
                     db.query(sql, function(err, result) {
                         if(err) {
                             return res.status(500).json({
@@ -125,7 +125,7 @@ module.exports = function(app) {
                         });
                     });
                 } else {
-                    // contacts were not provided
+                    // Contacts were not provided
                     return res.status(201).json({
                         "success": true,
                         "data": {

@@ -23,11 +23,22 @@ sap.ui.define([
         /**
          * Gets all daily cash earnings from the backend.
          *
-         * @param success (callback in case of success)
-         * @param error (callback in case of error)
+         * @param fSuccess (callback in case of success)
+         * @param fError (callback in case of error)
          */
-        getEarnings: function(success, error) {
-            this._http.perform("GET", "/daily-cash-earnings", success, error);
+        getEarnings: function(fSuccess, fError) {
+            this._http.performGet("/daily-cash-earnings", fSuccess, fError);
+        },
+
+        /**
+         * Adds an earning to the database.
+         *
+         * @param oEarning (earning data to be sent to the server)
+         * @param fSuccess (callback in case of success)
+         * @param fError (callback in case of error)
+         */
+        addEarning: function(oEarning, fSuccess, fError) {
+            this._http.performPost("/daily-cash-earnings", oEarning, fSuccess, fError);
         }
     });
 });

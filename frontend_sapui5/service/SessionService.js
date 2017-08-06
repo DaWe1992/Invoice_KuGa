@@ -23,11 +23,11 @@ sap.ui.define([
         /**
          * Logs the user out.
          *
-         * @param success (callback in case of success)
-         * @param error (callback in case of error)
+         * @param fSuccess (callback in case of success)
+         * @param fError (callback in case of error)
          */
         logout: function(success, error) {
-            this._http.perform("POST", "/logout", success, error);
+            this._http.performPost("/logout", fSuccess, fError);
         }
     });
 });

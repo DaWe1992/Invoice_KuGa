@@ -5,32 +5,38 @@
 
 "use strict";
 
-// Import necessary modules
+// import necessary modules
 var db = require("../db.js");
+var logger = require("../logger.js");
 
-module.exports = function(app) {
+module.exports = function(oApp) {
 
     /**
      * Returns a list of all customers.
      *
      * @name /customers
      */
-    app.get("/customers", function(req, res) {
-        var sql = "SELECT cust_id AS id, cust_address AS address, " +
-        "cust_firstname AS firstname, cust_lastname AS lastname FROM customers;";
+    oApp.get("/customers", function(oReq, oRes) {
+        var sSql = "SELECT " +
+            "cust_id AS id, " +
+            "cust_address AS address, " +
+            "cust_firstname AS firstname, " +
+            "cust_lastname AS lastname " +
+        "FROM customers;";
 
-        db.query(sql, function(err, result) {
-            if(err) {
-                return res.status(500).json({
+        db.query(sSql, function(oErr, oResult) {
+            if(oErr) {
+                logger.log(logger.levels.ERR, oErr)
+                return oRes.status(500).json({
                     "success": false,
-                    "err": err
+                    "err": oErr
                 });
             }
 
-            return res.status(200).json({
+            return oRes.status(200).json({
                 "success": true,
-                "count": result.rows.length,
-                "data": result.rows
+                "count": oResult.rows.length,
+                "data": oResult.rows
             });
         });
     });
@@ -41,20 +47,20 @@ module.exports = function(app) {
      * @name /customers
      * @param customer (in body, obligatory)
      */
-    app.post("/customers", function(req, res) {
-        var oCustomer = req.body;
+    oApp.post("/customers", function(oReq, oRes) {
+        var oCustomer = oReq.body;
 
-        // Validate the data received
+        // validate the data received
         if(!validate(oCustomer)) {
-            return res.status(400).json({
+            return oRes.status(400).json({
                 "success": false,
                 "err": "Please fill in all mandatory fields!"
             });
         }
 
-        // Generate new customer id
+        // generate new customer id
         getNewCustomerId(oCustomer.zip, function(sCustomerId) {
-            var sql = "INSERT INTO customers (" +
+            var sSql = "INSERT INTO customers (" +
                 "cust_id, " +
                 "cust_address, " +
                 "cust_firstname, " +
@@ -72,23 +78,24 @@ module.exports = function(app) {
                 "'" + oCustomer.street + "', " +
                 "'" + oCustomer.zip + "', " +
                 "'" + oCustomer.city + "', " +
-                "'" + req.user.username + "', " +
+                "'" + oReq.user.username + "', " +
                 "current_date" +
             ");";
 
-            db.query(sql, function(err, result) {
-                if(err) {
-                    return res.status(500).json({
+            db.query(sSql, function(oErr, oResult) {
+                if(oErr) {
+                    logger.log(logger.levels.ERR, oErr)
+                    return oRes.status(500).json({
                         "success": false,
-                        "err": err
+                        "err": oErr
                     });
                 }
 
-                // Check if contact were provided
+                // check if contact were provided
                 if(oCustomer.contacts) {
-                    // Contact were provided
-                    // Add customer contacts
-                    sql = "INSERT INTO customer_contacts (" +
+                    // contact were provided
+                    // add customer contacts
+                    sSql = "INSERT INTO customer_contacts (" +
                         "cuco_customer, " +
                         "cuco_contact_type, " +
                         "cuco_contact, " +
@@ -96,7 +103,7 @@ module.exports = function(app) {
                     ") VALUES";
 
                     for(var i = 0; i < oCustomer.contacts.length; i++) {
-                        sql += " (" +
+                        sSql += " (" +
                             "'" + sCustomerId + "', " +
                             "'" + oCustomer.contacts[i].type + "', " +
                             "'" + oCustomer.contacts[i].data + "', " +
@@ -104,20 +111,21 @@ module.exports = function(app) {
                         "),";
                     }
 
-                    // Remove last comma
-                    sql = sql.substring(0, sql.length - 1);
-                    sql += ";";
+                    // remove last comma
+                    sSql = sSql.substring(0, sSql.length - 1);
+                    sSql += ";";
 
-                    // Save customer contacts in database
-                    db.query(sql, function(err, result) {
-                        if(err) {
-                            return res.status(500).json({
+                    // save customer contacts in database
+                    db.query(sSql, function(oErr, oResult) {
+                        if(oErr) {
+                            logger.log(logger.levels.ERR, oErr)
+                            return oRes.status(500).json({
                                 "success": false,
-                                "err": err
+                                "err": oErr
                             });
                         }
 
-                        return res.status(201).json({
+                        return oRes.status(201).json({
                             "success": true,
                             "data": {
                                 "id": sCustomerId
@@ -125,8 +133,8 @@ module.exports = function(app) {
                         });
                     });
                 } else {
-                    // Contacts were not provided
-                    return res.status(201).json({
+                    // contacts were not provided
+                    return oRes.status(201).json({
                         "success": true,
                         "data": {
                             "id": sCustomerId
@@ -143,39 +151,54 @@ module.exports = function(app) {
      * @name /customer/:id
      * @param id (obligatory)
      */
-    app.get("/customers/:id", function(req, res) {
-        var id = req.params.id;
-        var response = {};
+    oApp.get("/customers/:id", function(oReq, oRes) {
+        var sId = oReq.params.id;
+        var oResponse = {};
 
-        var sql = "SELECT cust_id AS id, cust_address AS address, " +
-        "cust_firstname AS firstname, cust_lastname AS lastname, cust_street AS street, " +
-        "cust_zip AS zip, cust_city AS city FROM customers WHERE cust_id = '" + id + "';";
+        // select customer data
+        var sSql = "SELECT " +
+            "cust_id AS id, " +
+            "cust_address AS address, " +
+            "cust_firstname AS firstname, " +
+            "cust_lastname AS lastname, " +
+            "cust_street AS street, " +
+            "cust_zip AS zip, " +
+            "cust_city AS city " +
+        "FROM customers " +
+        "WHERE cust_id = '" + sId + "';";
 
-        db.query(sql, function(err, result) {
-            if(err) {
-                return res.status(500).json({
+        db.query(sSql, function(oErr, oResult) {
+            if(oErr) {
+                logger.log(logger.levels.ERR, oErr)
+                return oRes.status(500).json({
                     "success": false,
-                    "err": err
+                    "err": oErr
                 });
             }
 
-            response.customer = result.rows[0];
-            sql = "SELECT cuco_contact_type AS type, " +
-            "cuco_contact AS data, cuco_comments AS comments " +
-            "FROM customer_contacts WHERE cuco_customer = '" + id + "';";
+            oResponse.customer = oResult.rows[0];
 
-            db.query(sql, function(err, result) {
-                if(err) {
-                    return res.status(500).json({
+            // select customer contacts
+            sSql = "SELECT " +
+                "cuco_contact_type AS type, " +
+                "cuco_contact AS data, " +
+                "cuco_comments AS comments " +
+            "FROM customer_contacts " +
+            "WHERE cuco_customer = '" + sId + "';";
+
+            db.query(sSql, function(oErr, oResult) {
+                if(oErr) {
+                    logger.log(logger.levels.ERR, oErr)
+                    return oRes.status(500).json({
                         "success": false,
-                        "err": err
+                        "err": oErr
                     });
                 }
 
-                response.contacts = result.rows;
-                return res.status(200).json({
+                oResponse.contacts = oResult.rows;
+                return oRes.status(200).json({
                     "success": true,
-                    "data": response
+                    "data": oResponse
                 });
             });
         });
@@ -187,29 +210,34 @@ module.exports = function(app) {
      * @name /customers/:id/islocked
      * @param id (obligatory)
      */
-    app.get("/customers/:id/islocked", function(req, res) {
-        var id = req.params.id;
-        var response;
+    oApp.get("/customers/:id/islocked", function(oReq, oRes) {
+        var sId = oReq.params.id;
+        var oResponse;
 
-        var sql = "SELECT culo_id AS id, culo_user_email AS email, culo_user_name AS user " +
-        "FROM customers_lock WHERE culo_id = '" + id + "';";
+        var sSql = "SELECT " +
+            "culo_id AS id, " +
+            "culo_user_email AS email, " +
+            "culo_user_name AS user " +
+        "FROM customers_lock " +
+        "WHERE culo_id = '" + sId + "';";
 
-        db.query(sql, function(err, result) {
-            if(err) {
-                return res.status(500).json({
+        db.query(sSql, function(oErr, oResult) {
+            if(oErr) {
+                logger.log(logger.levels.ERR, oErr)
+                return oRes.status(500).json({
                     "success": false,
-                    "err": err
+                    "err": oErr
                 });
             }
 
-            response = ((result.rows.length > 0)
-                ? result.rows[0]
+            oResponse = ((oResult.rows.length > 0)
+                ? oResult.rows[0]
                 : false
             );
 
-            return res.status(200).json({
+            return oRes.status(200).json({
                 "success": true,
-                "data": response
+                "data": oResponse
             });
         });
     });
@@ -220,20 +248,28 @@ module.exports = function(app) {
      * @name /customers/id/lock
      * @param id (obligatory)
      */
-    app.post("/customers/:id/lock", function(req, res) {
-        var id = req.params.id;
-        var sql = "INSERT INTO customers_lock (culo_id, culo_user_email, culo_user_name) VALUES ('"
-        + id + "', '" + res.locals.user.email + "', '" + res.locals.user.fullName + "');";
+    oApp.post("/customers/:id/lock", function(oReq, oRes) {
+        var sId = oReq.params.id;
+        var sSql = "INSERT INTO customers_lock (" +
+            "culo_id, " +
+            "culo_user_email, " +
+            "culo_user_name" +
+        ") VALUES (" +
+            "'" + id + "'," +
+            "'" + res.locals.user.email + "', " +
+            "'" + res.locals.user.fullName + "'" +
+        ");";
 
-        db.query(sql, function(err, result) {
-            if(err) {
-                return res.status(500).json({
+        db.query(sSql, function(oErr, oResult) {
+            if(oErr) {
+                logger.log(logger.levels.ERR, oErr)
+                return oRes.status(500).json({
                     "success": false,
-                    "err": err
+                    "err": oErr
                 });
             }
 
-            return res.status(200).json({
+            return oRes.status(200).json({
                 "success": true
             });
         });
@@ -245,19 +281,20 @@ module.exports = function(app) {
      * @name /customers/id/unlock
      * @param id (obligatory)
      */
-    app.post("/customers/:id/unlock", function(req, res) {
-        var id = req.params.id;
-        var sql = "DELETE FROM customers_lock WHERE culo_id = '" + id + "';";
+    oApp.post("/customers/:id/unlock", function(oReq, oRes) {
+        var sId = oReq.params.id;
+        var sSql = "DELETE FROM customers_lock WHERE culo_id = '" + sId + "';";
 
-        db.query(sql, function(err, result) {
-            if(err) {
-                return res.status(500).json({
+        db.query(sSql, function(oErr, oResult) {
+            if(oErr) {
+                logger.log(logger.levels.ERR, oErr)
+                return oRes.status(500).json({
                     "success": false,
-                    "err": err
+                    "err": oErr
                 });
             }
 
-            return res.status(200).json({
+            return oRes.status(200).json({
                 "success": true
             });
         });
@@ -271,9 +308,12 @@ module.exports = function(app) {
  * @param fCallback
  */
 function getNewCustomerId(sZip, fCallback) {
-    getCounterValue(function(counter, err) {
-        if(err) fCallback(null, err);
-        fCallback(sZip + counter);
+    getCounterValue(function(iCounter, oErr) {
+        if(oErr) {
+            logger.log(logger.levels.ERR, oErr)
+            fCallback(null, oErr);
+        }
+        fCallback(sZip + iCounter);
     });
 }
 
@@ -283,14 +323,18 @@ function getNewCustomerId(sZip, fCallback) {
  * @param fCallback
  */
 function getCounterValue(fCallback) {
-    var sql = "SELECT max(" +
+    var sSql = "SELECT max(" +
         "substring(cust_id from 6 for (length(cust_id) - 5))" +
     ") AS counter FROM customers;";
 
-    db.query(sql, function(err, result) {
-        if(err) fCallback(null, err);
-        var counter = result.rows[0].counter;
-        fCallback(counter ? ++counter : 1, null);
+    db.query(sSql, function(oErr, oResult) {
+        if(oErr) {
+            logger.log(logger.levels.ERR, oErr)
+            fCallback(null, oErr);
+        }
+
+        var iCounter = oResult.rows[0].counter;
+        fCallback(iCounter ? ++iCounter : 1, null);
     });
 }
 

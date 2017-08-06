@@ -27,7 +27,7 @@ sap.ui.define([
          * @param fError (callback in case of error)
          */
         getInvoices: function(fSuccess, fError) {
-            this._http.perform("GET", "/invoices", fSuccess, fError);
+            this._http.performGet("/invoices", fSuccess, fError);
         },
 
         /**
@@ -38,7 +38,7 @@ sap.ui.define([
          * @param fError (callback in case of error)
          */
         getInvoice: function(id, fSuccess, fError) {
-            this._http.perform("GET", "/invoices/" + id, fSuccess, fError);
+            this._http.performGet("/invoices/" + id, fSuccess, fError);
         },
 
         /**

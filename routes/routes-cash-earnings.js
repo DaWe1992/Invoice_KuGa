@@ -5,33 +5,38 @@
 
 "use strict";
 
-// Import necessary modules
+// import necessary modules
 var db = require("../db.js");
+var logger = require("../logger.js");
 
-module.exports = function(app) {
+module.exports = function(oApp) {
 
     /**
      * Returns a list of all cash-earnings.
      *
      * @name /cash-earnings
      */
-    app.get("/daily-cash-earnings", function(req, res) {
-        var sql = "SELECT ce_id AS id, to_char(ce_date, 'YYYY-MM-DD') AS date, " +
-                     "ce_amount AS amount, ce_description AS description " +
-                  "FROM cash_earnings;";
+    oApp.get("/daily-cash-earnings", function(oReq, oRes) {
+        var sSql = "SELECT " +
+            "ce_id AS id, " +
+            "to_char(ce_date, 'YYYY-MM-DD') AS date, " +
+            "ce_amount AS amount, " +
+            "ce_description AS description " +
+        "FROM cash_earnings;";
 
-        db.query(sql, function(err, result) {
-            if(err) {
-                return res.status(500).json({
+        db.query(sSql, function(oErr, oResult) {
+            if(oErr) {
+                logger.log(logger.levels.ERR, oErr)
+                return oRes.status(500).json({
                     "success": false,
-                    "err": err
+                    "err": oErr
                 });
             }
 
-            return res.status(200).json({
+            return oRes.status(200).json({
                 "success": true,
-                "count": result.rows.length,
-                "data": result.rows
+                "count": oResult.rows.length,
+                "data": oResult.rows
             });
         });
     });
@@ -42,23 +47,34 @@ module.exports = function(app) {
      * @name /daily-cash-earnings
      * @param earning (in body, obligatory)
      */
-    app.post("/daily-cash-earnings", function(req, res) {
-        var earning = req.body;
-        var sql = "INSERT INTO cash_earnings (ce_date, ce_amount, ce_description) " +
-                  "VALUES ('" + earning.date + "', '" + earning.amount + "', '" + earning.description + "')" +
-                  "RETURNING ce_id AS id, to_char(ce_date, 'YYYY-MM-DD') AS date, ce_amount AS amount, ce_description AS description;";
+    oApp.post("/daily-cash-earnings", function(oReq, oRes) {
+        var oEarning = oReq.body;
+        var sSql = "INSERT INTO cash_earnings (" +
+            "ce_date, " +
+            "ce_amount, " +
+            "ce_description" +
+        ") VALUES (" +
+            "'" + oEarning.date + "', " +
+            "'" + oEarning.amount + "', " +
+            "'" + oEarning.description + "'" +
+        ") RETURNING " +
+            "ce_id AS id, " +
+            "to_char(ce_date, 'YYYY-MM-DD') AS date, " +
+            "ce_amount AS amount, " +
+            "ce_description AS description;";
 
-        db.query(sql, function(err, result) {
-            if(err) {
-                return res.status(500).json({
+        db.query(sSql, function(oErr, oResult) {
+            if(oErr) {
+                logger.log(logger.levels.ERR, oErr)
+                return oRes.status(500).json({
                     "success": false,
-                    "err": err
+                    "err": oErr
                 });
             }
 
-            return res.status(201).json({
+            return oRes.status(201).json({
                 "success": true,
-                "data": result
+                "data": oResult
             });
         });
     });
@@ -69,19 +85,20 @@ module.exports = function(app) {
      * @name /daily-cash-earnings/:id
      * @param id (obligatory)
      */
-    app.delete("/daily-cash-earnings/:id", function(req, res) {
-        var id = req.params.id;
-        var sql = "DELETE FROM cash_earnings WHERE ce_id = '" + id + "';";
+    oApp.delete("/daily-cash-earnings/:id", function(oReq, oRes) {
+        var sId = oReq.params.id;
+        var sSql = "DELETE FROM cash_earnings WHERE ce_id = '" + sId + "';";
 
-        db.query(sql, function(err, result) {
-            if(err) {
-                return res.status(500).json({
+        db.query(sSql, function(oErr, oResult) {
+            if(oErr) {
+                logger.log(logger.levels.ERR, oErr)
+                return oRes.status(500).json({
                     "success": false,
-                    "err": err
+                    "err": oErr
                 });
             }
 
-            return res.status(200).json({
+            return oRes.status(200).json({
                 "success": true
             });
         });

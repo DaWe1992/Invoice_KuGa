@@ -121,8 +121,8 @@
          * @param oEvent
          */
         onAddCustomer: function(oEvent) {
-            var oSplitContainer = this.getView().byId("splitContainer");
-            oSplitContainer.toDetail(this.createId("customer-new"), "slide");
+            this.getView().byId("splitContainer")
+            .toDetail(this.createId("customer-new"), "slide");
         },
 
         /**

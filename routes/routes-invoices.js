@@ -5,49 +5,63 @@
 
 "use strict";
 
-// Import necessary modules
+// import necessary modules
 var db = require("../db.js");
 var fs = require("fs");
 var pdf = require("html-pdf");
 var mustache = require("mustache");
+var logger = require("../logger.js");
 
-// Options for pdf creation
-var pdf_options = {
+// options for pdf creation
+var oPdfOptions = {
     "format": "A4"
-    //"orientation": "landscape"
     // for further options, see: https://www.npmjs.com/package/html-pdf
 };
 
-module.exports = function(app) {
+module.exports = function(oApp) {
 
     /**
      * Returns a list of all invoices.
      *
      * @name /invoices
      */
-    app.get("/invoices", function(req, res) {
+    oApp.get("/invoices", function(oReq, oRes) {
 
-        // Get a list of all invoices including their gross amounts
-        var sql = "SELECT inv_id AS id, to_char(inv_date, 'YYYY-MM-DD') AS date, inv_description AS description, (" +
-                      "SELECT SUM((ipos_qty * ipos_net_price) * (1 + ipos_vat)) " +
-                      "FROM invoice_positions WHERE ipos_inv_id = inv_id" +
-                  "), cust_address AS custaddress, cust_firstname AS custfirstname, cust_lastname AS custlastname, " +
-                  "cust_street AS custstreet, cust_zip AS custzip, cust_city AS custcity " +
-                  "FROM invoices INNER JOIN customers ON invoices.inv_cust_id = customers.cust_id " +
-                  "ORDER BY custlastname;";
+        // get a list of all invoices including their gross amounts
+        var sSql = "SELECT " +
+            "inv_id AS id, " +
+            "to_char(inv_date, 'YYYY-MM-DD') AS date, " +
+            "inv_description AS description, " +
+            "(" +
+                "SELECT " +
+                    "SUM((ipos_qty * ipos_net_price) * (1 + ipos_vat)) " +
+                "FROM invoice_positions " +
+                "WHERE ipos_inv_id = inv_id" +
+            "), " +
+            "cust_address AS custaddress, " +
+            "cust_firstname AS custfirstname, " +
+            "cust_lastname AS custlastname, " +
+            "cust_street AS custstreet, cust_zip AS custzip, cust_city AS custcity " +
+        "FROM " +
+            "invoices " +
+        "INNER JOIN " +
+            "customers " +
+        "ON invoices.inv_cust_id = customers.cust_id " +
+        "ORDER BY custlastname;";
 
-        db.query(sql, function(err, result) {
-            if(err) {
-                return res.status(500).json({
+        db.query(sSql, function(oErr, oResult) {
+            if(oErr) {
+                logger.log(logger.levels.ERR, oErr)
+                return oRes.status(500).json({
                     "success": false,
-                    "err": err
+                    "err": oErr
                 });
             }
 
-            return res.status(200).json({
+            return oRes.status(200).json({
                 "success": true,
-                "count": result.rows.length,
-                "data": result.rows
+                "count": oResult.rows.length,
+                "data": oResult.rows
             });
         });
     });
@@ -58,20 +72,20 @@ module.exports = function(app) {
      * @name /invoices
      * @param invoice (in body, obligatory)
      */
-    app.post("/invoices", function(req, res) {
-        var oInvoice = req.body;
+    oApp.post("/invoices", function(oReq, oRes) {
+        var oInvoice = oReq.body;
 
-        // Validate the data received
+        // validate the data received
         if(!validate(oInvoice)) {
-            return res.status(400).json({
+            return oRes.status(400).json({
                 "success": false,
                 "err": "Please fill in all mandatory fields!"
             });
         }
 
-        // Generate new invoice id
+        // generate new invoice id
         getNewInvoiceId(function(sInvoiceId) {
-            var sql = "INSERT INTO invoices (" +
+            var sSql = "INSERT INTO invoices (" +
                 "inv_id, " +
                 "inv_cust_id, " +
                 "inv_date, " +
@@ -89,24 +103,25 @@ module.exports = function(app) {
                     : oInvoice.invoice.date) + "', " +
                 "'" + oInvoice.invoice.room + "', " +
                 "'" + oInvoice.invoice.description + "', " +
-                "'" + req.user.username + "', " +
+                "'" + oReq.user.username + "', " +
                 "current_date" +
             ");";
 
-            db.query(sql, function(err, result) {
-                if(err) {
-                    return res.status(500).json({
+            db.query(sSql, function(oErr, oResult) {
+                if(oErr) {
+                    logger.log(logger.levels.ERR, oErr)
+                    return oRes.status(500).json({
                         "success": false,
-                        "err": err
+                        "err": oErr
                     });
                 }
 
-                // Check if invoice positions were provided
+                // check if invoice positions were provided
                 if(oInvoice.invoice.positions) {
-                    // Positions were provided
+                    // positions were provided
                 } else {
-                    // Positions were not provided
-                    return res.status(201).json({
+                    // positions were not provided
+                    return oRes.status(201).json({
                         "success": true,
                         "data": {
                             "id": sInvoiceId
@@ -123,21 +138,22 @@ module.exports = function(app) {
      * @name /invoices/:id
      * @param id (obligatory)
      */
-    app.get("/invoices/:id", function(req, res) {
-        var id = req.params.id;
+    oApp.get("/invoices/:id", function(oReq, oRes) {
+        var sId = oReq.params.id;
 
-        // Get the invoice data
-        getInvoiceById(id, function(data, err) {
-            if(err) {
-                return res.status(500).json({
+        // get the invoice data
+        getInvoiceById(sId, function(oData, oErr) {
+            if(oErr) {
+                logger.log(logger.levels.ERR, oErr)
+                return oRes.status(500).json({
                     "success": false,
-                    "err": err
+                    "err": oErr
                 });
             }
 
-            return res.status(200).json({
+            return oRes.status(200).json({
                 "success": true,
-                "data": data
+                "data": oData
             });
         });
     });
@@ -148,25 +164,26 @@ module.exports = function(app) {
      * @name /invoices/:id/print
      * @param id (obligatory)
      */
-    app.get("/invoices/:id/print", function(req, res) {
-        var id = req.params.id;
+    oApp.get("/invoices/:id/print", function(oReq, oRes) {
+        var sId = oReq.params.id;
 
-        // Get the invoice data
-        getInvoiceById(id, function(data, err) {
-            if(err) {
-                return res.status(500).json({
+        // get the invoice data
+        getInvoiceById(sId, function(oInvoice, oErr) {
+            if(oErr) {
+                logger.log(logger.levels.ERR, oErr)
+                return oRes.status(500).json({
                     "success": false,
-                    "err": err
+                    "err": oErr
                 });
             }
 
-            readAndRenderTemplate(data, function(html) {
+            readAndRenderTemplate(oInvoice, function(sHtml) {
 
-                // Create pdf and pipe it to the response stream
-                pdf.create(html, pdf_options).toStream(function(err, stream) {
-                    res.setHeader("Content-type", "application/pdf");
-                    res.setHeader("Content-disposition", "attachment; filename=Rechnung_" + data.invoice.id + ".pdf");
-                    stream.pipe(res);
+                // create pdf and pipe it to the response stream
+                pdf.create(sHtml, oPdfOptions).toStream(function(oErr, oStream) {
+                    oRes.setHeader("Content-type", "application/pdf");
+                    oRes.setHeader("Content-disposition", "attachment; filename=Rechnung_" + oInvoice.invoice.id + ".pdf");
+                    oStream.pipe(oRes);
                 });
             });
         });
@@ -178,7 +195,7 @@ module.exports = function(app) {
      * @name /invoices/:id/positions
      * @param id (obligatory)
      */
-    app.get("/invoices/:id/positions", function(req, res) {
+    oApp.get("/invoices/:id/positions", function(oReq, oRes) {
 
     });
 
@@ -188,23 +205,33 @@ module.exports = function(app) {
      * @name /invoices/:id/positions
      * @param id (obligatory)
      */
-    app.post("/invoices/:id/positions", function(req, res) {
-        var id = req.params.id;
-        var item = req.body;
-        var sql = "INSERT INTO invoice_positions (ipos_inv_id, ipos_description, ipos_qty, ipos_net_price, ipos_vat) " +
-                  "VALUES ('" + id + "', '" + item.pos + "', '" + item.qty + "', '" + item.unitprice + "', '" + item.vatrate + "');";
+    oApp.post("/invoices/:id/positions", function(oReq, oRes) {
+        var sId = oReq.params.id;
+        var oPosition = oReq.body;
+        var sSql = "INSERT INTO invoice_positions (" +
+            "ipos_inv_id, " +
+            "ipos_description, " +
+            "ipos_qty, " +
+            "ipos_net_price, " +
+            "ipos_vat" +
+        ") VALUES (" +
+            "'" + sId + "', " +
+            "'" + oPosition.pos + "', " +
+            "'" + oPosition.qty + "', " +
+            "'" + oPosition.unitprice + "', " +
+            "'" + oPosition.vatrate + "');";
 
-        db.query(sql, function(err, result) {
-            if(err) {
-                return res.status(500).json({
+        db.query(sSql, function(oErr, oResult) {
+            if(oErr) {
+                logger.log(logger.levels.ERR, oErr)
+                return oRes.status(500).json({
                     "success": false,
-                    "err": err
+                    "err": oErr
                 });
             }
 
-            return res.status(200).json({
-                "success": true,
-                "data": data
+            return oRes.status(200).json({
+                "success": true
             });
         });
     });
@@ -214,46 +241,76 @@ module.exports = function(app) {
  * Gets the data for the
  * invoice specified.
  *
- * @param id
+ * @param sId
  * @param fCallback
  */
-function getInvoiceById(id, fCallback) {
-    // Initialize empty object
-    var data = {};
+function getInvoiceById(sId, fCallback) {
+    // initialize empty object
+    var oResponse = {};
 
-    // Load customer data
-    var sql = "SELECT customers.cust_address AS address, customers.cust_firstname AS firstname, customers.cust_lastname AS lastname, " +
-                  "customers.cust_street AS street, customers.cust_zip AS zip, customers.cust_city AS city " +
-              "FROM customers INNER JOIN invoices ON customers.cust_id = invoices.inv_cust_id " +
-              "WHERE invoices.inv_id = '" + id + "';"
+    // load customer data
+    var sSql = "SELECT " +
+        "customers.cust_address AS address, " +
+        "customers.cust_firstname AS firstname, " +
+        "customers.cust_lastname AS lastname, " +
+        "customers.cust_street AS street, " +
+        "customers.cust_zip AS zip, " +
+        "customers.cust_city AS city " +
+    "FROM " +
+        "customers " +
+    "INNER JOIN " +
+        "invoices " +
+    "ON customers.cust_id = invoices.inv_cust_id " +
+    "WHERE invoices.inv_id = '" + sId + "';"
 
-    db.query(sql, function(err, result) {
-        if(err) fCallback(null, err);
-        data.customer = result.rows[0];
+    db.query(sSql, function(oErr, oResult) {
+        if(oErr) {
+            logger.log(logger.levels.ERR, oErr)
+            fCallback(null, oErr);
+        }
 
-        // Load invoice data
-        sql = "SELECT inv_id AS id, inv_description AS description, to_char(inv_date, 'DD.MM.YYYY') AS date " +
-        "FROM invoices WHERE inv_id = '" + id + "';";
+        oResponse.customer = oResult.rows[0];
 
-        db.query(sql, function(err, result) {
-            if(err) fCallback(null, err);
-            data.invoice = result.rows[0];
+        // load invoice data
+        sSql = "SELECT " +
+            "inv_id AS id, " +
+            "inv_description AS description, " +
+            "to_char(inv_date, 'DD.MM.YYYY') AS date " +
+        "FROM invoices " +
+        "WHERE inv_id = '" + sId + "';";
 
-            // Load invoice positions
-            sql = "SELECT ipos_description AS pos, ipos_qty AS qty, ipos_net_price AS unitprice, " +
-                      "ROUND((ipos_qty * ipos_net_price)::numeric,2) AS net, ipos_vat AS vatrate, ROUND(((ipos_qty * ipos_net_price) * ipos_vat)::numeric,2) AS vat, " +
-                      "ROUND(((ipos_qty * ipos_net_price) + ((ipos_qty * ipos_net_price) * ipos_vat))::numeric,2) AS gross " +
-                  "FROM invoice_positions " +
-                  "WHERE ipos_inv_id = '" + id + "';";
+        db.query(sSql, function(oErr, oResult) {
+            if(oErr) {
+                logger.log(logger.levels.ERR, oErr)
+                fCallback(null, oErr);
+            }
 
-            db.query(sql, function(err, result) {
-                if(err) fCallback(null, err)
-                data.invoice.positions = result.rows;
+            oResponse.invoice = oResult.rows[0];
+
+            // load invoice positions
+            sSql = "SELECT " +
+                "ipos_description AS pos, " +
+                "ipos_qty AS qty, " +
+                "ipos_net_price AS unitprice, " +
+                "ROUND((ipos_qty * ipos_net_price)::numeric, 2) AS net, " +
+                "ipos_vat AS vatrate, " +
+                "ROUND(((ipos_qty * ipos_net_price) * ipos_vat)::numeric, 2) AS vat, " +
+                "ROUND(((ipos_qty * ipos_net_price) + ((ipos_qty * ipos_net_price) * ipos_vat))::numeric, 2) AS gross " +
+            "FROM invoice_positions " +
+            "WHERE ipos_inv_id = '" + sId + "';";
+
+            db.query(sSql, function(oErr, oResult) {
+                if(oErr) {
+                    logger.log(logger.levels.ERR, oErr)
+                    fCallback(null, oErr)
+                }
+
+                oResponse.invoice.positions = oResult.rows;
 
                 // Calculate the sums
-                getSums(data.invoice.positions, function(sums) {
-                    data.invoice.sums = sums;
-                    fCallback(data, null);
+                getSums(oResponse.invoice.positions, function(oSums) {
+                    oResponse.invoice.sums = oSums;
+                    fCallback(oResponse, null);
                 });
             });
         });
@@ -267,24 +324,24 @@ function getInvoiceById(id, fCallback) {
  * @param fCallback
  */
 function getSums(aPositions, fCallback) {
-    var sumNet = 0;
-    var sumVat1 = 0; // 7%
-    var sumVat2 = 0; // 19%
-    var sumGross = 0;
+    var dSumNet = 0;
+    var dSumVat1 = 0; // 7%
+    var dSumVat2 = 0; // 19%
+    var dSumGross = 0;
 
     // loop over positions
     aPositions.forEach(function(oPos) {
-        sumNet += Number(oPos.net);
-        sumGross += Number(oPos.gross);
-        sumVat1 += (oPos.vatrate === "0.07" ? Number(oPos.vat) : 0);
-        sumVat2 += (oPos.vatrate === "0.19" ? Number(oPos.vat) : 0);
+        dSumNet += Number(oPos.net);
+        dSumGross += Number(oPos.gross);
+        dSumVat1 += (oPos.vatrate === "0.07" ? Number(oPos.vat) : 0);
+        dSumVat2 += (oPos.vatrate === "0.19" ? Number(oPos.vat) : 0);
     });
 
     fCallback({
-        net: sumNet.toFixed(2),
-        gross: sumGross.toFixed(2),
-        vat1: sumVat1.toFixed(2),
-        vat2: sumVat2.toFixed(2)
+        net: dSumNet.toFixed(2),
+        gross: dSumGross.toFixed(2),
+        vat1: dSumVat1.toFixed(2),
+        vat2: dSumVat2.toFixed(2)
     });
 }
 
@@ -292,19 +349,19 @@ function getSums(aPositions, fCallback) {
  * Reads and renders an HTML template
  * with the data specified.
  *
- * @param oData
+ * @param oInvoice
  * @param fCallback
  */
-function readAndRenderTemplate(data, fCallback) {
-    // Read template
-    fs.readFile("./template/invoice.html", "utf-8", function(err, oTemplate) {
-        var oHtml;
+function readAndRenderTemplate(oInvoice, fCallback) {
+    // read template
+    fs.readFile("./template/invoice.html", "utf-8", function(oErr, oTemplate) {
+        var sHtml;
 
-        // Render template with data
+        // render template with data
         mustache.parse(oTemplate);
-        oHtml = mustache.render(template, oData);
+        sHtml = mustache.render(oTemplate, oInvoice);
 
-        fCallback(oHtml);
+        fCallback(sHtml);
     });
 }
 
@@ -316,13 +373,14 @@ function readAndRenderTemplate(data, fCallback) {
 function getNewInvoiceId(fCallback) {
     var sCurrYear = new Date().getFullYear();
 
-    getMaxInvoiceId(function(sMaxId, err) {
-        if(err) {
-            fCallback(null, err);
+    getMaxInvoiceId(function(sMaxId, oErr) {
+        if(oErr) {
+            logger.log(logger.levels.ERR, oErr)
+            fCallback(null, oErr);
             return;
         }
 
-        // If first invoice in database
+        // if first invoice in database
         if(!sMaxId) {
             fCallback(sCurrYear + padZero(1, 3), null);
             return;
@@ -331,11 +389,11 @@ function getNewInvoiceId(fCallback) {
         var sYear = sMaxId.substring(0, 4);
         var iIncr = parseInt(sMaxId.substring(4, sMaxId.length));
 
-        // First invoice in new year
+        // first invoice in new year
         if(sCurrYear != sYear) {
             fCallback(sCurrYear + padZero(1, 3), null);
         }
-        // Just another invoice in the same year
+        // just another invoice in the same year
         else {
             fCallback(sYear + padZero(++iIncr, 3), null);
         }
@@ -348,11 +406,14 @@ function getNewInvoiceId(fCallback) {
  * @param fCallback
  */
 function getMaxInvoiceId(fCallback) {
-    var sql = "SELECT max(inv_id) AS maxid FROM invoices;";
+    var sSql = "SELECT max(inv_id) AS maxid FROM invoices;";
 
-    db.query(sql, function(err, result) {
-        if(err) fCallback(null, err);
-        fCallback(result.rows[0].maxid, null);
+    db.query(sSql, function(oErr, oResult) {
+        if(oErr) {
+            logger.log(logger.levels.ERR, oErr)
+            fCallback(null, oErr);
+        }
+        fCallback(oResult.rows[0].maxid, null);
     });
 }
 
@@ -360,12 +421,12 @@ function getMaxInvoiceId(fCallback) {
  * Adds leading zeros to a number.
  * e. g.: padZero(34, 5) => 00034
  *
- * @param nNum (number to be padded with zeros)
+ * @param iNum (number to be padded with zeros)
  * @param iSize (number of digits in total)
  * @return number padded with zeros
  */
-function padZero(nNum, iSize) {
-    var sNum = nNum + "";
+function padZero(iNum, iSize) {
+    var sNum = iNum + "";
     while(sNum.length < iSize) sNum = "0" + sNum;
     return sNum;
 }

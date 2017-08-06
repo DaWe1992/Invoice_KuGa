@@ -18,18 +18,16 @@ sap.ui.define([
         constructor: function() {},
 
         /**
-         * Performs an AJAX request.
+         * Performs a AJAX GET request.
          *
-         * @deprecated
-         * @param sReqMethod (GET, POST, PUT, DELETE, ...)
          * @param sReqUrl (REST endpoint)
          * @param fSuccess (callback in case of success)
          * @param fError (callback in case of error)
          */
-        perform: function(sReqMethod, sReqUrl, fSuccess, fError) {
+        performGet: function(sReqUrl, fSuccess, fError) {
             $.ajax({
                 url: sReqUrl,
-                method: sReqMethod,
+                method: "GET",
                 statusCode: {
                     200: function(res) {fSuccess(res)},
                     201: function(res) {fSuccess(res)},
@@ -37,10 +35,6 @@ sap.ui.define([
                     500: function(res) {fError(res)}
                 }
             });
-        },
-
-        performGet: function() {
-
         },
 
         /**
@@ -65,12 +59,46 @@ sap.ui.define([
             });
         },
 
-        performPut: function() {
-
+        /**
+         * Performs a AJAX PUT request.
+         *
+         * @param sReqUrl (REST endpoint)
+         * @param oData (data to be posted)
+         * @param fSuccess (callback in case of success)
+         * @param fError (callback in case of error)
+         */
+        performPut: function(sReqUrl, oData, fSuccess, fError) {
+            $.ajax({
+                url: sReqUrl,
+                method: "PUT",
+                data: oData,
+                statusCode: {
+                    200: function(res) {fSuccess(res)},
+                    201: function(res) {fSuccess(res)},
+                    400: function(res) {fError(res)},
+                    500: function(res) {fError(res)}
+                }
+            });
         },
 
-        performDelete: function() {
-
+        /**
+         * Performs a AJAX DELETE request.
+         *
+         * @param sReqUrl (REST endpoint)
+         * @param fSuccess (callback in case of success)
+         * @param fError (callback in case of error)
+         */
+        performDelete: function(sReqUrl, fSuccess, fError) {
+            $.ajax({
+                url: sReqUrl,
+                method: "DELETE",
+                statusCode: {
+                    200: function(res) {fSuccess(res)},
+                    201: function(res) {fSuccess(res)},
+                    400: function(res) {fError(res)},
+                    500: function(res) {fError(res)}
+                }
+            });
         }
     });
 });

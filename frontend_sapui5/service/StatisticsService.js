@@ -27,7 +27,7 @@ sap.ui.define([
          * @param fError (callback in case of error)
          */
         getEvtRevByMonth: function(fSuccess, fError) {
-            this._http.perform("GET", "/statistics/evt-rev-by-month", fSuccess, fError);
+            this._http.performGet("/statistics/evt-rev-by-month", fSuccess, fError);
         },
 
         /**
@@ -37,7 +37,7 @@ sap.ui.define([
          * @param fError (callback in case of error)
          */
         getEvtRevByCustomer: function(fSuccess, fError) {
-            this._http.perform("GET", "/statistics/evt-rev-by-customer", fSuccess, fError);
+            this._http.performGet("/statistics/evt-rev-by-customer", fSuccess, fError);
         },
 
         /**
@@ -47,7 +47,7 @@ sap.ui.define([
          * @param fError (callback in case of error)
          */
         getCeRev: function(fSuccess, fError) {
-            this._http.perform("GET", "statistics/ce-rev", fSuccess, fError);
+            this._http.performGet("statistics/ce-rev", fSuccess, fError);
         }
     });
 });

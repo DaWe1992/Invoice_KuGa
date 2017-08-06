@@ -112,9 +112,14 @@ sap.ui.define([
             }
         },
 
-        onAddInvoice: function() {
-            var oSplitContainer = this.getView().byId("splitContainer");
-            oSplitContainer.toDetail(this.createId("invoice-new"), "slide");
+        /**
+         * Navigates to the invoice-new page.
+         *
+         * @param oEvent
+         */
+        onAddInvoice: function(oEvent) {
+            this.getView().byId("splitContainer")
+            .toDetail(this.createId("invoice-new"), "slide");
         },
 
         /**

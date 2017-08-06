@@ -78,15 +78,16 @@ sap.ui.define([
             var oView = this.getView();
 
             // get input controls
-            var oInputType = oView.byId("contactType");
-            var oInputData = oView.byId("contactData");
-            var oInputComments = oView.byId("contactComments");
+            var aInputControls = [
+                oView.byId("contactType"), oView.byId("contactData"),
+                oView.byId("contactComments")
+            ];
 
             // create contact object
             var oContact = {
-                type: oInputType.getValue(),
-                data: oInputData.getValue(),
-                comments: oInputComments.getValue()
+                type: aInputControls[0].getValue(),
+                data: aInputControls[1].getValue(),
+                comments: aInputControls[2].getValue()
             };
 
             // add contact to model
@@ -94,9 +95,9 @@ sap.ui.define([
             this._wizard.getModel().refresh();
 
             // empty controls
-            oInputType.setValue("");
-            oInputData.setValue("");
-            oInputComments.setValue("");
+            aInputControls.forEach(function(control) {
+                control.setValue("");
+            });
         },
 
         /**

@@ -72,17 +72,17 @@ sap.ui.define([
             var oView = this.getView();
 
             // get input controls
-            var oInputPos = oView.byId("pos");
-            var oInputQuantity = oView.byId("quantity");
-            var oInputUnitprice = oView.byId("unitprice");
-            var oInputVatrate = oView.byId("vatrate");
+            var aInputControls = [
+                oView.byId("pos"), oView.byId("quantity"),
+                oView.byId("unitprice"), oView.byId("vatrate")
+            ];
 
             // create invoice position object
             var oPosition = {
-                pos: oInputPos.getValue(),
-                quantity: oInputQuantity.getValue(),
-                unitprice: oInputUnitprice.getValue(),
-                vatrate: oInputVatrate.getValue()
+                pos: aInputControls[0].getValue(),
+                quantity: aInputControls[1].getValue(),
+                unitprice: aInputControls[2].getValue(),
+                vatrate: aInputControls[3].getValue()
             };
 
             // add invoice position to model
@@ -90,10 +90,9 @@ sap.ui.define([
             this._wizard.getModel().refresh();
 
             // empty controls
-            oInputPos.setValue("");
-            oInputQuantity.setValue("");
-            oInputUnitprice.setValue("");
-            oInputVatrate.setValue("");
+            aInputControls.forEach(function(control) {
+                control.setValue("");
+            });
         },
 
         /**
@@ -147,20 +146,6 @@ sap.ui.define([
          */
         onNewInvoiceCancel: function(oEvent) {
 
-        },
-
-        /**
-         * Prints the invoice and displays
-         * a MessageToast requesting the user to be patient.
-         *
-         * @param oEvent
-         */
-        onInvoicePrint: function(oEvent) {
-            MessageToast.show(
-                self.getTextById("Misc.wait.for.invoice"), {
-                    duration: 5000
-                }
-            );
         }
     });
 });

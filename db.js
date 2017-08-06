@@ -4,23 +4,23 @@
  * It wraps the db connection and query process.
  */
 
-// Import necessary modules
+// import necessary modules
 var pg = require("pg");
 
-const conString = "postgres://postgres:admin@localhost:5432/db_invoice_kuga";
+const sConnectionString = "postgres://postgres:admin@localhost:5432/db_invoice_kuga";
 
 module.exports = {
 
     /**
      * Queries the database.
-     * @param sql
-     * @param callback
+     * @param sSql (sql string to be executed)
+     * @param fCallback
      */
-    query: function(sql, callback) {
-        pg.connect(conString, function(err, client, done) {
-            client.query(sql, function(err, result) {
-                done();
-                callback(err, result);
+    query: function(sSql, fCallback) {
+        pg.connect(sConnectionString, function(oErr, oClient, fDone) {
+            oClient.query(sSql, function(oErr, oResult) {
+                fDone();
+                fCallback(oErr, oResult);
             });
         });
     }

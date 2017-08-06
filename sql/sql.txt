@@ -7,9 +7,9 @@ CREATE TABLE IF NOT EXISTS customers(
     cust_zip VARCHAR(5),
     cust_city VARCHAR(50),
     created_at DATE,
-    created_by VARCHAR(20),
+    created_by VARCHAR(50),
     updated_at DATE,
-    updated_by VARCHAR(20)
+    updated_by VARCHAR(50)
 );
 
 CREATE TABLE IF NOT EXISTS customer_contacts(
@@ -19,9 +19,9 @@ CREATE TABLE IF NOT EXISTS customer_contacts(
 	cuco_contact VARCHAR(100),
 	cuco_comments VARCHAR(200),
     created_at DATE,
-    created_by VARCHAR(20),
+    created_by VARCHAR(50),
     updated_at DATE,
-    updated_by VARCHAR(20)
+    updated_by VARCHAR(50)
 );
 
 CREATE TABLE IF NOT EXISTS customers_lock(
@@ -38,9 +38,9 @@ CREATE TABLE IF NOT EXISTS invoices(
     inv_room VARCHAR(20),
     inv_description VARCHAR(100),
     created_at DATE,
-    created_by VARCHAR(20),
+    created_by VARCHAR(50),
     updated_at DATE,
-    updated_by VARCHAR(20)
+    updated_by VARCHAR(50)
 );
 
 CREATE TABLE IF NOT EXISTS invoice_positions (
@@ -51,9 +51,9 @@ CREATE TABLE IF NOT EXISTS invoice_positions (
     ipos_net_price NUMERIC(10,2),
     ipos_vat NUMERIC(3,2),
     created_at DATE,
-    created_by VARCHAR(20),
+    created_by VARCHAR(50),
     updated_at DATE,
-    updated_by VARCHAR(20)
+    updated_by VARCHAR(50)
 );
 
 CREATE TABLE IF NOT EXISTS cash_earnings (
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS cash_earnings (
     ce_date DATE,
     ce_description VARCHAR(100),
     created_at DATE,
-    created_by VARCHAR(20),
+    created_by VARCHAR(50),
     updated_at DATE,
-    updated_by VARCHAR(20)
+    updated_by VARCHAR(50)
 );

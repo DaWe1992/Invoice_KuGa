@@ -42,10 +42,18 @@ module.exports = function(app) {
      * @param customer (in body, obligatory)
      */
     app.post("/customers", function(req, res) {
-        var customer = req.body;
+        var oCustomer = req.body;
+
+        // validate the data received
+        if(!validate(oCustomer)) {
+            return res.status(400).json({
+                "success": false,
+                "err": "Please fill in all mandatory fields!"
+            });
+        }
 
         // generate new customer id
-        getNewCustomerId(customer.zip, function(sCustomerId) {
+        getNewCustomerId(oCustomer.zip, function(sCustomerId) {
             var sql = "INSERT INTO customers (" +
                 "cust_id, " +
                 "cust_address, " +
@@ -53,15 +61,19 @@ module.exports = function(app) {
                 "cust_lastname, " +
                 "cust_street, " +
                 "cust_zip, " +
-                "cust_city" +
+                "cust_city, " +
+                "created_by, " +
+                "created_at" +
             ") VALUES (" +
                 "'" + sCustomerId + "', " +
-                "'" + customer.address + "', " +
-                "'" + customer.firstname + "', " +
-                "'" + customer.lastname + "', " +
-                "'" + customer.street + "', " +
-                "'" + customer.zip + "', " +
-                "'" + customer.city + "'" +
+                "'" + oCustomer.address + "', " +
+                "'" + oCustomer.firstname + "', " +
+                "'" + oCustomer.lastname + "', " +
+                "'" + oCustomer.street + "', " +
+                "'" + oCustomer.zip + "', " +
+                "'" + oCustomer.city + "', " +
+                "'" + req.user.username + "', " +
+                "current_date" +
             ");";
 
             db.query(sql, function(err, result) {
@@ -73,7 +85,8 @@ module.exports = function(app) {
                 }
 
                 // check if contact were provided
-                if(customer.contacts) {
+                if(oCustomer.contacts) {
+                    // contact were provided
                     // add customer contacts
                     sql = "INSERT INTO customer_contacts (" +
                         "cuco_customer, " +
@@ -82,12 +95,12 @@ module.exports = function(app) {
                         "cuco_comments" +
                     ") VALUES";
 
-                    for(var i = 0; i < customer.contacts.length; i++) {
+                    for(var i = 0; i < oCustomer.contacts.length; i++) {
                         sql += " (" +
                             "'" + sCustomerId + "', " +
-                            "'" + customer.contacts[i].type + "', " +
-                            "'" + customer.contacts[i].data + "', " +
-                            "'" + customer.contacts[i].comments + "'" +
+                            "'" + oCustomer.contacts[i].type + "', " +
+                            "'" + oCustomer.contacts[i].data + "', " +
+                            "'" + oCustomer.contacts[i].comments + "'" +
                         "),";
                     }
 
@@ -106,10 +119,13 @@ module.exports = function(app) {
 
                         return res.status(201).json({
                             "success": true,
-                            "data": sCustomerId
+                            "data": {
+                                "id": sCustomerId
+                            }
                         });
                     });
                 } else {
+                    // contacts were not provided
                     return res.status(201).json({
                         "success": true,
                         "data": {
@@ -276,4 +292,20 @@ function getCounterValue(fCallback) {
         var counter = result.rows[0].counter;
         fCallback(counter ? ++counter : 1, null);
     });
+}
+
+/**
+ * Validates the customer data
+ * to be added to the database.
+ *
+ * @param oCustomer (data to be persisted in the db)
+ * @return true | false
+ */
+function validate(oCustomer) {
+    if(!oCustomer.address) return false;
+    if(!oCustomer.lastname) return false;
+    if(!oCustomer.street) return false;
+    if(!oCustomer.zip) return false;
+    if(!oCustomer.city) return false;
+    return true;
 }

@@ -30,6 +30,7 @@ sap.ui.define([
                     "invoice": {
                         "description": "",
                         "date": sCurrDate,
+                        "deliveryDate": "",
                         "room": "",
                         "comments": "",
                         "positions": []

@@ -53,6 +53,69 @@ module.exports = function(app) {
     });
 
     /**
+     * Adds a new invoice to the db.
+     *
+     * @name /invoices
+     * @param invoice (in body, obligatory)
+     */
+    app.post("/invoices", function(req, res) {
+        var oInvoice = req.body;
+
+        // validate the data received
+        if(!validate(oInvoice)) {
+            return res.status(400).json({
+                "success": false,
+                "err": "Please fill in all mandatory fields!"
+            });
+        }
+
+        // generate new invoice id
+        getNewInvoiceId(function(sInvoiceId) {
+            var sql = "INSERT INTO invoices (" +
+                "inv_id, " +
+                "inv_cust_id, " +
+                "inv_date, " +
+                "inv_delivery_date, " +
+                "inv_room, " +
+                "inv_description, " +
+                "created_by, " +
+                "created_at" +
+            ") VALUES (" +
+                "'" + sInvoiceId + "', " +
+                "'" + oInvoice.customer.id + "', " +
+                "'" + oInvoice.invoice.date + "', " +
+                "'" + oInvoice.invoice.deliveryDate + "', " +
+                "'" + oInvoice.invoice.room + "', " +
+                "'" + oInvoice.invoice.comments + "', " +
+                "'" + req.user.username + "', " +
+                "current_date" +
+            ");";
+
+            db.query(sql, function(err, result) {
+                if(err) {
+                    return res.status(500).json({
+                        "success": false,
+                        "err": err
+                    });
+                }
+
+                // check if invoice positions were provided
+                if(oInvoice.invoice.positions) {
+                    // positions were provided
+                } else {
+                    // positions were not provided
+                    return res.status(201).json({
+                        "success": true,
+                        "data": {
+                            "id": sInvoiceId
+                        }
+                    });
+                }
+            });
+        });
+    });
+
+    /**
      * Returns the invoice with the id specified.
      *
      * @name /invoices/:id
@@ -273,7 +336,7 @@ function getNewInvoiceId(fCallback) {
  * @param fCallback
  */
 function getMaxInvoiceId(fCallback) {
-    var sql = "SELECT MAX inv_id AS maxId FROM invoices";
+    var sql = "SELECT max(inv_id) AS maxId FROM invoices";
 
     db.query(sql, function(err, result) {
         if(err) fCallback(null, err);
@@ -283,13 +346,25 @@ function getMaxInvoiceId(fCallback) {
 
 /**
  * Adds leading zeros to a number.
+ * e. g.: padZero(34, 5) => 00034
  *
- * @param nNum
- * @param iSize
- * @return
+ * @param nNum (number to be padded with zeros)
+ * @param iSize (number of digits in total)
+ * @return number padded with zeros
  */
 function padZero(nNum, iSize) {
     var sNum = nNum + "";
     while(sNum.length < iSize) sNum = "0" + sNum;
     return sNum;
+}
+
+/**
+ * Validates the invoice data
+ * to be added to the database.
+ *
+ * @param oInvoice (data to be persisted in the db)
+ * @return true | false
+ */
+function validate(oInvoice) {
+    return true;
 }

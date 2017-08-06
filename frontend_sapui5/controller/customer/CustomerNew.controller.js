@@ -58,7 +58,7 @@ sap.ui.define([
                     },
                     function(res) {
                         MessageBox.error(
-                            self.getTextbyId("Misc.error.data.send")
+                            self.getTextById("Misc.error.data.send")
                         );
                     }
                 );

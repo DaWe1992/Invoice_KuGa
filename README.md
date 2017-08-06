@@ -75,7 +75,7 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
 **POST:**
 
 - `http://<host>:8080/customers`:  
-  Adds a new customer.
+  Adds a new customer. The data has to be sent in the request body:
 
   ```json
     {
@@ -109,7 +109,7 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
 **POST:**
 
 - `http://<host>:8080/invoices`:  
-  Adds a new invoice.
+  Adds a new invoice. The data has to be sent in the request body:
 
   ```json
     {
@@ -151,7 +151,7 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
   | *gross* | true, false  | true := returns gross revenues, false := returns net revenues |
   | *limit* | integer      | limits the number of result rows to *limit* (default: 10)     |
 
-- `http://<host>:8080/statistics/ce-rev:  
+- `http://<host>:8080/statistics/ce-rev`:  
   Returns the cash earnings revenue.
 
 ### Cash Earnings Endpoints

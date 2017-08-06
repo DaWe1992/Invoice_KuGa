@@ -76,6 +76,18 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
 
 - `http://<host>:8080/customers`:  
   Adds a new customer.
+
+  ```json
+    {
+        "address": "...",
+        "firstname": "...",
+        "lastname": "...",
+        "street": "...",
+        "zip": "...",
+        "city": "..."
+    }
+  ```
+
 - `http://<host>:8080/customers/:id/lock`:  
   Locks the customer record with id `id`.
 - `http://<host>:8080/customers/:id/unlock`:  
@@ -98,6 +110,21 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
 
 - `http://<host>:8080/invoices`:  
   Adds a new invoice.
+
+  ```json
+    {
+        "customer": {
+            "id": "..."
+        },
+        "invoice": {
+            "description": "...",
+            "date": "...",
+            "deliveryDate": "...",
+            "room": "..."
+        }
+    }
+  ```
+
 - `http://<host>:8080/invoices/:id/positions`:  
   Adds a new invoice position to the invoice with id `id`.
 

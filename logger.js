@@ -27,7 +27,7 @@ module.exports = {
 
         fs.appendFile(
             "./logs/log" + sYear + ".txt",
-            sLevel + "\t" + oDate + "\t" + sMsg,
+            sLevel + "\t" + oDate + "\t" + sMsg + "\n",
             function(oErr) {}
         );
     }

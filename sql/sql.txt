@@ -1,46 +1,68 @@
 CREATE TABLE IF NOT EXISTS customers(
-    cust_id serial PRIMARY KEY,
+    cust_id VARCHAR(10) PRIMARY KEY,
     cust_address VARCHAR(10),
     cust_firstname VARCHAR(50),
     cust_lastname VARCHAR(50),
     cust_street VARCHAR(50),
     cust_zip VARCHAR(5),
-    cust_city VARCHAR(50)
+    cust_city VARCHAR(50),
+    created_at DATE,
+    created_by VARCHAR(20),
+    updated_at DATE,
+    updated_by VARCHAR(20)
 );
 
 CREATE TABLE IF NOT EXISTS customer_contacts(
 	cuco_id serial PRIMARY KEY,
-	cuco_customer INT REFERENCES customers(cust_id) ON UPDATE CASCADE ON DELETE CASCADE,
+	cuco_customer VARCHAR(10) REFERENCES customers(cust_id) ON UPDATE CASCADE ON DELETE CASCADE,
 	cuco_contact_type VARCHAR(10),
 	cuco_contact VARCHAR(100),
-	cuco_comments VARCHAR(200)
+	cuco_comments VARCHAR(200),
+    created_at DATE,
+    created_by VARCHAR(20),
+    updated_at DATE,
+    updated_by VARCHAR(20)
 );
 
 CREATE TABLE IF NOT EXISTS customers_lock(
-	culo_id int references customers(cust_id) primary key,
+	culo_id VARCHAR(10) references customers(cust_id) primary key,
 	culo_user_email VARCHAR(100),
 	culo_user_name VARCHAR(50)
 );
 
 CREATE TABLE IF NOT EXISTS invoices(
-  inv_id serial PRIMARY KEY,
-  inv_cust_id INT REFERENCES customers(cust_id) ON UPDATE CASCADE ON DELETE CASCADE,
-  inv_date DATE,
-  inv_description VARCHAR(100)
+    inv_id VARCHAR(10) PRIMARY KEY,
+    inv_cust_id VARCHAR(10) REFERENCES customers(cust_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    inv_date DATE,
+    inv_delivery_date DATE,
+    inv_room VARCHAR(20),
+    inv_description VARCHAR(100),
+    created_at DATE,
+    created_by VARCHAR(20),
+    updated_at DATE,
+    updated_by VARCHAR(20)
 );
 
 CREATE TABLE IF NOT EXISTS invoice_positions (
-  ipos_id SERIAL PRIMARY KEY,
-  ipos_inv_id INT REFERENCES invoices(inv_id) ON UPDATE CASCADE ON DELETE CASCADE,
-  ipos_description VARCHAR(100),
-  ipos_qty INT,
-  ipos_net_price NUMERIC(10,2),
-  ipos_vat NUMERIC(3,2)
+    ipos_id SERIAL PRIMARY KEY,
+    ipos_inv_id VARCHAR(10) REFERENCES invoices(inv_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    ipos_description VARCHAR(100),
+    ipos_qty INT,
+    ipos_net_price NUMERIC(10,2),
+    ipos_vat NUMERIC(3,2),
+    created_at DATE,
+    created_by VARCHAR(20),
+    updated_at DATE,
+    updated_by VARCHAR(20)
 );
 
 CREATE TABLE IF NOT EXISTS cash_earnings (
     ce_id SERIAL PRIMARY KEY,
     ce_amount NUMERIC(10,2),
     ce_date DATE,
-    ce_description VARCHAR(100)
+    ce_description VARCHAR(100),
+    created_at DATE,
+    created_by VARCHAR(20),
+    updated_at DATE,
+    updated_by VARCHAR(20)
 );

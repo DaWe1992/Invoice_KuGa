@@ -241,3 +241,55 @@ function readAndRenderTemplate(data, fCallback) {
         fCallback(oHtml);
     });
 }
+
+/**
+ * Generates the id for a new invoice.
+ *
+ * @param fCallback
+ */
+function getNewInvoiceId(fCallback) {
+    var sCurrYear = new Date().getFullYear();
+
+    getMaxInvoiceId(function(sMaxId, err) {
+        if(err) fCallback(null, err);
+
+        var sYear = sMaxId.substring(0, 4);
+        var iIncr = parseInt(sMaxId.substring(4, sMaxId.length));
+
+        // first invoice in new year
+        if(sCurrYear !== sYear) {
+            fCallback(sCurrYear + "001", null);
+        }
+        // just another invoice in the same year
+        else {
+            fCallback(sYear + padZero(++iIncr, 3), null);
+        }
+    });
+}
+
+/**
+ * Gets the max invoice id.
+ *
+ * @param fCallback
+ */
+function getMaxInvoiceId(fCallback) {
+    var sql = "SELECT MAX inv_id AS maxId FROM invoices";
+
+    db.query(sql, function(err, result) {
+        if(err) fCallback(null, err);
+        fCallback(result.rows[0].maxId, null);
+    });
+}
+
+/**
+ * Adds leading zeros to a number.
+ *
+ * @param nNum
+ * @param iSize
+ * @return
+ */
+function padZero(nNum, iSize) {
+    var sNum = nNum + "";
+    while(sNum.length < iSize) sNum = "0" + sNum;
+    return sNum;
+}

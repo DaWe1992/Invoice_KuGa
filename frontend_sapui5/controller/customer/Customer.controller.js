@@ -75,6 +75,7 @@
 			if(sQuery && sQuery.length > 0) {
 				var oFilter = new Filter({
                     filters: [
+                        new Filter("id", FilterOperator.Contains, sQuery),
                         new Filter("firstname", FilterOperator.Contains, sQuery),
                         new Filter("lastname", FilterOperator.Contains, sQuery)
                     ],

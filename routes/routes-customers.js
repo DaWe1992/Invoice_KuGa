@@ -43,55 +43,27 @@ module.exports = function(app) {
      */
     app.post("/customers", function(req, res) {
         var customer = req.body;
-        var sql = "INSERT INTO customers (" +
-            "cust_address, " +
-            "cust_firstname, " +
-            "cust_lastname, " +
-            "cust_street, " +
-            "cust_zip, " +
-            "cust_city" +
-        ") VALUES (" +
-            "'" + customer.address + "', " +
-            "'" + customer.firstname + "', " +
-            "'" + customer.lastname + "', " +
-            "'" + customer.street + "', " +
-            "'" + customer.zip + "', " +
-            "'" + customer.city + "'" +
-        ") RETURNING cust_id as id;";
 
-        db.query(sql, function(err, result) {
-            if(err) {
-                return res.status(500).json({
-                    "success": false,
-                    "err": err
-                });
-            }
+        // generate new customer id
+        getNewCustomerId(customer.zip, function(sCustomerId) {
+            var sql = "INSERT INTO customers (" +
+                "cust_id, " +
+                "cust_address, " +
+                "cust_firstname, " +
+                "cust_lastname, " +
+                "cust_street, " +
+                "cust_zip, " +
+                "cust_city" +
+            ") VALUES (" +
+                "'" + sCustomerId + "', " +
+                "'" + customer.address + "', " +
+                "'" + customer.firstname + "', " +
+                "'" + customer.lastname + "', " +
+                "'" + customer.street + "', " +
+                "'" + customer.zip + "', " +
+                "'" + customer.city + "'" +
+            ");";
 
-            // get new customer id
-            var id = result.rows[0].id;
-
-            // add customer contacts
-            sql = "INSERT INTO customer_contacts (" +
-                "cuco_customer, " +
-                "cuco_contact_type, " +
-                "cuco_contact, " +
-                "cuco_comments" +
-            ") VALUES";
-
-            for(var i = 0; i < customer.contacts.length; i++) {
-                sql += " (" +
-                    "'" + id + "', " +
-                    "'" + customer.contacts[i].type + "', " +
-                    "'" + customer.contacts[i].data + "', " +
-                    "'" + customer.contacts[i].comments + "'" +
-                "),";
-            }
-
-            // remove last comma
-            sql = sql.substring(0, sql.length - 1);
-            sql += ";";
-
-            // save customer contacts in database
             db.query(sql, function(err, result) {
                 if(err) {
                     return res.status(500).json({
@@ -99,11 +71,52 @@ module.exports = function(app) {
                         "err": err
                     });
                 }
-            });
 
-            return res.status(201).json({
-                "success": true,
-                "data": result.rows[0]
+                // check if contact were provided
+                if(customer.contacts) {
+                    // add customer contacts
+                    sql = "INSERT INTO customer_contacts (" +
+                        "cuco_customer, " +
+                        "cuco_contact_type, " +
+                        "cuco_contact, " +
+                        "cuco_comments" +
+                    ") VALUES";
+
+                    for(var i = 0; i < customer.contacts.length; i++) {
+                        sql += " (" +
+                            "'" + sCustomerId + "', " +
+                            "'" + customer.contacts[i].type + "', " +
+                            "'" + customer.contacts[i].data + "', " +
+                            "'" + customer.contacts[i].comments + "'" +
+                        "),";
+                    }
+
+                    // remove last comma
+                    sql = sql.substring(0, sql.length - 1);
+                    sql += ";";
+
+                    // save customer contacts in database
+                    db.query(sql, function(err, result) {
+                        if(err) {
+                            return res.status(500).json({
+                                "success": false,
+                                "err": err
+                            });
+                        }
+
+                        return res.status(201).json({
+                            "success": true,
+                            "data": sCustomerId
+                        });
+                    });
+                } else {
+                    return res.status(201).json({
+                        "success": true,
+                        "data": {
+                            "id": sCustomerId
+                        }
+                    });
+                }
             });
         });
     });
@@ -238,51 +251,29 @@ module.exports = function(app) {
 /**
  * Generates the id for a new customer.
  *
+ * @param sZip
  * @param fCallback
  */
-function getNewCustomerId(fCallback) {
-    var sCurrYear = new Date().getFullYear();
-
-    getMaxCustomerId(function(sMaxId, err) {
+function getNewCustomerId(sZip, fCallback) {
+    getCounterValue(function(counter, err) {
         if(err) fCallback(null, err);
-        
-        var sYear = sMaxId.substring(0, 4);
-        var iIncr = parseInt(sMaxId.substring(4, sMaxId.length));
-
-        // first invoice in new year
-        if(sCurrYear !== sYear) {
-            fCallback(sCurrYear + "001", null);
-        }
-        // just another invoice in the same year
-        else {
-            fCallback(sYear + padZero(++iIncr, 3), null);
-        }
+        fCallback(sZip + counter);
     });
 }
 
 /**
- * Gets the max customer id.
+ * Gets the current counter value.
  *
  * @param fCallback
  */
-function getMaxCustomerId(fCallback) {
-    var sql = "SELECT MAX cust_id AS maxId FROM customers";
+function getCounterValue(fCallback) {
+    var sql = "SELECT max(" +
+        "substring(cust_id from 6 for (length(cust_id) - 5))" +
+    ") AS counter FROM customers;";
 
     db.query(sql, function(err, result) {
         if(err) fCallback(null, err);
-        fCallback(result.rows[0].maxId, null);
+        var counter = result.rows[0].counter;
+        fCallback(counter ? ++counter : 1, null);
     });
-}
-
-/**
- * Adds leading zeros to a number.
- *
- * @param nNum
- * @param iSize
- * @return
- */
-function padZero(nNum, iSize) {
-    var sNum = nNum + "";
-    while(sNum.length < iSize) sNum = "0" + sNum;
-    return sNum;
 }

@@ -46,23 +46,6 @@ sap.ui.define([
                     "cityState": "None"
                 }), "validation"
             );
-
-            this.getEvtBus().subscribe("channelNewCustomer", "saveCustomer", function() {
-                // persist the new customer in the database
-                new CustomerService().addCustomer(
-                    self._wizard.getModel().getData(),
-                    function(res) {
-                        MessageBox.success(
-                            self.getTextById("Misc.success.data.save") + " " + res.data.id
-                        );
-                    },
-                    function(res) {
-                        MessageBox.error(
-                            self.getTextById("Misc.error.data.send")
-                        );
-                    }
-                );
-            });
         },
 
         /**
@@ -122,7 +105,40 @@ sap.ui.define([
          * @param oEvent
          */
         onWizardComplete: function(oEvent) {
-            this.getEvtBus().publish("channelNewCustomer", "wizardFinished");
+            this.getView().byId("btnSaveNewCustomer").setVisible(true);
+        },
+
+        /**
+         * Persists the new customer in the database.
+         *
+         * @param oEvent
+         */
+        onNewCustomerSave: function(oEvent) {
+            new CustomerService().addCustomer(
+                self._wizard.getModel().getData(),
+                // callback in case of success
+                function(res) {
+                    MessageBox.success(
+                        self.getTextById("Misc.success.data.save") +
+                        " " + res.data.id
+                    );
+                },
+                // callback in case of error
+                function(res) {
+                    MessageBox.error(
+                        self.getTextById("Misc.error.data.send")
+                    );
+                }
+            );
+        },
+
+        /**
+         * Cancels the new customer.
+         *
+         * @param oEvent
+         */
+        onNewCustomerCancel: function(oEvent) {
+
         }
     });
 });

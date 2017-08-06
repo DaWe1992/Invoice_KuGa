@@ -84,9 +84,11 @@ module.exports = function(app) {
                 "'" + sInvoiceId + "', " +
                 "'" + oInvoice.customer.id + "', " +
                 "'" + oInvoice.invoice.date + "', " +
-                "'" + oInvoice.invoice.deliveryDate + "', " +
+                "'" + (oInvoice.invoice.deliveryDate
+                    ? oInvoice.invoice.deliveryDate
+                    : oInvoice.invoice.date) + "', " +
                 "'" + oInvoice.invoice.room + "', " +
-                "'" + oInvoice.invoice.comments + "', " +
+                "'" + oInvoice.invoice.description + "', " +
                 "'" + req.user.username + "', " +
                 "current_date" +
             ");";
@@ -230,7 +232,8 @@ function getInvoiceById(id, fCallback) {
         data.customer = result.rows[0];
 
         // Load invoice data
-        sql = "SELECT inv_id AS id, to_char(inv_date, 'DD.MM.YYYY') AS date FROM invoices WHERE inv_id = '" + id + "';";
+        sql = "SELECT inv_id AS id, inv_description AS description, to_char(inv_date, 'DD.MM.YYYY') AS date " +
+        "FROM invoices WHERE inv_id = '" + id + "';";
 
         db.query(sql, function(err, result) {
             if(err) fCallback(null, err);
@@ -314,14 +317,23 @@ function getNewInvoiceId(fCallback) {
     var sCurrYear = new Date().getFullYear();
 
     getMaxInvoiceId(function(sMaxId, err) {
-        if(err) fCallback(null, err);
+        if(err) {
+            fCallback(null, err);
+            return;
+        }
+
+        // If first invoice in database
+        if(!sMaxId) {
+            fCallback(sCurrYear + padZero(1, 3), null);
+            return;
+        }
 
         var sYear = sMaxId.substring(0, 4);
         var iIncr = parseInt(sMaxId.substring(4, sMaxId.length));
 
         // First invoice in new year
-        if(sCurrYear !== sYear) {
-            fCallback(sCurrYear + "001", null);
+        if(sCurrYear != sYear) {
+            fCallback(sCurrYear + padZero(1, 3), null);
         }
         // Just another invoice in the same year
         else {
@@ -336,11 +348,11 @@ function getNewInvoiceId(fCallback) {
  * @param fCallback
  */
 function getMaxInvoiceId(fCallback) {
-    var sql = "SELECT max(inv_id) AS maxId FROM invoices";
+    var sql = "SELECT max(inv_id) AS maxid FROM invoices;";
 
     db.query(sql, function(err, result) {
         if(err) fCallback(null, err);
-        fCallback(result.rows[0].maxId, null);
+        fCallback(result.rows[0].maxid, null);
     });
 }
 

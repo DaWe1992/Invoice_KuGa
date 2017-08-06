@@ -54,12 +54,6 @@
                     });
 				}
 			});
-
-            // make the save button visible
-            this.getEvtBus().subscribe("channelNewCustomer", "wizardFinished", function() {
-                var oSaveButton = oView.byId("btnSaveNewCustomer");
-                oSaveButton.setVisible(true);
-            }, this);
 		},
 
 		/**
@@ -129,19 +123,6 @@
         onAddCustomer: function(oEvent) {
             var oSplitContainer = this.getView().byId("splitContainer");
             oSplitContainer.toDetail(this.createId("customer-new"), "slide");
-        },
-
-        /**
-         * Tells the CustomerNew controller to
-         * save the new customer.
-         *
-         * @param oEvent
-         */
-        onNewCustomerSave: function(oEvent) {
-            this.getView().byId("splitContainer").toDetail(
-                this.createId("customer-placeholder")
-            );
-            this.getEvtBus().publish("channelNewCustomer", "saveCustomer");
         },
 
         /**

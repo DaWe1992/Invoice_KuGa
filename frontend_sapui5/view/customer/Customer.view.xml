@@ -9,7 +9,7 @@
 		height="100%"
 		initialMaster="customer-master"
 		initialDetail="customer-placeholder">
-		
+
 		<!-- *********************************************************************************************** -->
 		<!-- Master pages -->
 		<masterPages>
@@ -89,23 +89,10 @@
 				id="customer-detail"
 				height="100%"
 				title="{i18n>Customer.page.detail.title}"
-				class="sapUiStdPage sapUiResponsiveContentPadding">
+				class="sapUiStdPage">
 				<content>
 					<mvc:XMLView viewName="com.danielwehner.invoicekuga.view.customer.CustomerDetail" height="100%"/>
 				</content>
-				<footer>
-					<Toolbar>
-						<content>
-							<ToolbarSpacer>
-								<layoutData>
-									<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
-								</layoutData>
-							</ToolbarSpacer>
-							<Button text="{i18n>Misc.save}" type="Accept" press=""></Button>
-							<Button text="{i18n>Misc.delete}" type="Reject" press=""></Button>
-						</content>
-					</Toolbar>
-				</footer>
 			</Page>
 			<Page
 				id="customer-new"
@@ -115,20 +102,6 @@
 				<content>
 					<mvc:XMLView viewName="com.danielwehner.invoicekuga.view.customer.CustomerNew" height="100%"/>
 				</content>
-				<footer>
-					<Toolbar>
-						<content>
-							<ToolbarSpacer/>
-							<Button
-								id="btnSaveNewCustomer"
-								text="{i18n>Misc.save}"
-								press="onNewCustomerSave"
-								type="Accept"
-								visible="false"
-							/>
-						</content>
-					</Toolbar>
-				</footer>
 			</Page>
 		</detailPages>
 	</SplitContainer>

@@ -7,8 +7,10 @@
  */
 sap.ui.define([
     "com/danielwehner/invoicekuga/controller/BaseController",
-    "sap/ui/model/json/JSONModel"
-], function(BaseController, JSONModel) {
+    "sap/ui/model/json/JSONModel",
+    "com/danielwehner/invoicekuga/service/InvoiceService",
+    "sap/m/MessageBox"
+], function(BaseController, JSONModel, InvoiceService, MessageBox) {
     "use strict";
 
     var self;
@@ -92,6 +94,73 @@ sap.ui.define([
             oInputQuantity.setValue("");
             oInputUnitprice.setValue("");
             oInputVatrate.setValue("");
+        },
+
+        /**
+         * Handles the completion of the wizard.
+         *
+         * @param oEvent
+         */
+        onWizardComplete: function(oEvent) {
+            var oView = this.getView();
+            oView.byId("btnSaveNewInvoice").setVisible(true);
+            oView.byId("btnSaveAndPrintNewInvoice").setVisible(true);
+        },
+
+        /**
+         * Saves the new invoice.
+         *
+         * @param oEvent
+         */
+        onNewInvoiceSave: function(oEvent) {
+            new InvoiceService().addInvoice(
+                self._wizard.getModel().getData(),
+                // callback in case of success
+                function(res) {
+                    MessageBox.success(
+                        self.getTextById("Misc.success.data.save") +
+                        " " + res.data.id
+                    );
+                },
+                // callback in case of error
+                function(res) {
+                    MessageBox.error(
+                        self.getTextById("Misc.error.data.send")
+                    );
+                }
+            );
+        },
+
+        /**
+         * Saves and prints the invoice.
+         *
+         * @param oEvent
+         */
+        onNewInvoiceSaveAndPrint: function(oEvent) {
+
+        },
+
+        /**
+         * Cancels the new invoice.
+         *
+         * @param oEvent
+         */
+        onNewInvoiceCancel: function(oEvent) {
+
+        },
+
+        /**
+         * Prints the invoice and displays
+         * a MessageToast requesting the user to be patient.
+         *
+         * @param oEvent
+         */
+        onInvoicePrint: function(oEvent) {
+            MessageToast.show(
+                self.getTextById("Misc.wait.for.invoice"), {
+                    duration: 5000
+                }
+            );
         }
     });
 });

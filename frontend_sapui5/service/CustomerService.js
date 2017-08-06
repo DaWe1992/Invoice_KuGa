@@ -42,7 +42,7 @@ sap.ui.define([
         },
 
         /**
-         * Adds a customer.
+         * Adds a customer to the database.
          *
          * @param oData (customer data to be sent to the server)
          * @param fSuccess (callback in case of success)

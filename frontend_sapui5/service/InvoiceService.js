@@ -39,6 +39,17 @@ sap.ui.define([
          */
         getInvoice: function(id, fSuccess, fError) {
             this._http.perform("GET", "/invoices/" + id, fSuccess, fError);
+        },
+
+        /**
+         * Adds an invoice to the database.
+         *
+         * @param oData (invoice data to be sent to the server)
+         * @param fSuccess (callback in case of success)
+         * @param fError (callback in case of error)
+         */
+        addInvoice: function(oData, fSuccess, fError) {
+            this._http.performPost("/invoices", oData, fSuccess, fError);
         }
     });
 });

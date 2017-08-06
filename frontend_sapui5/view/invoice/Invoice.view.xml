@@ -117,24 +117,10 @@
 				id="invoice-detail"
 				height="100%"
 				title="{i18n>Invoice.page.detail.title}"
-				class="sapUiStdPage sapUiResponsiveContentPadding">
+				class="sapUiStdPage">
 				<content>
 					<mvc:XMLView viewName="com.danielwehner.invoicekuga.view.invoice.InvoiceDetail" height="100%"/>
 				</content>
-				<footer>
-					<Toolbar>
-						<content>
-							<Button press="" icon="sap-icon://print"/>
-							<ToolbarSpacer>
-								<layoutData>
-									<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
-								</layoutData>
-							</ToolbarSpacer>
-							<Button text="{i18n>Misc.save}" type="Accept" press=""></Button>
-							<Button text="{i18n>Misc.delete}" type="Reject" press=""></Button>
-						</content>
-					</Toolbar>
-				</footer>
 			</Page>
 			<Page
 				id="invoice-new"
@@ -144,20 +130,6 @@
 				<content>
 					<mvc:XMLView viewName="com.danielwehner.invoicekuga.view.invoice.InvoiceNew" height="100%"/>
 				</content>
-				<footer>
-					<Toolbar>
-						<content>
-							<ToolbarSpacer/>
-							<Button
-								id="btnSaveNewInvoice"
-								text="{i18n>Misc.save}"
-								press="onNewInvoiceSave"
-								type="Accept"
-								visible="false"
-							/>
-						</content>
-					</Toolbar>
-				</footer>
 			</Page>
 		</detailPages>
 	</SplitContainer>

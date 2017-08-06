@@ -11,10 +11,9 @@ sap.ui.define([
     "sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
     "com/danielwehner/invoicekuga/service/InvoiceService",
-    "sap/m/MessageBox",
-    "sap/m/MessageToast"
+    "sap/m/MessageBox"
 ], function(BaseController, JSONModel, Filter, FilterOperator,
-            InvoiceService, MessageBox, MessageToast) {
+            InvoiceService, MessageBox) {
     "use strict";
 
     var self;
@@ -68,6 +67,7 @@ sap.ui.define([
             if(sQuery && sQuery.length > 0) {
                 var oFilter = new Filter({
                     filters: [
+                        new Filter("id", FilterOperator.Contains, sQuery),
                         new Filter("description", FilterOperator.Contains, sQuery),
                         new Filter("custlastname", FilterOperator.Contains, sQuery),
                         new Filter("date", FilterOperator.Contains, sQuery)
@@ -112,27 +112,9 @@ sap.ui.define([
             }
         },
 
-        /**
-         * Prints the invoice and displays
-         * a MessageToast requesting the user to be patient.
-         *
-         * @param oEvent
-         */
-        onInvoicePrint: function(oEvent) {
-            MessageToast.show(
-                self.getTextById("Misc.wait.for.invoice"), {
-                    duration: 5000
-                }
-            );
-        },
-
         onAddInvoice: function() {
             var oSplitContainer = this.getView().byId("splitContainer");
             oSplitContainer.toDetail(this.createId("invoice-new"), "slide");
-        },
-
-        onNewInvoiceSave: function() {
-
         },
 
         /**

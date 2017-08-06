@@ -4,113 +4,144 @@
 	xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core"
     xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form">
 
-	<Wizard
-        id="invoiceWizard"
-		complete="onWizardComplete">
+	<Page showHeader="false">
+		<content>
+			<Wizard
+		        id="invoiceWizard"
+				complete="onWizardComplete">
 
-        <!-- Add invoice head data -->
-		<WizardStep
-            id="invoiceHeadStep"
-			title="{i18n>Invoice.page.detail.new.wizard.step.invoice.head}"
-			validated="false"
-            activate="validateInvoiceHeadStep">
+		        <!-- Add invoice head data -->
+				<WizardStep
+		            id="invoiceHeadStep"
+					title="{i18n>Invoice.page.detail.new.wizard.step.invoice.head}"
+					validated="false"
+		            activate="validateInvoiceHeadStep">
 
-			<form:SimpleForm editable="true" layout="ResponsiveGridLayout"
-				labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12"
-				adjustLabelSpan="false"
-				emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"
-				columnsXL="2" columnsL="2" columnsM="2"
-				singleContainerFullSize="false" >
-				<form:content>
-					<!-- Invoice head data -->
-					<core:Title text="{i18n>Invoice.form.section.head}"/>
-					<Label text="{i18n>Invoice.description}" required="true"/>
-					<Input id="newInvoiceDescription" value="{/invoice/description}"
-						liveChange="validateInvoiceHeadStep"
+					<form:SimpleForm editable="true" layout="ResponsiveGridLayout"
+						labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12"
+						adjustLabelSpan="false"
+						emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"
+						columnsXL="2" columnsL="2" columnsM="2"
+						singleContainerFullSize="false" >
+						<form:content>
+							<!-- Invoice head data -->
+							<core:Title text="{i18n>Invoice.form.section.head}"/>
+							<Label text="{i18n>Invoice.description}" required="true"/>
+							<Input id="newInvoiceDescription" value="{/invoice/description}"
+								liveChange="validateInvoiceHeadStep"
+							/>
+							<Label text="{i18n>Invoice.date}" required="true"/>
+							<DatePicker
+								id="newInvoiceDate"
+								value="{/invoice/date}"
+								valueFormat="yyyy-MM-dd"
+								displayFormat="long"
+								liveChange="validateInvoiceHeadStep"
+							/>
+							<Label text="{i18n>Invoice.room}"/>
+							<Select id="newInvoiceRoom" selectedKey="{/invoice/room}">
+		    					<items>
+		    						<core:Item text="{i18n>Invoice.room.rossini}" key="rossini"/>
+		    						<core:Item text="{i18n>Invoice.room.littmann}" key="littmann"/>
+		    					</items>
+		    				</Select>
+							<Label id="newInvoiceComments" text="{i18n>Invoice.comments}"/>
+							<Input value="{/invoice/comments}"/>
+
+							<!-- ************************************************************ -->
+							<!-- Invoice customer data -->
+							<core:Title text="{i18n>Invoice.form.section.customer}"/>
+							<Label text="{i18n>Customer.id}" required="true"/>
+		                    <Input id="newInvoiceCustomerId" value="{/customer/id}"
+								liveChange="validateInvoiceHeadStep"
+							/>
+							<Button icon="sap-icon://search">
+								<layoutData>
+		                            <layout:GridData span="XL1 L1 M1 S1"/>
+		                        </layoutData>
+							</Button>
+						</form:content>
+					</form:SimpleForm>
+				</WizardStep>
+				<!-- ********************************************************************************** -->
+		        <!-- Add invoice positions -->
+				<WizardStep
+		            id="invoicePositionsStep"
+					validated="false"
+					title="{i18n>Invoice.page.detail.new.wizard.step.invoice.positions}"
+					activate="onWizardComplete">
+
+		            <form:SimpleForm id="invoicePositionsForm" editable="true" layout="ResponsiveGridLayout"
+		                labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false"
+		                emptySpanXL="4" emptySpanL="3" emptySpanM="2" emptySpanS="0"
+		                columnsXL="1" columnsL="1" columnsM="1"
+		                singleContainerFullSize="false">
+
+		                <form:content>
+		                    <Label text="{i18n>Invoice.positions.pos}" required="true"/>
+		                    <Input id="pos" value=""/>
+		                    <Label text="{i18n>Invoice.positions.quantity}" required="true"/>
+		                    <Input id="quantity" value=""/>
+		                    <Label text="{i18n>Invoice.positions.unitprice}" required="true"/>
+		                    <Input id="unitprice" value=""/>
+							<Label text="{i18n>Invoice.positions.vatrate}" required="true"/>
+		                    <Input id="vatrate" value=""/>
+		                    <Button icon="sap-icon://add" press="onPositionAdd">
+		                        <layoutData>
+		                            <layout:GridData span="XL1 L1 M1 S1"/>
+		                        </layoutData>
+		                    </Button>
+		                </form:content>
+		            </form:SimpleForm>
+		            <Table
+		                items="{/invoice/positions}"
+		                inset="false">
+		                <columns>
+		                    <Column><Text text="{i18n>Invoice.positions.pos}"/></Column>
+							<Column hAlign="End"><Text text="{i18n>Invoice.positions.quantity}"/></Column>
+							<Column hAlign="End"><Text text="{i18n>Invoice.positions.unitprice}"/></Column>
+							<Column hAlign="End"><Text text="{i18n>Invoice.positions.vatrate}"/></Column>
+		                </columns>
+		                <items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{pos}"/>
+									<Text text="{quantity}"/>
+									<Text text="{unitprice}"/>
+									<Text text="{vatrate}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+		            </Table>
+				</WizardStep>
+			</Wizard>
+		</content>
+		<footer>
+			<Toolbar>
+				<content>
+					<ToolbarSpacer/>
+					<Button
+						id="btnCancelNewInvoice"
+						text="{i18n>Misc.cancel}"
+						press="onNewInvoiceCancel"
+						type="Reject"
 					/>
-					<Label text="{i18n>Invoice.date}" required="true"/>
-					<DatePicker
-						id="newInvoiceDate"
-						value="{/invoice/date}"
-						valueFormat="yyyy-MM-dd"
-						displayFormat="long"
-						liveChange="validateInvoiceHeadStep"
+					<Button
+						id="btnSaveAndPrintNewInvoice"
+						text="{i18n>Misc.save.print}"
+						press="onNewInvoiceSaveAndPrint"
+						type="Accept"
+						visible="false"
 					/>
-					<Label text="{i18n>Invoice.room}"/>
-					<Select id="newInvoiceRoom" selectedKey="{/invoice/room}">
-    					<items>
-    						<core:Item text="{i18n>Invoice.room.rossini}" key="rossini"/>
-    						<core:Item text="{i18n>Invoice.room.littmann}" key="littmann"/>
-    					</items>
-    				</Select>
-					<Label id="newInvoiceComments" text="{i18n>Invoice.comments}"/>
-					<Input value="{/invoice/comments}"/>
-
-					<!-- ************************************************************ -->
-					<!-- Invoice customer data -->
-					<core:Title text="{i18n>Invoice.form.section.customer}"/>
-					<Label text="{i18n>Customer.id}" required="true"/>
-                    <Input id="newInvoiceCustomerId" value="{/customer/id}"
-						liveChange="validateInvoiceHeadStep"
+					<Button
+						id="btnSaveNewInvoice"
+						text="{i18n>Misc.save}"
+						press="onNewInvoiceSave"
+						type="Accept"
+						visible="false"
 					/>
-					<Button icon="sap-icon://search">
-						<layoutData>
-                            <layout:GridData span="XL1 L1 M1 S1"/>
-                        </layoutData>
-					</Button>
-				</form:content>
-			</form:SimpleForm>
-		</WizardStep>
-		<!-- ********************************************************************************** -->
-        <!-- Add invoice positions -->
-		<WizardStep
-            id="invoicePositionsStep"
-			validated="false"
-			title="{i18n>Invoice.page.detail.new.wizard.step.invoice.positions}"
-			activate="onWizardComplete">
-
-            <form:SimpleForm id="invoicePositionsForm" editable="true" layout="ResponsiveGridLayout"
-                labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false"
-                emptySpanXL="4" emptySpanL="3" emptySpanM="2" emptySpanS="0"
-                columnsXL="1" columnsL="1" columnsM="1"
-                singleContainerFullSize="false">
-
-                <form:content>
-                    <Label text="{i18n>Invoice.positions.pos}" required="true"/>
-                    <Input id="pos" value=""/>
-                    <Label text="{i18n>Invoice.positions.quantity}" required="true"/>
-                    <Input id="quantity" value=""/>
-                    <Label text="{i18n>Invoice.positions.unitprice}" required="true"/>
-                    <Input id="unitprice" value=""/>
-					<Label text="{i18n>Invoice.positions.vatrate}" required="true"/>
-                    <Input id="vatrate" value=""/>
-                    <Button icon="sap-icon://add" press="onPositionAdd">
-                        <layoutData>
-                            <layout:GridData span="XL1 L1 M1 S1"/>
-                        </layoutData>
-                    </Button>
-                </form:content>
-            </form:SimpleForm>
-            <Table
-                items="{/invoice/positions}"
-                inset="false">
-                <columns>
-                    <Column><Text text="{i18n>Invoice.positions.pos}"/></Column>
-					<Column hAlign="End"><Text text="{i18n>Invoice.positions.quantity}"/></Column>
-					<Column hAlign="End"><Text text="{i18n>Invoice.positions.unitprice}"/></Column>
-					<Column hAlign="End"><Text text="{i18n>Invoice.positions.vatrate}"/></Column>
-                </columns>
-                <items>
-					<ColumnListItem>
-						<cells>
-							<Text text="{pos}"/>
-							<Text text="{quantity}"/>
-							<Text text="{unitprice}"/>
-							<Text text="{vatrate}"/>
-						</cells>
-					</ColumnListItem>
-				</items>
-            </Table>
-		</WizardStep>
-	</Wizard>
+				</content>
+			</Toolbar>
+		</footer>
+	</Page>
 </mvc:View>

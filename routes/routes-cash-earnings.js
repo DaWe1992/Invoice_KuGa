@@ -7,7 +7,8 @@
 
 // import necessary modules
 var db = require("../db.js");
-var logger = require("../logger.js");
+var logger = require("../logger/logger.js");
+var isAuthenticated = require("../passport/isAuthenticated.js");
 
 module.exports = function(oApp) {
 
@@ -16,7 +17,7 @@ module.exports = function(oApp) {
      *
      * @name /cash-earnings
      */
-    oApp.get("/daily-cash-earnings", function(oReq, oRes) {
+    oApp.get("/daily-cash-earnings", isAuthenticated, function(oReq, oRes) {
         var sSql = "SELECT " +
             "ce_id AS id, " +
             "to_char(ce_date, 'YYYY-MM-DD') AS date, " +
@@ -26,7 +27,7 @@ module.exports = function(oApp) {
 
         db.query(sSql, function(oErr, oResult) {
             if(oErr) {
-                logger.log(logger.levels.ERR, oErr)
+                logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
                     "success": false,
                     "err": oErr
@@ -47,7 +48,7 @@ module.exports = function(oApp) {
      * @name /daily-cash-earnings
      * @param earning (in body, obligatory)
      */
-    oApp.post("/daily-cash-earnings", function(oReq, oRes) {
+    oApp.post("/daily-cash-earnings", isAuthenticated, function(oReq, oRes) {
         var oEarning = oReq.body;
         var sSql = "INSERT INTO cash_earnings (" +
             "ce_date, " +
@@ -65,7 +66,7 @@ module.exports = function(oApp) {
 
         db.query(sSql, function(oErr, oResult) {
             if(oErr) {
-                logger.log(logger.levels.ERR, oErr)
+                logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
                     "success": false,
                     "err": oErr
@@ -85,13 +86,13 @@ module.exports = function(oApp) {
      * @name /daily-cash-earnings/:id
      * @param id (obligatory)
      */
-    oApp.delete("/daily-cash-earnings/:id", function(oReq, oRes) {
+    oApp.delete("/daily-cash-earnings/:id", isAuthenticated, function(oReq, oRes) {
         var sId = oReq.params.id;
         var sSql = "DELETE FROM cash_earnings WHERE ce_id = '" + sId + "';";
 
         db.query(sSql, function(oErr, oResult) {
             if(oErr) {
-                logger.log(logger.levels.ERR, oErr)
+                logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
                     "success": false,
                     "err": oErr

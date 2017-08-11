@@ -73,7 +73,7 @@ sap.ui.define([
         logout: function() {
             new SessionService().logout(
                 function() {location.reload();},
-                function() {}
+                function() {location.reload();}
             );
         },
 

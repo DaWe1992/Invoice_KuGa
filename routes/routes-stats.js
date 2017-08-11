@@ -8,6 +8,8 @@
 // import necessary modules
 var db = require("../db.js");
 var url = require("url");
+var logger = require("../logger/logger.js");
+var isAuthenticated = require("../passport/isAuthenticated.js");
 
 module.exports = function(oApp) {
 
@@ -16,7 +18,7 @@ module.exports = function(oApp) {
      *
      * @name /statistics/evtrevbymonth
      */
-    oApp.get("/statistics/evt-rev-by-month", function(oReq, oRes) {
+    oApp.get("/statistics/evt-rev-by-month", isAuthenticated, function(oReq, oRes) {
         var sSql = "";
     });
 
@@ -27,7 +29,7 @@ module.exports = function(oApp) {
      * @param gross (if true, gross prices are returned, else net prices)
      * @param limit (limits the number of result rows)
      */
-    oApp.get("/statistics/evt-rev-by-customer", function(oReq, oRes) {
+    oApp.get("/statistics/evt-rev-by-customer", isAuthenticated, function(oReq, oRes) {
         var oQueryObject = url.parse(oReq.url, true).query;
 
         var sGross = oQueryObject.gross === "true" ? "true" : "false";
@@ -50,6 +52,7 @@ module.exports = function(oApp) {
 
         db.query(sSql, function(oErr, oResult) {
             if(oErr) {
+                logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
                     "success": false,
                     "err": oErr
@@ -72,7 +75,7 @@ module.exports = function(oApp) {
      *
      * @name /statistics/ce-rev
      */
-    oApp.get("/statistics/ce-rev", function(oReq, oRes) {
+    oApp.get("/statistics/ce-rev", isAuthenticated, function(oReq, oRes) {
         var sSql = "SELECT " +
             "ce_amount AS cerevenue, " +
             "to_char(ce_date, 'YYYY-MM-DD') AS date " +
@@ -81,6 +84,7 @@ module.exports = function(oApp) {
 
         db.query(sSql, function(oErr, oResult) {
             if(oErr) {
+                logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
                     "success": false,
                     "err": oErr

@@ -8,8 +8,8 @@
 
 // import necessary modules
 var pg = require("pg");
-
-const sConnectionString = "postgres://postgres:admin@localhost:5432/db_invoice_kuga";
+var config = require("./config.js");
+var logger = require("./logger/logger.js");
 
 module.exports = {
 
@@ -19,7 +19,8 @@ module.exports = {
      * @param fCallback
      */
     query: function(sSql, fCallback) {
-        pg.connect(sConnectionString, function(oErr, oClient, fDone) {
+        logger.log(logger.levels.INFO, "Executing SQL: " + sSql);
+        pg.connect(config.postgres.url, function(oErr, oClient, fDone) {
             oClient.query(sSql, function(oErr, oResult) {
                 fDone();
                 fCallback(oErr, oResult);

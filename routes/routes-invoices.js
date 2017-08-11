@@ -10,7 +10,8 @@ var db = require("../db.js");
 var fs = require("fs");
 var pdf = require("html-pdf");
 var mustache = require("mustache");
-var logger = require("../logger.js");
+var logger = require("../logger/logger.js");
+var isAuthenticated = require("../passport/isAuthenticated.js");
 
 // options for pdf creation
 var oPdfOptions = {
@@ -25,7 +26,7 @@ module.exports = function(oApp) {
      *
      * @name /invoices
      */
-    oApp.get("/invoices", function(oReq, oRes) {
+    oApp.get("/invoices", isAuthenticated, function(oReq, oRes) {
 
         // get a list of all invoices including their gross amounts
         var sSql = "SELECT " +
@@ -51,7 +52,7 @@ module.exports = function(oApp) {
 
         db.query(sSql, function(oErr, oResult) {
             if(oErr) {
-                logger.log(logger.levels.ERR, oErr)
+                logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
                     "success": false,
                     "err": oErr
@@ -72,7 +73,7 @@ module.exports = function(oApp) {
      * @name /invoices
      * @param invoice (in body, obligatory)
      */
-    oApp.post("/invoices", function(oReq, oRes) {
+    oApp.post("/invoices", isAuthenticated, function(oReq, oRes) {
         var oInvoice = oReq.body;
 
         // validate the data received
@@ -109,7 +110,7 @@ module.exports = function(oApp) {
 
             db.query(sSql, function(oErr, oResult) {
                 if(oErr) {
-                    logger.log(logger.levels.ERR, oErr)
+                    logger.log(logger.levels.ERR, oErr);
                     return oRes.status(500).json({
                         "success": false,
                         "err": oErr
@@ -138,13 +139,13 @@ module.exports = function(oApp) {
      * @name /invoices/:id
      * @param id (obligatory)
      */
-    oApp.get("/invoices/:id", function(oReq, oRes) {
+    oApp.get("/invoices/:id", isAuthenticated, function(oReq, oRes) {
         var sId = oReq.params.id;
 
         // get the invoice data
         getInvoiceById(sId, function(oData, oErr) {
             if(oErr) {
-                logger.log(logger.levels.ERR, oErr)
+                logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
                     "success": false,
                     "err": oErr
@@ -164,13 +165,13 @@ module.exports = function(oApp) {
      * @name /invoices/:id/print
      * @param id (obligatory)
      */
-    oApp.get("/invoices/:id/print", function(oReq, oRes) {
+    oApp.get("/invoices/:id/print", isAuthenticated, function(oReq, oRes) {
         var sId = oReq.params.id;
 
         // get the invoice data
         getInvoiceById(sId, function(oInvoice, oErr) {
             if(oErr) {
-                logger.log(logger.levels.ERR, oErr)
+                logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
                     "success": false,
                     "err": oErr
@@ -195,7 +196,7 @@ module.exports = function(oApp) {
      * @name /invoices/:id/positions
      * @param id (obligatory)
      */
-    oApp.get("/invoices/:id/positions", function(oReq, oRes) {
+    oApp.get("/invoices/:id/positions", isAuthenticated, function(oReq, oRes) {
 
     });
 
@@ -205,7 +206,7 @@ module.exports = function(oApp) {
      * @name /invoices/:id/positions
      * @param id (obligatory)
      */
-    oApp.post("/invoices/:id/positions", function(oReq, oRes) {
+    oApp.post("/invoices/:id/positions", isAuthenticated, function(oReq, oRes) {
         var sId = oReq.params.id;
         var oPosition = oReq.body;
         var sSql = "INSERT INTO invoice_positions (" +
@@ -223,7 +224,7 @@ module.exports = function(oApp) {
 
         db.query(sSql, function(oErr, oResult) {
             if(oErr) {
-                logger.log(logger.levels.ERR, oErr)
+                logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
                     "success": false,
                     "err": oErr
@@ -265,7 +266,7 @@ function getInvoiceById(sId, fCallback) {
 
     db.query(sSql, function(oErr, oResult) {
         if(oErr) {
-            logger.log(logger.levels.ERR, oErr)
+            logger.log(logger.levels.ERR, oErr);
             fCallback(null, oErr);
         }
 
@@ -281,7 +282,7 @@ function getInvoiceById(sId, fCallback) {
 
         db.query(sSql, function(oErr, oResult) {
             if(oErr) {
-                logger.log(logger.levels.ERR, oErr)
+                logger.log(logger.levels.ERR, oErr);
                 fCallback(null, oErr);
             }
 
@@ -301,7 +302,7 @@ function getInvoiceById(sId, fCallback) {
 
             db.query(sSql, function(oErr, oResult) {
                 if(oErr) {
-                    logger.log(logger.levels.ERR, oErr)
+                    logger.log(logger.levels.ERR, oErr);
                     fCallback(null, oErr)
                 }
 
@@ -375,7 +376,7 @@ function getNewInvoiceId(fCallback) {
 
     getMaxInvoiceId(function(sMaxId, oErr) {
         if(oErr) {
-            logger.log(logger.levels.ERR, oErr)
+            logger.log(logger.levels.ERR, oErr);
             fCallback(null, oErr);
             return;
         }
@@ -410,7 +411,7 @@ function getMaxInvoiceId(fCallback) {
 
     db.query(sSql, function(oErr, oResult) {
         if(oErr) {
-            logger.log(logger.levels.ERR, oErr)
+            logger.log(logger.levels.ERR, oErr);
             fCallback(null, oErr);
         }
         fCallback(oResult.rows[0].maxid, null);

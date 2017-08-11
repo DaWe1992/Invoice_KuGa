@@ -28,7 +28,7 @@ module.exports = {
         var sYear = oDate.getFullYear();
 
         fs.appendFile(
-            "./logs/log" + sYear + ".txt",
+            "../logs/log" + sYear + ".txt",
             sLevel + "\t" + oDate + "\t" + sMsg + "\n",
             function(oErr) {}
         );

@@ -1,0 +1,79 @@
+doctype html
+html
+  head
+    title= title
+    link(rel="stylesheet", href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css")
+    style(type="text/css").
+        html, body {
+            height: 100%;
+        }
+        body {
+            padding: 50px;
+            font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+            background: #a1dbff;
+            background: -moz-linear-gradient(top, #a1dbff 0%, #cbebff 53%, #f0f9ff 100%);
+            background: -webkit-linear-gradient(top, #a1dbff 0%,#cbebff 53%,#f0f9ff 100%);
+            background: linear-gradient(to bottom, #a1dbff 0%,#cbebff 53%,#f0f9ff 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a1dbff', endColorstr='#f0f9ff', GradientType=0);
+        }
+        a {
+            color: #00B7FF;
+        }
+        .form-signin {
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+        }
+        .form-signin .form-control {
+            position: relative;
+            font-size: 16px;
+            height: auto;
+            padding: 10px;
+
+        }
+        .form-signin .form-control:focus {
+            z-index: 2;
+        }
+        .form-signin input {
+            margin-bottom: 10px;
+        }
+        .account-wall {
+            margin-top: 20px;
+            padding: 40px 0px 20px 0px;
+            background-color: #f7f7f7;
+            -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        }
+        .signup-wall {
+            margin-top: 20px;
+            padding: 20px 0px 20px 0px;
+            background-color: #f7f7f7;
+            -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        }
+        .login-title {
+            color: #555;
+            font-size: 18px;
+            font-weight: 400;
+            display: block;
+        }
+        .profile-img {
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 10px;
+            display: block;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+        }
+        .new-account {
+            display: block;
+            margin-top: 10px;
+        }
+        h1.error-message {
+            color: red;
+        }
+  body
+    block content

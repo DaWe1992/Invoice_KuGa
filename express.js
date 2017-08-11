@@ -10,15 +10,24 @@ var path = require("path");
 var http = require("http");
 var colors = require("colors");
 var express = require("express");
+var mongoose = require("mongoose");
+var passport = require("passport");
+var flash = require("connect-flash");
 var favicon = require("serve-favicon");
 var bodyParser = require("body-parser");
-var stormpath = require("express-stormpath");
-var logger = require("./logger.js");
+var cookieParser = require("cookie-parser");
+var expressSession = require("express-session");
+
+var config = require("./config.js");
+var logger = require("./logger/logger.js");
+var isAuthenticated = require("./passport/isAuthenticated.js");
 
 var oApp = express();
-var iPORT = 8080;
 
 console.log("SETTING UP THE SERVER...");
+
+// connect to mongo db
+mongoose.connect(config.mongo.url);
 
 // middleware
 // log routes
@@ -26,58 +35,47 @@ oApp.use(function(oReq, oRes, fNext) {
     console.log(colors.yellow(oReq.method + "\t" + oReq.url));
     fNext();
 });
+
+// setup jade for authentication
+oApp.set("views", path.join(__dirname, "passport", "views"));
+oApp.set("view engine", "jade");
+
 // support JSON encoded bodies
 oApp.use(bodyParser.json());
 // support encoded bodies
 oApp.use(bodyParser.urlencoded({extended: true}));
-// configure stormpath
-oApp.use(stormpath.init(oApp, {
-    client: {
-        apiKey: {
-            file: "./stormpath/apiKey.properties"
-        }
-    },
-    web: {
-        login: {
-            enabled: true
-        },
-        logout: {
-            enabled: true
-        },
-        me: {
-            enabled: true
-        },
-        oauth2: {
-            enabled: false
-        },
-        register: {
-            enabled: true
-        }
-    },
-    application: {
-        href: "https://api.stormpath.com/v1/applications/onkfEfUjnUWO6qMg4y5J7",
-    }
-}));
-// serve favicon
-oApp.use(favicon(path.join(__dirname, "frontend", "img", "favicon.ico")));
-// serve static files in frontend folder
-oApp.use(
-    stormpath.loginRequired, express.static(
-        __dirname + "/frontend" + (process.argv[2] === "sapui5" ? "_sapui5" : "")
-    )
-);
+oApp.use(cookieParser());
+
+// initialize passport.js
+oApp.use(expressSession({secret: "mySecretKey"}));
+oApp.use(passport.initialize());
+oApp.use(passport.session());
+
+var initPassport = require("./passport/initPassport.js");
+initPassport(passport);
+
+// flash middleware to store messages in session
+oApp.use(flash());
 
 // include routes
 require("./routes/routes-customers.js")(oApp);
 require("./routes/routes-invoices.js")(oApp);
 require("./routes/routes-stats.js")(oApp);
 require("./routes/routes-cash-earnings")(oApp);
+require("./routes/routes-authentication")(oApp, passport);
+
+// serve favicon
+oApp.use(favicon(path.join(__dirname, "frontend", "img", "favicon.ico")));
+// serve static files in frontend folder
+oApp.use(
+    isAuthenticated, express.static(
+        __dirname + "/frontend" + (process.argv[2] === "sapui5" ? "_sapui5" : "")
+    )
+);
 
 // bind application to port
-http.createServer(oApp).listen(iPORT);
-
-oApp.on("stormpath.ready", function() {
-    logger.log(logger.levels.INFO, "Application (re)started")
-    console.log(colors.green("Server listens on port " + iPORT + "."));
+http.createServer(oApp).listen(config.app.port, function() {
+    logger.log(logger.levels.INFO, "Application (re)started");
+    console.log(colors.green("Server listens on port " + config.app.port + "."));
     console.log(colors.magenta("Requests:"));
 });

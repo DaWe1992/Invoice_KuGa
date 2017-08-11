@@ -26,7 +26,7 @@ sap.ui.define([
          * @param fSuccess (callback in case of success)
          * @param fError (callback in case of error)
          */
-        logout: function(success, error) {
+        logout: function(fSuccess, fError) {
             this._http.performPost("/logout", fSuccess, fError);
         }
     });

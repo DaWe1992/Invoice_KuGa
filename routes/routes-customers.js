@@ -7,7 +7,8 @@
 
 // import necessary modules
 var db = require("../db.js");
-var logger = require("../logger.js");
+var logger = require("../logger/logger.js");
+var isAuthenticated = require("../passport/isAuthenticated.js");
 
 module.exports = function(oApp) {
 
@@ -16,7 +17,7 @@ module.exports = function(oApp) {
      *
      * @name /customers
      */
-    oApp.get("/customers", function(oReq, oRes) {
+    oApp.get("/customers", isAuthenticated, function(oReq, oRes) {
         var sSql = "SELECT " +
             "cust_id AS id, " +
             "cust_address AS address, " +
@@ -26,7 +27,7 @@ module.exports = function(oApp) {
 
         db.query(sSql, function(oErr, oResult) {
             if(oErr) {
-                logger.log(logger.levels.ERR, oErr)
+                logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
                     "success": false,
                     "err": oErr
@@ -47,7 +48,7 @@ module.exports = function(oApp) {
      * @name /customers
      * @param customer (in body, obligatory)
      */
-    oApp.post("/customers", function(oReq, oRes) {
+    oApp.post("/customers", isAuthenticated, function(oReq, oRes) {
         var oCustomer = oReq.body;
 
         // validate the data received
@@ -84,7 +85,7 @@ module.exports = function(oApp) {
 
             db.query(sSql, function(oErr, oResult) {
                 if(oErr) {
-                    logger.log(logger.levels.ERR, oErr)
+                    logger.log(logger.levels.ERR, oErr);
                     return oRes.status(500).json({
                         "success": false,
                         "err": oErr
@@ -118,7 +119,7 @@ module.exports = function(oApp) {
                     // save customer contacts in database
                     db.query(sSql, function(oErr, oResult) {
                         if(oErr) {
-                            logger.log(logger.levels.ERR, oErr)
+                            logger.log(logger.levels.ERR, oErr);
                             return oRes.status(500).json({
                                 "success": false,
                                 "err": oErr
@@ -151,7 +152,7 @@ module.exports = function(oApp) {
      * @name /customer/:id
      * @param id (obligatory)
      */
-    oApp.get("/customers/:id", function(oReq, oRes) {
+    oApp.get("/customers/:id", isAuthenticated, function(oReq, oRes) {
         var sId = oReq.params.id;
         var oResponse = {};
 
@@ -169,7 +170,7 @@ module.exports = function(oApp) {
 
         db.query(sSql, function(oErr, oResult) {
             if(oErr) {
-                logger.log(logger.levels.ERR, oErr)
+                logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
                     "success": false,
                     "err": oErr
@@ -188,7 +189,7 @@ module.exports = function(oApp) {
 
             db.query(sSql, function(oErr, oResult) {
                 if(oErr) {
-                    logger.log(logger.levels.ERR, oErr)
+                    logger.log(logger.levels.ERR, oErr);
                     return oRes.status(500).json({
                         "success": false,
                         "err": oErr
@@ -210,9 +211,9 @@ module.exports = function(oApp) {
      * @name /customers/:id/islocked
      * @param id (obligatory)
      */
-    oApp.get("/customers/:id/islocked", function(oReq, oRes) {
+    oApp.get("/customers/:id/islocked", isAuthenticated, function(oReq, oRes) {
         var sId = oReq.params.id;
-        var oResponse;
+        var bResponse;
 
         var sSql = "SELECT " +
             "culo_id AS id, " +
@@ -223,21 +224,21 @@ module.exports = function(oApp) {
 
         db.query(sSql, function(oErr, oResult) {
             if(oErr) {
-                logger.log(logger.levels.ERR, oErr)
+                logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
                     "success": false,
                     "err": oErr
                 });
             }
 
-            oResponse = ((oResult.rows.length > 0)
+            bResponse = ((oResult.rows.length > 0)
                 ? oResult.rows[0]
                 : false
             );
 
             return oRes.status(200).json({
                 "success": true,
-                "data": oResponse
+                "data": bResponse
             });
         });
     });
@@ -248,7 +249,7 @@ module.exports = function(oApp) {
      * @name /customers/id/lock
      * @param id (obligatory)
      */
-    oApp.post("/customers/:id/lock", function(oReq, oRes) {
+    oApp.post("/customers/:id/lock", isAuthenticated, function(oReq, oRes) {
         var sId = oReq.params.id;
         var sSql = "INSERT INTO customers_lock (" +
             "culo_id, " +
@@ -262,7 +263,7 @@ module.exports = function(oApp) {
 
         db.query(sSql, function(oErr, oResult) {
             if(oErr) {
-                logger.log(logger.levels.ERR, oErr)
+                logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
                     "success": false,
                     "err": oErr
@@ -281,13 +282,13 @@ module.exports = function(oApp) {
      * @name /customers/id/unlock
      * @param id (obligatory)
      */
-    oApp.post("/customers/:id/unlock", function(oReq, oRes) {
+    oApp.post("/customers/:id/unlock", isAuthenticated, function(oReq, oRes) {
         var sId = oReq.params.id;
         var sSql = "DELETE FROM customers_lock WHERE culo_id = '" + sId + "';";
 
         db.query(sSql, function(oErr, oResult) {
             if(oErr) {
-                logger.log(logger.levels.ERR, oErr)
+                logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
                     "success": false,
                     "err": oErr
@@ -310,7 +311,7 @@ module.exports = function(oApp) {
 function getNewCustomerId(sZip, fCallback) {
     getCounterValue(function(iCounter, oErr) {
         if(oErr) {
-            logger.log(logger.levels.ERR, oErr)
+            logger.log(logger.levels.ERR, oErr);
             fCallback(null, oErr);
         }
         fCallback(sZip + iCounter);
@@ -329,7 +330,7 @@ function getCounterValue(fCallback) {
 
     db.query(sSql, function(oErr, oResult) {
         if(oErr) {
-            logger.log(logger.levels.ERR, oErr)
+            logger.log(logger.levels.ERR, oErr);
             fCallback(null, oErr);
         }
 

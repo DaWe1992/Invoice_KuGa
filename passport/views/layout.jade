@@ -8,16 +8,18 @@ html
             height: 100%;
         }
         body {
+            border-top: 7px solid #427CAC;
             padding: 50px;
             font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-            background: #a1dbff;
-            background: -moz-linear-gradient(top, #a1dbff 0%, #cbebff 53%, #f0f9ff 100%);
-            background: -webkit-linear-gradient(top, #a1dbff 0%,#cbebff 53%,#f0f9ff 100%);
-            background: linear-gradient(to bottom, #a1dbff 0%,#cbebff 53%,#f0f9ff 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a1dbff', endColorstr='#f0f9ff', GradientType=0);
+            background: #abc5df;
+            background: -moz-linear-gradient(top, #ABC5DF 0%, #C8D8E7 51%, #E4EAEF 100%);
+            background: -webkit-linear-gradient(top, #ABC5DF 0%,#C8D8E7 51%,#E4EAEF 100%);
+            background: linear-gradient(to bottom, #ABC5DF 0%,#C8D8E7 51%,#E4EAEF 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ABC5DF", endColorstr="#E4EAEF", GradientType=0);
         }
         a {
             color: #00B7FF;
+            margin-top: 10px;
         }
         .form-signin {
             max-width: 330px;
@@ -40,18 +42,18 @@ html
         .account-wall {
             margin-top: 20px;
             padding: 40px 0px 20px 0px;
-            background-color: #f7f7f7;
+            background-color: rgba(255, 255, 255, 0.3);
             -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
             -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3);
         }
         .signup-wall {
             margin-top: 20px;
             padding: 20px 0px 20px 0px;
-            background-color: #f7f7f7;
+            background-color: rgba(255, 255, 255, 0.3);
             -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
             -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3);
         }
         .login-title {
             color: #555;
@@ -60,6 +62,7 @@ html
             display: block;
         }
         .profile-img {
+            border: 1px solid #666;
             width: 96px;
             height: 96px;
             margin: 0 auto 10px;
@@ -68,11 +71,8 @@ html
             -webkit-border-radius: 50%;
             border-radius: 50%;
         }
-        .new-account {
-            display: block;
+        p.error-message {
             margin-top: 10px;
-        }
-        h1.error-message {
             color: red;
         }
   body

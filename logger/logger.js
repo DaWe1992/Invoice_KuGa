@@ -14,7 +14,7 @@ module.exports = {
     levels: {
         INFO: "INFO",
         WARN: "WARN",
-        ERR: "ERR"
+        ERR: "ERRO"
     },
 
     /**
@@ -28,8 +28,8 @@ module.exports = {
         var sYear = oDate.getFullYear();
 
         fs.appendFile(
-            "../logs/log" + sYear + ".txt",
-            sLevel + "\t" + oDate + "\t" + sMsg + "\n",
+            "./logs/log" + sYear + ".txt",
+            sLevel + "\t\t" + oDate + "\t\t" + sMsg + "\n",
             function(oErr) {}
         );
     },

@@ -43,10 +43,17 @@ You also have to install `PostgreSQL` which will be used as a database. In order
 
 ## Start the Application
 
-Before application startup, make sure that MongoDB is running:
+Before application startup, make sure that `MongoDB` is running.
 
 ```
 mongod --dbpath /Users/Daniel/Documents/mongodb/data
+```
+
+The `MongoDB` database is used for user authentication. You can get a list of all users by logging in to the `MongoDB` shell:
+
+```
+mongo
+db.users.find()
 ```
 
 In order to start the application, go to the root folder of the application and run the following command (if the `sapui5` parameter is specified the `SAPUI5` frontend will be loaded):

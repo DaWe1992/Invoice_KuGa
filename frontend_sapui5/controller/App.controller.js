@@ -9,20 +9,40 @@ sap.ui.define([
     "com/danielwehner/invoicekuga/controller/BaseController",
     "com/danielwehner/invoicekuga/service/SessionService",
     "sap/m/Popover",
-	"sap/m/Button"
-], function(BaseController, SessionService, Popover, Button) {
+	"sap/m/Button",
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageBox"
+], function(BaseController, SessionService, Popover, Button, JSONModel, MessageBox) {
     "use strict";
+
+    var self;
 
     return BaseController.extend("com.danielwehner.invoicekuga.controller.App", {
 
         /**
          * onInit function.
          * Sets the content density class for the app.
+         * Sets the session model.
          */
         onInit: function() {
+            self  = this;
+
+            // add content density class
             /*this.getView().addStyleClass(
                 this.getOwnerComponent().getContentDensityClass()
             );*/
+
+            // set model
+            new SessionService().user(
+                function(res) {
+                    self.getView().setModel(
+                        new JSONModel(res.data)
+                    );
+                },
+                function() {
+
+                }
+            );
         },
 
         /**
@@ -50,13 +70,13 @@ sap.ui.define([
 				placement: sap.m.PlacementType.Bottom,
 				content: [
                     new Button({
-                        text: this.getTextById("App.user"),
+                        text: this.getTextById("App.menu.user"),
                         icon: "sap-icon://notes",
                         type: sap.m.ButtonType.Transparent,
-                        press: ""
+                        press: this.showUserInfo
                     }),
 					new Button({
-						text: this.getTextById("App.logout"),
+						text: this.getTextById("App.menu.logout"),
                         icon: "sap-icon://log",
 						type: sap.m.ButtonType.Transparent,
                         press: this.logout
@@ -66,6 +86,19 @@ sap.ui.define([
 
 			oPopover.openBy(oEvent.getSource());
 		},
+
+        /**
+         * Shows user information.
+         */
+        showUserInfo: function() {
+            var oData = self.getView().getModel().getData();
+            MessageBox.information(
+                self.getTextById("App.user.body.username") + ": " + oData.username + " | " +
+                self.getTextById("App.user.body.email") + ": " + oData.email, {
+                    title: self.getTextById("App.menu.user")
+                }
+            );
+        },
 
         /**
          * Logs user out.

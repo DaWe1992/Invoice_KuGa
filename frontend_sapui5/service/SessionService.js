@@ -21,6 +21,16 @@ sap.ui.define([
         },
 
         /**
+         * Gets the current user information.
+         *
+         * @param fSuccess (callback in case of success)
+         * @param fError (callback in case of error)
+         */
+        user: function(fSuccess, fError) {
+            this._http.performGet("/me", fSuccess, fError);
+        },
+
+        /**
          * Logs the user out.
          *
          * @param fSuccess (callback in case of success)

@@ -31,14 +31,14 @@ module.exports = function(passport) {
                     // username does not exist, log the error and redirect back
                     if(!oUser) {
                         logger.log(logger.levels.ERR, "User not found with username " + sUsername);
-                        return fDone(null, false, oReq.flash("message", "User not found."));
+                        return fDone(null, false, oReq.flash("message", "User not found"));
                     }
 
                     // user exists but wrong password, log the error
                     if(!isValidPassword(oUser, sPassword)) {
                         logger.log(logger.levels.ERR, "Invalid password");
                         // redirect to login page
-                        return fDone(null, false, oReq.flash("message", "Invalid Password"));
+                        return fDone(null, false, oReq.flash("message", "Invalid password"));
                     }
 
                     // both user and password match, return user

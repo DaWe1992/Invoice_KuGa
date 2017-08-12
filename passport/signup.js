@@ -40,8 +40,8 @@ module.exports = function(passport){
                         oNewUser.username = sUsername;
                         oNewUser.password = createHash(sPassword);
                         oNewUser.email = oReq.param("email");
-                        oNewUser.firstName = oReq.param("firstName");
-                        oNewUser.lastName = oReq.param("lastName");
+                        //oNewUser.firstName = oReq.param("firstname");
+                        //oNewUser.lastName = oReq.param("lastname");
 
                         // save the user
                         oNewUser.save(function(oErr) {
@@ -50,7 +50,7 @@ module.exports = function(passport){
                                 throw err;
                             }
 
-                            logger.log(logger.levels.INFO, "User registration successfull");
+                            logger.log(logger.levels.INFO, "User registration successful");
                             return fDone(null, oNewUser);
                         });
                     }

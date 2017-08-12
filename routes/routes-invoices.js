@@ -59,6 +59,11 @@ module.exports = function(oApp) {
                 });
             }
 
+            // set sum to 0 if sum is undefined
+            for(var i = 0; i < oResult.rows.length; i++) {
+                if(!oResult.rows[i].sum) oResult.rows[i].sum = 0;
+            }
+
             return oRes.status(200).json({
                 "success": true,
                 "count": oResult.rows.length,

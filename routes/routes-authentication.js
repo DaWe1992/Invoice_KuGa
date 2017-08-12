@@ -5,6 +5,9 @@
 
 "use strict";
 
+// import necessary modules
+var isAuthenticated = require("../passport/isAuthenticated.js");
+
 module.exports = function(oApp, passport) {
 
 	/**
@@ -38,7 +41,7 @@ module.exports = function(oApp, passport) {
      * @name /signup
      */
 	oApp.get("/signup", function(oReq, oRes){
-		oRes.render("register", {
+		oRes.render("signup", {
             message: oReq.flash("message")
         });
 	});
@@ -53,6 +56,21 @@ module.exports = function(oApp, passport) {
 		failureRedirect: "/signup",
 		failureFlash : true
 	}));
+
+	/**
+	 * Gets the user information.
+	 *
+	 * @name /me
+	 */
+	oApp.get("/me", isAuthenticated, function(oReq, oRes) {
+		return oRes.status(200).json({
+			"success": true,
+			"data": {
+				"username": oReq.user.username,
+				"email": oReq.user.email
+			}
+		});
+	});
 
     /**
      * Handles logout post.

@@ -200,7 +200,9 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
 - `http://<host>:8080/login`:  
   Sends the login information to the server.
 - `http://<host>:8080/signup`:  
-  Sends the signup information to the server.
+  Sends the signup information to the server.  
+- `http://<host>:8080/logout`:  
+  Logs the user out.
 
 ## Debugging Node.js Backend
 

@@ -184,6 +184,24 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
 - `http://<host>:8080/daily-cash-earnings/:id`:  
   Deletes the cash earning with id `id`.
 
+### Misc
+
+**GET:**
+
+- `http://<host>:8080/login`:  
+  Shows the login screen.
+- `http://<host>:8080/signup`:  
+  Shows the signup screen.
+- `http://<host>:8080/me`:  
+  Returns the user information.
+
+**POST:**
+
+- `http://<host>:8080/login`:  
+  Sends the login information to the server.
+- `http://<host>:8080/signup`:  
+  Sends the signup information to the server.
+
 ## Debugging Node.js Backend
 
 Debugging is an integral part of the development process. For debugging a `Node.js` application it is recommended to use

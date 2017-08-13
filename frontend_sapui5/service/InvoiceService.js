@@ -50,6 +50,17 @@ sap.ui.define([
          */
         addInvoice: function(oData, fSuccess, fError) {
             this._http.performPost("/invoices", oData, fSuccess, fError);
+        },
+
+        /**
+         * Prints the invoice specified.
+         *
+         * @param sId (id of the invoice)
+         * @param fSuccess (callback in case of success)
+         * @param fError (callback in case of error)
+         */
+        printInvoice: function(sId, fSuccess, fError) {
+            this._http.performGet("/invoices/" + sId + "/print", fSuccess, fError);
         }
     });
 });

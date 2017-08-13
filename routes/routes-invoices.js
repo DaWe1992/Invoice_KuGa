@@ -277,46 +277,67 @@ function getInvoiceById(sId, fCallback) {
 
         oResponse.customer = oResult.rows[0];
 
-        // load invoice data
+        // load technical information
         sSql = "SELECT " +
-            "inv_id AS id, " +
-            "inv_description AS description, " +
-            "to_char(inv_date, 'DD.MM.YYYY') AS date " +
+            "created_at AS createdat, " +
+            "created_by AS createdby, " +
+            "updated_at AS updatedat, " +
+            "updated_by AS updatedby " +
         "FROM invoices " +
         "WHERE inv_id = '" + sId + "';";
 
         db.query(sSql, function(oErr, oResult) {
             if(oErr) {
                 logger.log(logger.levels.ERR, oErr);
-                fCallback(null, oErr);
+                return oRes.status(500).json({
+                    "success": false,
+                    "err": oErr
+                });
             }
 
-            oResponse.invoice = oResult.rows[0];
+            oResponse.techinfo = oResult.rows[0];
 
-            // load invoice positions
+            // load invoice data
             sSql = "SELECT " +
-                "ipos_description AS pos, " +
-                "ipos_qty AS qty, " +
-                "ipos_net_price AS unitprice, " +
-                "ROUND((ipos_qty * ipos_net_price)::numeric, 2) AS net, " +
-                "ipos_vat AS vatrate, " +
-                "ROUND(((ipos_qty * ipos_net_price) * ipos_vat)::numeric, 2) AS vat, " +
-                "ROUND(((ipos_qty * ipos_net_price) + ((ipos_qty * ipos_net_price) * ipos_vat))::numeric, 2) AS gross " +
-            "FROM invoice_positions " +
-            "WHERE ipos_inv_id = '" + sId + "';";
+                "inv_id AS id, " +
+                "inv_description AS description, " +
+                "to_char(inv_date, 'DD.MM.YYYY') AS date " +
+            "FROM invoices " +
+            "WHERE inv_id = '" + sId + "';";
 
             db.query(sSql, function(oErr, oResult) {
                 if(oErr) {
                     logger.log(logger.levels.ERR, oErr);
-                    fCallback(null, oErr)
+                    fCallback(null, oErr);
                 }
 
-                oResponse.invoice.positions = oResult.rows;
+                oResponse.invoice = oResult.rows[0];
 
-                // Calculate the sums
-                getSums(oResponse.invoice.positions, function(oSums) {
-                    oResponse.invoice.sums = oSums;
-                    fCallback(oResponse, null);
+                // load invoice positions
+                sSql = "SELECT " +
+                    "ipos_description AS pos, " +
+                    "ipos_qty AS qty, " +
+                    "ipos_net_price AS unitprice, " +
+                    "ROUND((ipos_qty * ipos_net_price)::numeric, 2) AS net, " +
+                    "ipos_vat AS vatrate, " +
+                    "ROUND(((ipos_qty * ipos_net_price) * ipos_vat)::numeric, 2) AS vat, " +
+                    "ROUND(((ipos_qty * ipos_net_price) + ((ipos_qty * ipos_net_price) * ipos_vat))::numeric, 2) AS gross " +
+                "FROM invoice_positions " +
+                "WHERE ipos_inv_id = '" + sId + "';";
+
+                db.query(sSql, function(oErr, oResult) {
+                    if(oErr) {
+                        logger.log(logger.levels.ERR, oErr);
+                        fCallback(null, oErr)
+                    }
+
+                    oResponse.invoice.positions = oResult.rows;
+
+                    // Calculate the sums
+                    getSums(oResponse.invoice.positions, function(oSums) {
+                        oResponse.invoice.sums = oSums;
+                        fCallback(oResponse, null);
+                    });
                 });
             });
         });

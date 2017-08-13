@@ -6,11 +6,18 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
 sap.ui.define([
-    "com/danielwehner/invoicekuga/controller/BaseController"
-], function(BaseController) {
+    "com/danielwehner/invoicekuga/controller/BaseController",
+    "com/danielwehner/invoicekuga/service/InvoiceService"
+], function(BaseController, InvoiceService) {
     "use strict";
 
     return BaseController.extend("com.danielwehner.invoicekuga.controller.invoice.InvoiceDetail", {
 
+        /**
+         * onInit function.
+         */
+        onInit: function() {
+
+        }
     });
 });

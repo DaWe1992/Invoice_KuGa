@@ -1,0 +1,22 @@
+<core:FragmentDefinition
+	xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+    xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form">
+
+    <form:SimpleForm id="customerForm" editable="true" layout="ResponsiveGridLayout"
+        labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false"
+        emptySpanXL="4" emptySpanL="3" emptySpanM="2" emptySpanS="0"
+        columnsXL="1" columnsL="1" columnsM="1"
+        singleContainerFullSize="false">
+        <form:content>
+            <Label text="{i18n>Misc.created.at}"/>
+            <Input value="{/techinfo/createdat}" enabled="false"/>
+            <Label text="{i18n>Misc.created.by}"/>
+            <Input value="{/techinfo/createdby}" enabled="false"/>
+            <Label text="{i18n>Misc.updated.at}"/>
+            <Input value="{/techinfo/updatedat}" enabled="false"/>
+            <Label text="{i18n>Misc.updated.by}"/>
+            <Input value="{/techinfo/updatedby}" enabled="false"/>
+        </form:content>
+    </form:SimpleForm>
+
+</core:FragmentDefinition>

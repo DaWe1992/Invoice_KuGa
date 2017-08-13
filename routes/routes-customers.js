@@ -179,13 +179,14 @@ module.exports = function(oApp) {
 
             oResponse.customer = oResult.rows[0];
 
-            // select customer contacts
+            // load technical information
             sSql = "SELECT " +
-                "cuco_contact_type AS type, " +
-                "cuco_contact AS data, " +
-                "cuco_comments AS comments " +
-            "FROM customer_contacts " +
-            "WHERE cuco_customer = '" + sId + "';";
+                "created_at AS createdat, " +
+                "created_by AS createdby, " +
+                "updated_at AS updatedat, " +
+                "updated_by AS updatedby " +
+            "FROM customers " +
+            "WHERE cust_id = '" + sId + "';";
 
             db.query(sSql, function(oErr, oResult) {
                 if(oErr) {
@@ -196,10 +197,30 @@ module.exports = function(oApp) {
                     });
                 }
 
-                oResponse.contacts = oResult.rows;
-                return oRes.status(200).json({
-                    "success": true,
-                    "data": oResponse
+                oResponse.techinfo = oResult.rows[0];
+
+                // select customer contacts
+                sSql = "SELECT " +
+                    "cuco_contact_type AS type, " +
+                    "cuco_contact AS data, " +
+                    "cuco_comments AS comments " +
+                "FROM customer_contacts " +
+                "WHERE cuco_customer = '" + sId + "';";
+
+                db.query(sSql, function(oErr, oResult) {
+                    if(oErr) {
+                        logger.log(logger.levels.ERR, oErr);
+                        return oRes.status(500).json({
+                            "success": false,
+                            "err": oErr
+                        });
+                    }
+
+                    oResponse.contacts = oResult.rows;
+                    return oRes.status(200).json({
+                        "success": true,
+                        "data": oResponse
+                    });
                 });
             });
         });

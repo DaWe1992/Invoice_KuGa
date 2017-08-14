@@ -60,8 +60,9 @@ oApp.use(flash());
 // include routes
 require("./routes/routes-customers.js")(oApp);
 require("./routes/routes-invoices.js")(oApp);
-require("./routes/routes-stats.js")(oApp);
 require("./routes/routes-cash-earnings")(oApp);
+require("./routes/routes-stats.js")(oApp);
+require("./routes/routes-excel.js")(oApp);
 require("./routes/routes-authentication")(oApp, passport);
 
 // serve favicon

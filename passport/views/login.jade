@@ -3,7 +3,8 @@ extends layout
 block content
 	div.container
 		div.row
-			div.col-sm-6.col-md-4.col-md-offset-4
+			div.col-xs-0.col-sm-3.col-md-4
+			div.col-xs-12.col-sm-6.col-md-4
 				h1.text-center.title Sign In
 					div.wall
 						img(class="profile-img", src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120")
@@ -20,3 +21,4 @@ block content
 					#message
 					if message
 						p.text-center.error-message #{message}
+			div.col-xs-0.col-sm-3.col-md-4

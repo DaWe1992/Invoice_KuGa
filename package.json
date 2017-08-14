@@ -16,6 +16,7 @@
     "html-pdf": "^2.0.1",
     "jade": "^1.11.0",
     "mongoose": "^4.11.6",
+    "msexcel-builder": "0.0.2",
     "mustache": "^2.2.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",

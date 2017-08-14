@@ -188,6 +188,9 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
 - `http://<host>:8080/statistics/ce-rev`:  
   Returns the cash earnings revenue.
 
+- `http://<host>:8080/statistics/aggregated-revenues`:  
+  Returns an excel file that contains the aggregated revenues.
+
 ### Cash Earnings Endpoints
 
 **GET:**

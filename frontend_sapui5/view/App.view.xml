@@ -1,8 +1,10 @@
 <core:View
 	controllerName="com.danielwehner.invoicekuga.controller.App"
 	height="100%"
-	xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
-	xmlns:core="sap.ui.core" xmlns:tnt="sap.tnt">
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns:tnt="sap.tnt">
 
     <tnt:ToolPage id="toolPage" height="100%">
 
@@ -10,8 +12,10 @@
         <tnt:header>
             <tnt:ToolHeader>
                 <Button
-                    id="sideNavigationToggleButton" icon="sap-icon://menu2"
-                    type="Transparent" press="onSideNavButtonPress">
+                    id="sideNavigationToggleButton"
+					icon="sap-icon://menu2"
+                    type="Transparent"
+					press="onSideNavButtonPress">
                     <layoutData>
                         <OverflowToolbarLayoutData priority="NeverOverflow"/>
 					</layoutData>
@@ -27,16 +31,23 @@
 				</Image>
 				<ToolbarSpacer>
 					<layoutData>
-						<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
+						<OverflowToolbarLayoutData
+							priority="NeverOverflow"
+							minWidth="20px"/>
 					</layoutData>
 				</ToolbarSpacer>
 				<Label text="{i18n>App.title} ({i18n>App.version})"/>
 				<ToolbarSpacer>
 					<layoutData>
-						<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
+						<OverflowToolbarLayoutData
+							priority="NeverOverflow"
+							minWidth="20px"/>
 					</layoutData>
 				</ToolbarSpacer>
-				<Button text="{/username}" type="Transparent" press="handleUserNamePress">
+				<Button
+					text="{/username}"
+					type="Transparent"
+					press="handleUserNamePress">
 					<layoutData>
 						<OverflowToolbarLayoutData priority="NeverOverflow"/>
 					</layoutData>
@@ -46,18 +57,35 @@
 
 		<!-- Toolpage sidecontent -->
 		<tnt:sideContent>
-            <tnt:SideNavigation expanded="{= !${device>/system/phone}}" itemSelect="onItemSelect">
+            <tnt:SideNavigation
+				expanded="{= !${device>/system/phone}}"
+				itemSelect="onItemSelect">
 				<tnt:item>
 					<tnt:NavigationList>
-						<tnt:NavigationListItem text="{i18n>Navi.customers}" icon="sap-icon://customer" select="onNavToCustomers"/>
-	                    <tnt:NavigationListItem text="{i18n>Navi.invoices}" icon="sap-icon://travel-expense-report" select="onNavToInvoices"/>
-	                    <tnt:NavigationListItem text="{i18n>Navi.earnings}" icon="sap-icon://money-bills" select="onNavToEarnings"/>
-	                    <tnt:NavigationListItem text="{i18n>Navi.statistics}" icon="sap-icon://area-chart" select="onNavToStatistics"/>
+						<tnt:NavigationListItem
+							text="{i18n>Navi.customers}"
+							icon="sap-icon://customer"
+							select="onNavToCustomers"/>
+	                    <tnt:NavigationListItem
+							text="{i18n>Navi.invoices}"
+							icon="sap-icon://travel-expense-report"
+							select="onNavToInvoices"/>
+	                    <tnt:NavigationListItem
+							text="{i18n>Navi.earnings}"
+							icon="sap-icon://money-bills"
+							select="onNavToEarnings"/>
+	                    <tnt:NavigationListItem
+							text="{i18n>Navi.statistics}"
+							icon="sap-icon://area-chart"
+							select="onNavToStatistics"/>
 					</tnt:NavigationList>
 				</tnt:item>
 				<tnt:fixedItem>
 					<tnt:NavigationList>
-						<tnt:NavigationListItem text="{i18n>Navi.settings}" icon="sap-icon://action-settings" select=""/>
+						<tnt:NavigationListItem
+							text="{i18n>Navi.settings}"
+							icon="sap-icon://action-settings"
+							select=""/>
 					</tnt:NavigationList>
 				</tnt:fixedItem>
 			</tnt:SideNavigation>
@@ -65,10 +93,11 @@
 
 		<!-- Main contents of the app -->
 		<tnt:mainContents>
-			<NavContainer id="container" height="100%">
+			<NavContainer
+				id="container"
+				height="100%">
 				<!-- Here goes the content (loaded by router) -->
 			</NavContainer>
 		</tnt:mainContents>
-
 	</tnt:ToolPage>
 </core:View>

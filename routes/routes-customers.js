@@ -92,15 +92,17 @@ module.exports = function(oApp) {
                     });
                 }
 
-                // check if contact were provided
+                // check if contacts were provided
                 if(oCustomer.contacts) {
-                    // contact were provided
+                    // contacts were provided
                     // add customer contacts
                     sSql = "INSERT INTO customer_contacts (" +
                         "cuco_customer, " +
                         "cuco_contact_type, " +
                         "cuco_contact, " +
-                        "cuco_comments" +
+                        "cuco_comments, " +
+                        "created_by, " +
+                        "created_at" +
                     ") VALUES";
 
                     for(var i = 0; i < oCustomer.contacts.length; i++) {
@@ -108,7 +110,9 @@ module.exports = function(oApp) {
                             "'" + sCustomerId + "', " +
                             "'" + oCustomer.contacts[i].type + "', " +
                             "'" + oCustomer.contacts[i].data + "', " +
-                            "'" + oCustomer.contacts[i].comments + "'" +
+                            "'" + oCustomer.contacts[i].comments + "', " +
+                            "'" + oReq.user.username + "', " +
+                            "current_date" +
                         "),";
                     }
 

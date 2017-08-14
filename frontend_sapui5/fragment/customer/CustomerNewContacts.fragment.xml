@@ -1,0 +1,75 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form">
+
+    <form:SimpleForm
+        id="customerContactsForm"
+        editable="true"
+        layout="ResponsiveGridLayout"
+        labelSpanXL="3"
+        labelSpanL="3"
+        labelSpanM="3"
+        labelSpanS="12"
+        adjustLabelSpan="false"
+        emptySpanXL="4"
+        emptySpanL="3"
+        emptySpanM="2"
+        emptySpanS="0"
+        columnsXL="1"
+        columnsL="1"
+        columnsM="1"
+        singleContainerFullSize="false">
+
+        <form:content>
+            <Label
+                text="{i18n>Customer.contact.type}"
+                required="true"/>
+            <Input
+                id="contactType"
+                value=""/>
+
+            <Label
+                text="{i18n>Customer.contact.data}"
+                required="true"/>
+            <Input
+                id="contactData"
+                value=""/>
+
+            <Label text="{i18n>Customer.contact.comments}"/>
+            <Input
+                id="contactComments"
+                value=""/>
+
+            <Button
+                icon="sap-icon://add"
+                press="onContactAdd">
+                <layoutData>
+                    <layout:GridData span="XL1 L1 M1 S1"/>
+                </layoutData>
+            </Button>
+        </form:content>
+    </form:SimpleForm>
+
+    <Table
+        items="{/contacts}"
+        inset="false">
+        <columns>
+            <Column><Text text="{i18n>Customer.contact.type}"/></Column>
+            <Column><Text text="{i18n>Customer.contact.data}"/></Column>
+            <Column minScreenWidth="Desktop">
+                <Text text="{i18n>Customer.contact.comments}"/>
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem>
+                <cells>
+                    <Text text="{type}"/>
+                    <Text text="{data}"/>
+                    <Text text="{comments}"/>
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+</core:FragmentDefinition>

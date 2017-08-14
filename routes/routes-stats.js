@@ -35,8 +35,8 @@ module.exports = function(oApp) {
         var sGross = oQueryObject.gross === "true" ? "true" : "false";
         var sLimit = !isNaN(oQueryObject.limit) ? oQueryObject.limit : "10";
 
-        var sSqlGross = gross === "true" ? " * (1 + ipos_vat)" : "";
-        var sSqlLimit = " LIMIT " + limit;
+        var sSqlGross = sGross === "true" ? " * (1 + ipos_vat)" : "";
+        var sSqlLimit = " LIMIT " + sLimit;
 
         // get revenues by customer
         var sSql = "SELECT " +

@@ -1,7 +1,9 @@
 <mvc:View
 	controllerName="com.danielwehner.invoicekuga.controller.customer.Customer"
 	height="100%"
-	xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
 	xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 
 	<SplitContainer
@@ -13,6 +15,7 @@
 		<!-- *********************************************************************************************** -->
 		<!-- Master pages -->
 		<masterPages>
+
 			<!-- Customer list page -->
 			<Page
 				id="customer-master"
@@ -20,11 +23,15 @@
 				title="{i18n>Customer.page.master.title}"
 				class="sapUiStdPage"
 				showHeader="true">
+
 				<subHeader>
 					<Toolbar>
-						<SearchField liveChange="onSearch" width="100%"/>
+						<SearchField
+							liveChange="onSearch"
+							width="100%"/>
 					</Toolbar>
 				</subHeader>
+
 				<content>
 					<!-- Customer list -->
 					<List
@@ -32,13 +39,15 @@
 						items="{path: '/'}"
 						height="100%">
 						<items>
-							<CustomListItem type="Navigation" press="onItemPress" custom:to="detail">
+							<CustomListItem
+								type="Navigation"
+								press="onItemPress"
+								custom:to="detail">
 								<HBox>
 									<core:Icon
 										src="sap-icon://customer"
 										size="2rem"
-										class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom text-blue"
-									/>
+										class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom text-blue"/>
 									<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
 										<Label text="{id}" class="text-blue"/>
 										<Label text="{address}"/>
@@ -49,23 +58,30 @@
 						</items>
 					</List>
 				</content>
+
 				<footer>
 					<Toolbar>
 						<content>
 							<ToolbarSpacer>
 								<layoutData>
-									<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
+									<OverflowToolbarLayoutData
+										priority="NeverOverflow"
+										minWidth="20px"/>
 								</layoutData>
 							</ToolbarSpacer>
-							<Button icon="sap-icon://add" press="onAddCustomer"></Button>
+							<Button
+								icon="sap-icon://add"
+								press="onAddCustomer"/>
 						</content>
 					</Toolbar>
 				</footer>
 			</Page>
 		</masterPages>
+
 		<!-- *********************************************************************************************** -->
 		<!-- Detail pages -->
 		<detailPages>
+
 			<!-- Placeholder page -->
 			<Page
 				id="customer-placeholder"
@@ -77,9 +93,9 @@
 						height="100%"
 						showHeader="false"
 						text="{i18n>Customer.page.detail.messagepage.text}"
-						description="{i18n>Customer.page.detail.messagepage.description}">
-					</MessagePage>
+						description="{i18n>Customer.page.detail.messagepage.description}"/>
 				</content>
+
 				<footer>
 					<Toolbar/>
 				</footer>
@@ -91,7 +107,9 @@
 				title="{i18n>Customer.page.detail.title}"
 				class="sapUiStdPage">
 				<content>
-					<mvc:XMLView viewName="com.danielwehner.invoicekuga.view.customer.CustomerDetail" height="100%"/>
+					<mvc:XMLView
+						viewName="com.danielwehner.invoicekuga.view.customer.CustomerDetail"
+						height="100%"/>
 				</content>
 			</Page>
 			<Page
@@ -100,7 +118,9 @@
 				title="{i18n>Customer.page.detail.new.title}"
 				class="sapUiStdPage">
 				<content>
-					<mvc:XMLView viewName="com.danielwehner.invoicekuga.view.customer.CustomerNew" height="100%"/>
+					<mvc:XMLView
+						viewName="com.danielwehner.invoicekuga.view.customer.CustomerNew"
+						height="100%"/>
 				</content>
 			</Page>
 		</detailPages>

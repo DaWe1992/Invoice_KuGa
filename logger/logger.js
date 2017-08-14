@@ -7,6 +7,7 @@
 
 // import necessary modules
 var fs = require("fs");
+var config = require("../config.js");
 
 module.exports = {
 
@@ -24,6 +25,12 @@ module.exports = {
      * @param sMsg (message to be logged)
      */
     log: function(sLevel, sMsg) {
+
+        if(!config.logger.enabled) return;
+        if(sLevel === this.levels.INFO && !config.logger.logInfo) return;
+        if(sLevel === this.levels.WARN && !config.logger.logWarn) return;
+        if(sLevel === this.levels.ERR && !config.logger.logErro) return;
+
         var oDate = new Date();
         var sYear = oDate.getFullYear();
 

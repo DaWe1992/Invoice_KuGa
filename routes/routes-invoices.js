@@ -6,8 +6,8 @@
 "use strict";
 
 // import necessary modules
-var db = require("../db.js");
 var fs = require("fs");
+var db = require("../db.js");
 var pdf = require("html-pdf");
 var mustache = require("mustache");
 var logger = require("../logger/logger.js");
@@ -125,6 +125,50 @@ module.exports = function(oApp) {
                 // check if invoice positions were provided
                 if(oInvoice.invoice.positions) {
                     // positions were provided
+                    // add invoice positions
+                    sSql = "INSERT INTO invoice_positions (" +
+                        "ipos_inv_id, " +
+                        "ipos_description, " +
+                        "ipos_qty, " +
+                        "ipos_net_price, " +
+                        "ipos_vat, " +
+                        "created_by, " +
+                        "created_at" +
+                    ") VALUES";
+
+                    for(var i = 0; i < oInvoice.invoice.positions.length; i++) {
+                        sSql += " (" +
+                            "'" + sInvoiceId + "', " +
+                            "'" + oInvoice.invoice.positions[i].pos + "', " +
+                            "'" + oInvoice.invoice.positions[i].quantity + "', " +
+                            "'" + oInvoice.invoice.positions[i].unitprice + "', " +
+                            "'" + oInvoice.invoice.positions[i].vatrate + "', " +
+                            "'" + oReq.user.username + "', " +
+                            "current_date" +
+                        "),";
+                    }
+
+                    // remove last comma
+                    sSql = sSql.substring(0, sSql.length - 1);
+                    sSql += ";";
+
+                    // save invoice positions in database
+                    db.query(sSql, function(oErr, oResult) {
+                        if(oErr) {
+                            logger.log(logger.levels.ERR, oErr);
+                            return oRes.status(500).json({
+                                "success": false,
+                                "err": oErr
+                            });
+                        }
+
+                        return oRes.status(201).json({
+                            "success": true,
+                            "data": {
+                                "id": sInvoiceId
+                            }
+                        });
+                    });
                 } else {
                     // positions were not provided
                     return oRes.status(201).json({

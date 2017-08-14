@@ -1,5 +1,6 @@
 <core:FragmentDefinition
-    xmlns="sap.m" xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
     xmlns:layout="sap.ui.layout"
     xmlns:form="sap.ui.layout.form">
 
@@ -15,16 +16,13 @@
             <Button
                 text="{i18n>Misc.save}"
                 press="onSaveNewEarning"
-                type="Accept"
-            />
+                type="Accept"/>
         </beginButton>
         <endButton>
             <Button
                 text="{i18n>Misc.cancel}"
                 press="onCancelDialog"
-                type="Reject"
-            />
+                type="Reject"/>
         </endButton>
     </Dialog>
-
 </core:FragmentDefinition>

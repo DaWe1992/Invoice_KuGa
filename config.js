@@ -10,6 +10,12 @@ module.exports = {
     app: {
         port: 8080
     },
+    logger: {
+        enabled: true,
+        logErro: true,
+        logInfo: false,
+        logWarn: true
+    },
     postgres: {
         url: "postgres://postgres:admin@localhost:5432/db_invoice_kuga"
     },

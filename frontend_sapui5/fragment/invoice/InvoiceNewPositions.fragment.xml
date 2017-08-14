@@ -1,0 +1,90 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form">
+
+    <form:SimpleForm
+        editable="true"
+        layout="ResponsiveGridLayout"
+        labelSpanXL="3"
+        labelSpanL="3"
+        labelSpanM="3"
+        labelSpanS="12"
+        adjustLabelSpan="false"
+        emptySpanXL="4"
+        emptySpanL="3"
+        emptySpanM="2"
+        emptySpanS="0"
+        columnsXL="1"
+        columnsL="1"
+        columnsM="1"
+        singleContainerFullSize="false">
+
+        <form:content>
+            <Label
+                text="{i18n>Invoice.positions.pos}"
+                required="true"/>
+            <Input
+                id="pos"
+                value=""/>
+
+            <Label
+                text="{i18n>Invoice.positions.quantity}"
+                required="true"/>
+            <Input
+                id="quantity"
+                value=""/>
+
+            <Label
+                text="{i18n>Invoice.positions.unitprice}"
+                required="true"/>
+            <Input
+                id="unitprice"
+                value=""/>
+
+            <Label
+                text="{i18n>Invoice.positions.vatrate}"
+                required="true"/>
+            <Input
+                id="vatrate"
+                value=""/>
+            <Button
+                icon="sap-icon://add"
+                press="onPositionAdd">
+                <layoutData>
+                    <layout:GridData span="XL1 L1 M1 S1"/>
+                </layoutData>
+            </Button>
+        </form:content>
+    </form:SimpleForm>
+
+    <Table
+        items="{/invoice/positions}"
+        inset="false">
+        <columns>
+            <Column>
+                <Text text="{i18n>Invoice.positions.pos}"/>
+            </Column>
+            <Column hAlign="End">
+                <Text text="{i18n>Invoice.positions.quantity}"/>
+            </Column>
+            <Column hAlign="End">
+                <Text text="{i18n>Invoice.positions.unitprice}"/>
+            </Column>
+            <Column hAlign="End">
+                <Text text="{i18n>Invoice.positions.vatrate}"/>
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem>
+                <cells>
+                    <Text text="{pos}"/>
+                    <Text text="{quantity}"/>
+                    <Text text="{unitprice}"/>
+                    <Text text="{vatrate}"/>
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+</core:FragmentDefinition>

@@ -97,7 +97,17 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
         "lastname": "...",
         "street": "...",
         "zip": "...",
-        "city": "..."
+        "city": "...",
+        "contacts": [
+            {
+                "type": "...",
+                "data": "...",
+                "comments": "..."
+            },
+            {
+                "..."
+            }
+        ]
     }
   ```
 
@@ -133,7 +143,18 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
             "description": "...",
             "date": "...",
             "deliveryDate": "...",
-            "room": "..."
+            "room": "...",
+            "positions": [
+                {
+                    "pos": "...",
+                    "quantity": "...",
+                    "unitprice": "...",
+                    "vatrate": "..."
+                },
+                {
+                    "..."
+                }
+            ]
         }
     }
   ```

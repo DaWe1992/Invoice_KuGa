@@ -1,22 +1,24 @@
 <mvc:View
 	controllerName="com.danielwehner.invoicekuga.controller.statistics.Statistics"
 	height="100%"
-	xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core">
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core">
 
     <Page
         title="{i18n>Statistics.page.title}"
         height="100%"
         class="sapUiContentPadding">
+
         <headerContent>
             <Button
                 icon="sap-icon://switch-views"
-                press="onOpenSelectStatisticsDialog"
-            />
+                press="onOpenSelectStatisticsDialog"/>
 			<Button
 				icon="sap-icon://action-settings"
-				press="onOpenChartSettingsDialog"
-			/>
+				press="onOpenChartSettingsDialog"/>
         </headerContent>
+
         <content>
             <Panel
                 id="chartPanel"

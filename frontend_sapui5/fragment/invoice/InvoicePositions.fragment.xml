@@ -1,0 +1,164 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form">
+
+    <!-- ************************************************************ -->
+    <!-- Invoice positions table -->
+    <Panel
+        expandable="true"
+        expanded="false"
+        backgroundDesign="Transparent"
+        class="sapUiNoContentPadding">
+
+        <headerToolbar>
+            <Toolbar height="3rem">
+                <core:Icon
+                    src="sap-icon://sales-order-item"
+                    size="1.5rem"/>
+                <Title text="{i18n>Invoice.panel.positions.title}"/>
+                <ToolbarSpacer/>
+            </Toolbar>
+        </headerToolbar>
+
+        <content>
+            <Table
+                items="{
+                    path: '/invoice/positions'
+                }"
+                inset="false"
+                growing="true"
+                growingThreshold="3">
+                <columns>
+                    <Column width="40%">
+                        <Text text="{i18n>Invoice.positions.pos}"/>
+                    </Column>
+                    <Column
+                        width="10%"
+                        hAlign="End">
+                        <Text text="{i18n>Invoice.positions.quantity}"/>
+                    </Column>
+                    <Column
+                        width="10%"
+                        minScreenWidth="Desktop"
+                        hAlign="End">
+                        <Text text="{i18n>Invoice.positions.unitprice}"/>
+                    </Column>
+                    <Column
+                        width="10%"
+                        hAlign="End">
+                        <Text text="{i18n>Invoice.positions.net}"/>
+                    </Column>
+                    <Column
+                        width="10%"
+                        minScreenWidth="Desktop"
+                        hAlign="End">
+                        <Text text="{i18n>Invoice.positions.vatrate}"/>
+                    </Column>
+                    <Column
+                        width="10%"
+                        hAlign="End">
+                        <Text text="{i18n>Invoice.positions.vat}"/>
+                    </Column>
+                    <Column
+                        width="10%"
+                        hAlign="End">
+                        <Text text="{i18n>Invoice.positions.gross}"/>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{pos}"/>
+                            <Text
+                                textAlign="Right"
+                                text="{
+                                    path: 'qty',
+                                    type: 'sap.ui.model.type.Integer'
+                                }"/>
+                            <Text
+                                textAlign="Right"
+                                text="{
+                                    path: 'unitprice',
+                                    type: 'sap.ui.model.type.Float',
+                                    formatOptions: {minFractionDigits: 2, maxFractionDigits: 2}
+                                }"/>
+                            <Text
+                                textAlign="Right"
+                                text="{
+                                    path: 'net',
+                                    type: 'sap.ui.model.type.Float',
+                                    formatOptions: {minFractionDigits: 2, maxFractionDigits: 2}
+                                }"/>
+                            <Text
+                                textAlign="Right"
+                                text="{vatrate}"/>
+                            <Text
+                                textAlign="Right"
+                                text="{
+                                    path: 'vat',
+                                    type: 'sap.ui.model.type.Float',
+                                    formatOptions: {minFractionDigits: 2, maxFractionDigits: 2}
+                                }"/>
+                            <Text
+                                textAlign="Right"
+                                text="{
+                                    path: 'gross',
+                                    type: 'sap.ui.model.type.Float',
+                                    formatOptions: {minFractionDigits: 2, maxFractionDigits: 2}
+                                }"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Panel>
+
+    <!-- ************************************************************ -->
+    <!-- Sums -->
+    <HBox
+        class="sapUiSmallMarginTop"
+        width="100%">
+        <VBox class="sapUiSmallMarginEnd">
+            <Label text="{i18n>Invoice.positions.sums.net}"/>
+            <Input
+                enabled="false"
+                value="{
+                    path: '/invoice/sums/net',
+                    type: 'sap.ui.model.type.Float',
+                    formatOptions: {minFractionDigits: 2, maxFractionDigits: 2}
+                }"/>
+        </VBox>
+        <VBox class="sapUiSmallMarginEnd">
+            <Label text="{i18n>Invoice.positions.sums.vat1}"/>
+            <Input
+                enabled="false"
+                value="{
+                    path: '/invoice/sums/vat1',
+                    type: 'sap.ui.model.type.Float',
+                    formatOptions: {minFractionDigits: 2, maxFractionDigits: 2}
+                }"/>
+        </VBox>
+        <VBox class="sapUiSmallMarginEnd">
+            <Label text="{i18n>Invoice.positions.sums.vat2}"/>
+            <Input
+                enabled="false"
+                value="{
+                    path: '/invoice/sums/vat2',
+                    type: 'sap.ui.model.type.Float',
+                    formatOptions: {minFractionDigits: 2, maxFractionDigits: 2}
+                }"/>
+        </VBox>
+        <VBox class="sapUiSmallMarginEnd">
+            <Label text="{i18n>Invoice.positions.sums.gross}"/>
+            <Input
+                enabled="false"
+                value="{
+                    path:'/invoice/sums/gross',
+                    type: 'sap.ui.model.type.Float',
+                    formatOptions: {minFractionDigits: 2, maxFractionDigits: 2}
+                }"/>
+        </VBox>
+    </HBox>
+</core:FragmentDefinition>

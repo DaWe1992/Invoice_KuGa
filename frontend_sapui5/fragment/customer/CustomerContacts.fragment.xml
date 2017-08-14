@@ -1,0 +1,52 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Panel
+        expandable="true"
+        expanded="{= !${device>/system/phone}}"
+        backgroundDesign="Transparent"
+        class="sapUiNoContentPadding">
+
+        <headerToolbar>
+            <Toolbar height="3rem">
+                <core:Icon
+					src="sap-icon://address-book"
+					size="1.5rem"/>
+                <Title text="{i18n>Customer.panel.contacts.title}"/>
+                <ToolbarSpacer/>
+                <Button
+					icon="sap-icon://add"
+					press="onOpenAddContactDialog"/>
+            </Toolbar>
+        </headerToolbar>
+
+        <content>
+            <Table
+                items="{
+                    path: '/contacts',
+                    sorter: {
+                        path: 'type'
+                    }
+                }"
+                inset="false">
+                <columns>
+                    <Column><Text text="{i18n>Customer.contact.type}"/></Column>
+                    <Column><Text text="{i18n>Customer.contact.data}"/></Column>
+                    <Column minScreenWidth="Desktop">
+                        <Text text="{i18n>Customer.contact.comments}"/>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{type}"/>
+                            <Text text="{data}"/>
+                            <Text text="{comments}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Panel>
+</core:FragmentDefinition>

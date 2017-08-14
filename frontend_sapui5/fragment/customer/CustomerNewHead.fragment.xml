@@ -1,0 +1,76 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form">
+
+    <form:SimpleForm
+        id="customerForm"
+        editable="true"
+        layout="ResponsiveGridLayout"
+        labelSpanXL="3"
+        labelSpanL="3"
+        labelSpanM="3"
+        labelSpanS="12"
+        adjustLabelSpan="false"
+        emptySpanXL="4"
+        emptySpanL="3"
+        emptySpanM="2"
+        emptySpanS="0"
+        columnsXL="1"
+        columnsL="1"
+        columnsM="1"
+        singleContainerFullSize="false">
+
+        <form:content>
+            <Label
+                text="{i18n>Customer.address}"
+                required="true"/>
+            <Input
+                id="newCustomerAddress"
+                value="{/address}"
+                valueState="{validation>/addressState}"
+                liveChange="validateCustomerHeadStep"/>
+
+            <Label text="{i18n>Customer.firstname}"/>
+            <Input
+                id="newCustomerFirstname"
+                value="{/firstname}"/>
+
+            <Label
+                text="{i18n>Customer.lastname}"
+                required="true"/>
+            <Input
+                id="newCustomerLastname"
+                value="{/lastname}"
+                valueState="{validation>/lastnameState}"
+                liveChange="validateCustomerHeadStep"/>
+
+            <Label
+                text="{i18n>Customer.street}"
+                required="true"/>
+            <Input
+                id="newCustomerStreet"
+                value="{/street}"
+                valueState="{validation>/streetState}"
+                liveChange="validateCustomerHeadStep"/>
+
+            <Label
+                text="{i18n>Customer.zip}"
+                required="true"/>
+            <Input
+                id="newCustomerZip"
+                value="{/zip}"
+                valueState="{validation>/zipState}"
+                liveChange="validateCustomerHeadStep"/>
+
+            <Label
+                text="{i18n>Customer.city}"
+                required="true"/>
+            <Input
+                id="newCustomerCity"
+                value="{/city}"
+                valueState="{validation>/cityState}"
+                liveChange="validateCustomerHeadStep"/>
+        </form:content>
+    </form:SimpleForm>
+</core:FragmentDefinition>

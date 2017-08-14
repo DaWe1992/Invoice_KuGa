@@ -1,7 +1,9 @@
 <mvc:View
 	controllerName="com.danielwehner.invoicekuga.controller.invoice.Invoice"
 	height="100%"
-	xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
 	xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 
     <SplitContainer
@@ -13,6 +15,7 @@
 		<!-- *********************************************************************************************** -->
 		<!-- Master pages -->
 		<masterPages>
+
 			<!-- Invoice list page -->
 			<Page
 				id="invoice-master"
@@ -20,11 +23,15 @@
 				title="{i18n>Invoice.page.master.title}"
 				class="sapUiStdPage"
 				showHeader="true">
+
 				<subHeader>
 					<Toolbar>
-						<SearchField liveChange="onSearch" width="100%"/>
+						<SearchField
+							liveChange="onSearch"
+							width="100%"/>
 					</Toolbar>
 				</subHeader>
+
 				<content>
 					<!-- Customer list -->
 					<List
@@ -40,7 +47,10 @@
 						}"
 						height="100%">
 						<items>
-							<CustomListItem type="Navigation" press="onItemPress" custom:to="detail">
+							<CustomListItem
+								type="Navigation"
+								press="onItemPress"
+								custom:to="detail">
 								<HBox>
 									<core:Icon
 										src="sap-icon://travel-expense-report"
@@ -48,7 +58,9 @@
 										class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom text-blue"
 									/>
 									<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
-										<Label text="{i18n>Invoice.id}: {id}" class="text-blue"/>
+										<Label
+											text="{i18n>Invoice.id}: {id}"
+											class="text-blue"/>
 										<Label text="{description}"/>
 										<Label text="{custlastname}, {
 											path: 'date',
@@ -60,8 +72,6 @@
 												style: 'medium'
 											}
 										}"/>
-										<!--<Label text="- - - - - - - - - - - - - - - - - - -"/>-->
-										<!--<Label text="{i18n>Invoice.sum}:" class="sapUiSmallMarginTop"/>-->
 										<Label text="" class="sapUiTinyMarginTop"/>
 										<Label text="{
 											path: 'sum',
@@ -77,24 +87,30 @@
 						</items>
 					</List>
 				</content>
-				
+
 				<footer>
 					<Toolbar>
 						<content>
 							<ToolbarSpacer>
 								<layoutData>
-									<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
+									<OverflowToolbarLayoutData
+										priority="NeverOverflow"
+										minWidth="20px"/>
 								</layoutData>
 							</ToolbarSpacer>
-							<Button icon="sap-icon://add" press="onAddInvoice"></Button>
+							<Button
+								icon="sap-icon://add"
+								press="onAddInvoice"/>
 						</content>
 					</Toolbar>
 				</footer>
 			</Page>
 		</masterPages>
+
 		<!-- *********************************************************************************************** -->
 		<!-- Detail pages -->
 		<detailPages>
+
 			<!-- Placeholder page -->
 			<Page
 				id="invoice-placeholder"
@@ -106,9 +122,9 @@
 						height="100%"
 						showHeader="false"
 						text="{i18n>Invoice.page.detail.messagepage.text}"
-						description="{i18n>Invoice.page.detail.messagepage.description}">
-					</MessagePage>
+						description="{i18n>Invoice.page.detail.messagepage.description}"/>
 				</content>
+
 				<footer>
 					<Toolbar/>
 				</footer>
@@ -120,7 +136,9 @@
 				title="{i18n>Invoice.page.detail.title}"
 				class="sapUiStdPage">
 				<content>
-					<mvc:XMLView viewName="com.danielwehner.invoicekuga.view.invoice.InvoiceDetail" height="100%"/>
+					<mvc:XMLView
+						viewName="com.danielwehner.invoicekuga.view.invoice.InvoiceDetail"
+						height="100%"/>
 				</content>
 			</Page>
 			<Page
@@ -129,7 +147,9 @@
 				title="{i18n>Invoice.page.detail.new.title}"
 				class="sapUiStdPage">
 				<content>
-					<mvc:XMLView viewName="com.danielwehner.invoicekuga.view.invoice.InvoiceNew" height="100%"/>
+					<mvc:XMLView
+						viewName="com.danielwehner.invoicekuga.view.invoice.InvoiceNew"
+						height="100%"/>
 				</content>
 			</Page>
 		</detailPages>

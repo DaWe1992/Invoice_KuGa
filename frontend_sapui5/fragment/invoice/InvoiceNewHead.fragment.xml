@@ -1,0 +1,78 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form">
+
+    <form:SimpleForm
+        editable="true"
+        layout="ResponsiveGridLayout"
+        labelSpanXL="4"
+        labelSpanL="4"
+        labelSpanM="12"
+        labelSpanS="12"
+        adjustLabelSpan="false"
+        emptySpanXL="0"
+        emptySpanL="0"
+        emptySpanM="0"
+        emptySpanS="0"
+        columnsXL="2"
+        columnsL="2"
+        columnsM="2"
+        singleContainerFullSize="false">
+
+        <form:content>
+            <core:Title text="{i18n>Invoice.form.section.head}"/>
+
+            <Label
+                text="{i18n>Invoice.description}"
+                required="true"/>
+            <Input
+                id="newInvoiceDescription"
+                value="{/invoice/description}"
+                liveChange="validateInvoiceHeadStep"/>
+
+            <Label
+                text="{i18n>Invoice.date}"
+                required="true"/>
+            <DatePicker
+                id="newInvoiceDate"
+                value="{/invoice/date}"
+                valueFormat="yyyy-MM-dd"
+                displayFormat="long"
+                liveChange="validateInvoiceHeadStep"/>
+
+            <Label text="{i18n>Invoice.room}"/>
+            <Select
+                id="newInvoiceRoom"
+                selectedKey="{/invoice/room}">
+                <items>
+                    <core:Item text="{i18n>Invoice.room.rossini}" key="rossini"/>
+                    <core:Item text="{i18n>Invoice.room.littmann}" key="littmann"/>
+                </items>
+            </Select>
+
+            <Label
+                id="newInvoiceComments"
+                text="{i18n>Invoice.comments}"/>
+            <Input value="{/invoice/comments}"/>
+
+            <!-- ************************************************************ -->
+            <!-- Customer data -->
+            <core:Title text="{i18n>Invoice.form.section.customer}"/>
+
+            <Label
+                text="{i18n>Customer.id}"
+                required="true"/>
+            <Input
+                id="newInvoiceCustomerId"
+                value="{/customer/id}"
+                liveChange="validateInvoiceHeadStep"/>
+            <Button icon="sap-icon://search">
+                <layoutData>
+                    <layout:GridData span="XL1 L1 M1 S1"/>
+                </layoutData>
+            </Button>
+        </form:content>
+    </form:SimpleForm>
+</core:FragmentDefinition>

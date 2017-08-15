@@ -63,7 +63,7 @@ sap.ui.define([
          *
          * @param oEvent
          */
-        handleUserNamePress: function(oEvent) {
+        onUserNamePress: function(oEvent) {
 			var oPopover = new Popover({
                 showHeader: true,
                 title: this.getTextById("Misc.actions"),

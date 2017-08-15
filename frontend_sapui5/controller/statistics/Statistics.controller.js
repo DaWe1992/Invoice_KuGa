@@ -9,8 +9,10 @@ sap.ui.define([
     "com/danielwehner/invoicekuga/controller/BaseController",
     "com/danielwehner/invoicekuga/service/StatisticsService",
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageToast"
-], function(BaseController, StatisticsService, JSONModel, MessageToast) {
+    "sap/m/MessageToast",
+    "sap/m/Popover",
+    "sap/m/Link"
+], function(BaseController, StatisticsService, JSONModel, MessageToast, Popover, Link) {
     "use strict";
 
     var self;
@@ -70,6 +72,37 @@ sap.ui.define([
                 "ChartSettingsDialog",
                 "com.danielwehner.invoicekuga.fragment.ChartSettingsDialog"
             );
+        },
+
+        /**
+         * Shows a popover to select the year
+         * for which the excel statistics are to be printed.
+         *
+         * @param oEvent
+         */
+        onPrintExcelStatsPress: function(oEvent) {
+            var iYear = new Date().getFullYear();
+            var aLinks = [];
+
+            // create a link for each year
+            for(var i = iYear; i > iYear - 4; i--) {
+                aLinks.push(
+                    new Link({
+                        text: i,
+                        href: "/statistics/aggregated-revenues/" + i
+                    }).addStyleClass("sapUiMediumMargin")
+                );
+            }
+
+            // add the popover
+            var oPopover = new Popover({
+                showHeader: true,
+                title: this.getTextById("Statistics.popover.print.excel"),
+				placement: sap.m.PlacementType.Top,
+				content: aLinks
+			}).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+
+			oPopover.openBy(oEvent.getSource());
         },
 
         /**

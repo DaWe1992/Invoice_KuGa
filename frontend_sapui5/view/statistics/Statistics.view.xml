@@ -32,5 +32,21 @@
                 </content>
             </Panel>
         </content>
+
+		<footer>
+			<Toolbar>
+				<content>
+					<Button
+						icon="sap-icon://excel-attachment"
+						text="{i18n>Statistics.button.print.excel}"
+						press="onPrintExcelStatsPress"/>
+					<ToolbarSpacer>
+						<layoutData>
+							<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
+						</layoutData>
+					</ToolbarSpacer>
+				</content>
+			</Toolbar>
+		</footer>
     </Page>
 </mvc:View>

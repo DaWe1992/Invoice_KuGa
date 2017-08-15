@@ -6,6 +6,7 @@
 "use strict";
 
 // import necessary modules
+var fs = require("fs");
 var db = require("../db.js");
 var async = require("async");
 var xlsBuilder = require("msexcel-builder");
@@ -17,35 +18,27 @@ module.exports = function(oApp) {
     /**
      * Gets the aggregated revenues and sends an excel file.
      *
-     * @name /statistics/aggregated-revenues
+     * @name /statistics/aggregated-revenues/:year
+     * @param year (obligatory)
      */
-    oApp.get("/statistics/aggregated-revenues", isAuthenticated, function(oReq, oRes) {
+    oApp.get("/statistics/aggregated-revenues/:year", isAuthenticated, function(oReq, oRes) {
+        var sYear = oReq.params.year;
+        var sFilePath = "./xlsx/";
+        var sFileName = "aggregated_revenues" + sYear + ".xlsx";
+        var sFullFilePath = sFilePath + sFileName;
 
         // create workbook
         var oWorkBook = xlsBuilder.createWorkbook(
-            "./xlsx/", "aggregated_revenues.xlsx"
+            sFilePath, sFileName
         );
-        // create worksheet
-        var oSheet = oWorkBook.createSheet("Nettoumsätze", 400, 400);
-        // add header
-        oSheet.set(1, 1, "Nettoumsätze");
-
-        // set days
-        for(var i = 0; i < 31; i++) {
-            oSheet.set(1, i + 4, i + 1);
-        }
-
-        // set months
-        for(var i = 0; i < 12; i++) {
-            oSheet.set(i + 2, 3, i + 1);
-        }
+        var oSheet = prepareExcelSheet(oWorkBook, "Nettoumsätze " + sYear);
 
         // add data to sheet
         async.each(getSequence(1, 12), function(i, fCallback) {
-            getAggregatedRevenues(i, "2017", function(oRes) {
+            getAggregatedRevenues(i, sYear, function(oRes) {
                 var i = oRes.month;
 
-                fillArray(oRes.data, function(aData) {
+                addMissingRevenueEntries(oRes.data, function(aData) {
                     for(var j = 0; j < aData.length; j++) {
                         oSheet.set(i + 1, j + 4, aData[j].amount);
                     }
@@ -72,12 +65,51 @@ module.exports = function(oApp) {
                     );
                     return oRes.sendStatus(500);
                 } else {
-                    return oRes.sendStatus(200);
+                    // read excel file created from fs
+                    var oReadStream = fs.createReadStream(sFullFilePath);
+                    var oStats = fs.statSync(sFullFilePath);
+
+                    // set http headers
+                    oRes.setHeader(
+                        "Content-type",
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    );
+                    oRes.setHeader("Content-length", oStats.size);
+                    oRes.setHeader("Content-disposition", "attachment; filename=" + sFileName);
+
+                    // pipe file stream to response
+                    oReadStream.pipe(oRes);
                 }
             });
         });
     });
 };
+
+/**
+ * Prepares the excel sheet.
+ *
+ * @param oWorkBook
+ * @param sSheetName
+ * @return
+ */
+function prepareExcelSheet(oWorkBook, sSheetName) {
+    // create worksheet
+    var oSheet = oWorkBook.createSheet(sSheetName, 400, 400);
+    // add header
+    oSheet.set(1, 1, sSheetName);
+
+    // set days
+    for(var i = 0; i < 31; i++) {
+        oSheet.set(1, i + 4, i + 1);
+    }
+
+    // set months
+    for(var i = 0; i < 12; i++) {
+        oSheet.set(i + 2, 3, i + 1);
+    }
+
+    return oSheet;
+}
 
 /**
  * Gets an array of sequential numbers.
@@ -98,7 +130,7 @@ function getSequence(iStart, iEnd) {
  * @param aArr
  * @param fCallback
  */
-function fillArray(aArr, fCallback) {
+function addMissingRevenueEntries(aArr, fCallback) {
     async.each(getSequence(1, 31), function(i, fCallback) {
         // check if an entry for the ith day exists
         var bFound = aArr.filter(function(oItem) {

@@ -32,6 +32,6 @@ module.exports = {
         secret: "mySecretKey",
         resave: true,
         saveUninitialized: true,
-        cookieMaxAge: 120000 // delete the session cookie after two hours
+        cookieMaxAge: 7200000 // delete the session cookie after two hours
     }
 };

@@ -27,7 +27,9 @@ var oApp = express();
 console.log("SETTING UP THE SERVER...");
 
 // connect to mongo db
-mongoose.connect(config.mongo.url);
+mongoose.connect(config.mongo.url, {
+    useMongoClient: true
+});
 
 // middleware
 // log routes
@@ -47,7 +49,14 @@ oApp.use(bodyParser.urlencoded({extended: true}));
 oApp.use(cookieParser());
 
 // initialize passport.js
-oApp.use(expressSession({secret: "mySecretKey"}));
+oApp.use(expressSession({
+    secret: "mySecretKey",
+    resave: true,
+    saveUninitialized: true
+    /*cookie: {
+        maxAge: 5000 // sets the maximum age of the cookie
+    }*/
+}));
 oApp.use(passport.initialize());
 oApp.use(passport.session());
 

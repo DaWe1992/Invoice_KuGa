@@ -17,7 +17,14 @@ module.exports = {
         logWarn: true
     },
     postgres: {
-        url: "postgres://postgres:admin@localhost:5432/db_invoice_kuga"
+        // url: "postgres://postgres:admin@localhost:5432/db_invoice_kuga",
+        // connection: {
+        user: "postgres",
+        host: "localhost",
+        database: "db_invoice_kuga",
+        password: "admin",
+        port: 5432,
+        // }
     },
     mongo: {
         url: "mongodb://localhost/users"

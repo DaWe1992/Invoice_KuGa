@@ -9,7 +9,7 @@
 var fs = require("fs");
 var db = require("../db.js");
 var async = require("async");
-var xlsBuilder = require("msexcel-builder");
+var xlsBuilder = require("msexcel-builder-colorfix");
 var logger = require("../logger/logger.js");
 var isAuthenticated = require("../passport/isAuthenticated.js");
 
@@ -31,7 +31,7 @@ module.exports = function(oApp) {
         var oWorkBook = xlsBuilder.createWorkbook(
             sFilePath, sFileName
         );
-        var oSheet = prepareExcelSheet(oWorkBook, "Nettoumsätze " + sYear);
+        var oSheet = prepareExcelSheet(oWorkBook, "Nettoumsätze", sYear);
 
         // add data to sheet
         async.each(getSequence(1, 12), function(i, fCallback) {
@@ -40,6 +40,13 @@ module.exports = function(oApp) {
 
                 addMissingRevenueEntries(oRes.data, function(aData) {
                     for(var j = 0; j < aData.length; j++) {
+                        oSheet.align(i + 1, j + 4, "right");
+                        oSheet.border(i + 1, j + 4, {
+                            left: "thin",
+                            top: "thin",
+                            right: "thin",
+                            bottom: "thin"
+                        });
                         oSheet.set(i + 1, j + 4, aData[j].amount);
                     }
 
@@ -90,25 +97,77 @@ module.exports = function(oApp) {
  *
  * @param oWorkBook
  * @param sSheetName
+ * @param sYear
  * @return
  */
-function prepareExcelSheet(oWorkBook, sSheetName) {
+function prepareExcelSheet(oWorkBook, sSheetName, sYear) {
     // create worksheet
     var oSheet = oWorkBook.createSheet(sSheetName, 400, 400);
     // add header
+    oSheet.font(1, 1, {
+        sz: "18",
+        bold: "true"
+    });
     oSheet.set(1, 1, sSheetName);
+
+    formatCell(
+        oSheet, 1, 3, "13", "true",
+        "3F5161", "center", true
+    );
+    oSheet.set(1, 3, sYear);
 
     // set days
     for(var i = 0; i < 31; i++) {
+        formatCell(
+            oSheet, 1, i + 4, "13", "true",
+            "427CAC", "center", true
+        );
         oSheet.set(1, i + 4, i + 1);
     }
 
     // set months
     for(var i = 0; i < 12; i++) {
+        formatCell(
+            oSheet, i + 2, 3, "13", "true",
+            "427CAC", "center", true
+        );
         oSheet.set(i + 2, 3, i + 1);
     }
 
     return oSheet;
+}
+
+/**
+ * Formats excel cell.
+ *
+ * @param oSheet
+ * @param iCol
+ * @param iRow
+ * @param sSize
+ * @param sBold
+ * @param sColor
+ * @param sAlign
+ * @param bBorders
+ */
+function formatCell(oSheet, iCol, iRow, sSize, sBold, sColor, sAlign, bBorders) {
+    oSheet.font(iCol, iRow, {
+        sz: sSize,
+        bold: sBold
+    });
+    oSheet.align(iCol, iRow, sAlign);
+    oSheet.fill(iCol, iRow, {
+        type: "solid",
+        fgColor: sColor
+    });
+
+    if(bBorders) {
+        oSheet.border(iCol, iRow, {
+            left: "thin",
+            top: "thin",
+            right: "thin",
+            bottom: "thin"
+        });
+    }
 }
 
 /**

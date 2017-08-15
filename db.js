@@ -11,6 +11,8 @@ var pg = require("pg");
 var config = require("./config.js");
 var logger = require("./logger/logger.js");
 
+var oPool = new pg.Pool(config.postgres);
+
 module.exports = {
 
     /**
@@ -20,7 +22,9 @@ module.exports = {
      */
     query: function(sSql, fCallback) {
         logger.log(logger.levels.INFO, "Executing SQL: " + sSql);
-        pg.connect(config.postgres.url, function(oErr, oClient, fDone) {
+
+        // execute sql
+        oPool.connect(function(oErr, oClient, fDone) {
             oClient.query(sSql, function(oErr, oResult) {
                 fDone();
                 fCallback(oErr, oResult);

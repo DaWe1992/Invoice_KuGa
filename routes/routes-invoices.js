@@ -300,6 +300,7 @@ function getInvoiceById(sId, fCallback) {
 
     // load customer data
     var sSql = "SELECT " +
+        "customers.cust_id AS id, " +
         "customers.cust_address AS address, " +
         "customers.cust_firstname AS firstname, " +
         "customers.cust_lastname AS lastname, " +

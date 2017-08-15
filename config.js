@@ -10,6 +10,7 @@ module.exports = {
     app: {
         port: 8080
     },
+    frontend: "_sapui5", // alternative: ""
     logger: {
         enabled: true,
         logErro: true,
@@ -17,16 +18,20 @@ module.exports = {
         logWarn: true
     },
     postgres: {
-        // url: "postgres://postgres:admin@localhost:5432/db_invoice_kuga",
-        // connection: {
+        // url: postgres://postgres:admin@localhost:5432/db_invoice_kuga
         user: "postgres",
         host: "localhost",
         database: "db_invoice_kuga",
         password: "admin",
         port: 5432,
-        // }
     },
     mongo: {
         url: "mongodb://localhost/users"
+    },
+    session: {
+        secret: "mySecretKey",
+        resave: true,
+        saveUninitialized: true,
+        cookieMaxAge: 120000 // delete the session cookie after two hours
     }
 };

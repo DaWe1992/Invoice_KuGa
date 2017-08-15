@@ -50,12 +50,12 @@ oApp.use(cookieParser());
 
 // initialize passport.js
 oApp.use(expressSession({
-    secret: "mySecretKey",
-    resave: true,
-    saveUninitialized: true
-    /*cookie: {
-        maxAge: 5000 // sets the maximum age of the cookie
-    }*/
+    secret: config.session.secret,
+    resave: config.session.resave,
+    saveUninitialized: config.session.saveUninitialized,
+    cookie: {
+        maxAge: config.session.cookieMaxAge
+    }
 }));
 oApp.use(passport.initialize());
 oApp.use(passport.session());
@@ -76,10 +76,10 @@ require("./routes/routes-authentication")(oApp, passport);
 
 // serve favicon
 oApp.use(favicon(path.join(__dirname, "frontend", "img", "favicon.ico")));
-// serve static files in frontend folder
+// serve static files in frontend(_sapui5) folder
 oApp.use(
     isAuthenticated, express.static(
-        __dirname + "/frontend" + (process.argv[2] === "sapui5" ? "_sapui5" : "")
+        __dirname + "/frontend" + config.frontend
     )
 );
 

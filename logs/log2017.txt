@@ -1,1 +1,2 @@
 ERRO		Tue Aug 15 2017 17:15:15 GMT+0200 (CEST)		error: relation "customers" does not exist
+ERRO		Tue Aug 15 2017 17:38:00 GMT+0200 (CEST)		User not found with username askfjh

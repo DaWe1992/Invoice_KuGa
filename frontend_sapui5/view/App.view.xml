@@ -36,7 +36,9 @@
 							minWidth="20px"/>
 					</layoutData>
 				</ToolbarSpacer>
-				<Label text="{i18n>App.title} ({i18n>App.version})"/>
+				<Label
+					text="{i18n>App.title} ({i18n>App.version})"
+					class="text-medium"/>
 				<ToolbarSpacer>
 					<layoutData>
 						<OverflowToolbarLayoutData

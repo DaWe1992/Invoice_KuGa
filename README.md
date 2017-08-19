@@ -57,13 +57,13 @@ use users
 db.users.find()
 ```
 
-In order to start the application, go to the root folder of the application and run the following command (if the `sapui5` parameter is specified the `SAPUI5` frontend will be loaded):
+In order to start the application, go to the root folder of the application and run the following command:
 
 ```
-node express.js [sapui5]
+node express.js
 ```
 
-or (loads the `SAPUI5` frontend by default)
+or short:
 
 ```
 npm start

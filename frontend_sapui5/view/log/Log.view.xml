@@ -70,7 +70,9 @@
 									<Label
 										text="{date}"
 										class="text-blue"/>
-									<Label text="{text}"/>
+									<Label
+										text="{text}"
+										class="text-medium"/>
 								</VBox>
 							</HBox>
 						</CustomListItem>

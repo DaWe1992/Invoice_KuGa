@@ -40,7 +40,7 @@
 					<!-- Technical invoice information -->
 					<IconTabFilter
 						icon="sap-icon://technical-object"
-						iconColor="Negative"
+						iconColor="Default"
 						text="{i18n>Invoice.icontab.info}">
 
 						<core:Fragment

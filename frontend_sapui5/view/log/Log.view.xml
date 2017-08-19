@@ -1,0 +1,82 @@
+<mvc:View
+	controllerName="com.danielwehner.invoicekuga.controller.log.Log"
+	height="100%"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc">
+
+	<Page
+		height="100%"
+		title="{i18n>Log.page.title}"
+		class="sapUiStdPage"
+		showHeader="true">
+		<content>
+		    <IconTabBar
+		        expandable="false"
+		        expanded="true"
+				select="onIconTabBarSelect"
+		        class="sapUiNoContentPadding">
+				<items>
+					<IconTabFilter
+						showAll="true"
+						count="{/count/total}"
+						text="{i18n>Log.alerts}"
+						key="All"/>
+					<IconTabSeparator/>
+					<IconTabFilter
+						icon="sap-icon://hint"
+						iconColor="Default"
+						count="{/count/info}"
+						text="{i18n>Log.info}"
+						key="Info"/>
+					<IconTabFilter
+						icon="sap-icon://message-warning"
+						iconColor="Critical"
+						count="{/count/warn}"
+						text="{i18n>Log.warning}"
+						key="Warn"/>
+					<IconTabFilter
+						icon="sap-icon://status-error"
+						iconColor="Negative"
+						count="{/count/erro}"
+						text="{i18n>Log.error}"
+						key="Erro"/>
+				</items>
+		        <content>
+		            <List
+		                id="tableAlerts"
+						items="{
+		                    path: '/logs'
+		                }">
+						<CustomListItem>
+							<HBox>
+								<FlexBox
+									width="5%"
+									justifyContent="Center">
+									<core:Icon
+										src="{=
+											${status} === 'INFO' ? 'sap-icon://hint' :
+					                    	${status} === 'WARN' ? 'sap-icon://message-warning' : 'sap-icon://status-error'
+										}"
+										color="{=
+											${status} === 'INFO' ? 'Default' :
+					                    	${status} === 'WARN' ? 'Critical' : 'Negative'
+										}"
+										size="2rem"
+										class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+									/>
+								</FlexBox>
+								<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
+									<Label
+										text="{date}"
+										class="text-blue"/>
+									<Label text="{text}"/>
+								</VBox>
+							</HBox>
+						</CustomListItem>
+					</List>
+		        </content>
+			</IconTabBar>
+		</content>
+	</Page>
+</mvc:View>

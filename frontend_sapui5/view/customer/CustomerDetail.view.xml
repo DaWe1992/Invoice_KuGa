@@ -37,7 +37,7 @@
 					<!-- Technical customer information -->
 					<IconTabFilter
 						icon="sap-icon://technical-object"
-						iconColor="Negative"
+						iconColor="Default"
 						text="{i18n>Customer.icontab.info}">
 
 						<core:Fragment

@@ -21,8 +21,6 @@ module.exports = {
      * @param fCallback
      */
     query: function(sSql, fCallback) {
-        logger.log(logger.levels.INFO, "Executing SQL: " + sSql);
-
         // execute sql
         oPool.connect(function(oErr, oClient, fDone) {
             oClient.query(sSql, function(oErr, oResult) {

@@ -83,6 +83,10 @@
 				<tnt:fixedItem>
 					<tnt:NavigationList>
 						<tnt:NavigationListItem
+							text="{i18n>Navi.logs}"
+							icon="sap-icon://education"
+							select="onNavToLogs"/>
+						<tnt:NavigationListItem
 							text="{i18n>Navi.settings}"
 							icon="sap-icon://action-settings"
 							select=""/>

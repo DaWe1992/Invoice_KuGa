@@ -66,3 +66,10 @@ CREATE TABLE IF NOT EXISTS cash_earnings (
     updated_at DATE,
     updated_by VARCHAR(50)
 );
+
+CREATE TABLE IF NOT EXISTS logs (
+    log_id SERIAL PRIMARY KEY,
+    log_status VARCHAR(4),
+    log_text VARCHAR(500),
+    log_date DATE
+);

@@ -7,6 +7,7 @@
 
 // import necessary modules
 var fs = require("fs");
+var db = require("../db.js");
 var config = require("../config.js");
 
 module.exports = {
@@ -31,14 +32,31 @@ module.exports = {
         if(sLevel === this.levels.WARN && !config.logger.logWarn) return;
         if(sLevel === this.levels.ERR && !config.logger.logErro) return;
 
-        var oDate = new Date();
-        var sYear = oDate.getFullYear();
+        // insert log into db
+        var sSql = "INSERT INTO logs (" +
+            "log_status, " +
+            "log_text, " +
+            "log_date" +
+        ") VALUES (" +
+            "'" + sLevel + "', " +
+            "'" + sMsg + "', " +
+            "current_date" +
+        ");";
 
-        fs.appendFile(
-            "./logs/log" + sYear + ".txt",
-            sLevel + "\t\t" + oDate + "\t\t" + sMsg + "\n",
-            function(oErr) {}
-        );
+        db.query(sSql, function(oErr, oResult) {
+            if(oErr) {
+                // save log in file
+                // fallback in case the db connection is not available
+                var oDate = new Date();
+                var sYear = oDate.getFullYear();
+
+                fs.appendFile(
+                    "./logs/log" + sYear + ".txt",
+                    this.levels.ERR + "\t\t" + oDate + "\t\t" + oErr + "\n",
+                    function(oErr) {}
+                );
+            }
+        });
     },
 
     /**

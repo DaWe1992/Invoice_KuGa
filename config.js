@@ -14,7 +14,7 @@ module.exports = {
     logger: {
         enabled: true,
         logErro: true,
-        logInfo: false,
+        logInfo: true,
         logWarn: true
     },
     postgres: {

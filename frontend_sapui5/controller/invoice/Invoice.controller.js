@@ -29,8 +29,7 @@ sap.ui.define([
 
             // load invoice list data
             this._getInvoices(function(data) {
-                var oModel = new JSONModel(data);
-                oView.setModel(oModel);
+                oView.setModel(new JSONModel(data));
             });
 
             // get reference to detail page

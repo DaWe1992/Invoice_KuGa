@@ -136,6 +136,13 @@ sap.ui.define([
          */
         onNavToStatistics: function() {
             this.getRouter().navTo("statistics");
+        },
+
+        /**
+         * Navigates to the logs page.
+         */
+        onNavToLogs: function() {
+            this.getRouter().navTo("logs");
         }
     });
 });

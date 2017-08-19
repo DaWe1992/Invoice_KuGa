@@ -88,6 +88,11 @@
                     "pattern": "statistics",
                     "name": "statistics",
                     "target": "statistics"
+                },
+                {
+                    "pattern": "logs",
+                    "name": "logs",
+                    "target": "logs"
                 }
 			],
 			 "targets": {
@@ -109,6 +114,10 @@
                 },
                 "statistics": {
                     "viewName": "statistics.Statistics",
+                    "viewLevel": 1
+                },
+                "logs": {
+                    "viewName": "log.Log",
                     "viewLevel": 1
                 },
                 "notFound": {

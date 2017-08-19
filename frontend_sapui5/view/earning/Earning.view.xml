@@ -14,7 +14,9 @@
 
 		<content>
 			<List
-				items="{path: '/'}"
+				items="{
+					path: '/'
+				}"
 				growing="true"
 				growingThreshold="5"
 				growingScrollToLoad="false">

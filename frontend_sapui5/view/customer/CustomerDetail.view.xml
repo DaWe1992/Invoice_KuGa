@@ -53,6 +53,10 @@
 		<footer>
 			<Toolbar>
 				<content>
+					<ToggleButton
+						id="toggleCustomerLock"
+						icon="sap-icon://unlocked"
+						press="onToggleCustomerLock"/>
 					<ToolbarSpacer>
 						<layoutData>
 							<OverflowToolbarLayoutData
@@ -63,11 +67,13 @@
 					<Button
 						text="{i18n>Misc.save}"
 						type="Accept"
-						press=""/>
+						press="onCustomerSave"
+						visible="{settings>/enabled}"/>
 					<Button
 						text="{i18n>Misc.delete}"
 						type="Reject"
-						press=""/>
+						press="onCustomerDelete"
+						visible="{settings>/enabled}"/>
 				</content>
 			</Toolbar>
 		</footer>

@@ -281,9 +281,9 @@ module.exports = function(oApp) {
             "culo_user_email, " +
             "culo_user_name" +
         ") VALUES (" +
-            "'" + id + "'," +
-            "'" + res.locals.user.email + "', " +
-            "'" + res.locals.user.fullName + "'" +
+            "'" + sId + "'," +
+            "'" + oReq.user.email + "', " +
+            "'" + oReq.user.username + "'" +
         ");";
 
         postgresDb.query(sSql, function(oErr, oResult) {

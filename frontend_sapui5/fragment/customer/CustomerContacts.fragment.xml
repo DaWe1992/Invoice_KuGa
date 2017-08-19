@@ -17,7 +17,8 @@
                 <ToolbarSpacer/>
                 <Button
 					icon="sap-icon://add"
-					press="onOpenAddContactDialog"/>
+					press="onOpenAddContactDialog"
+					visible="{settings>/enabled}"/>
             </Toolbar>
         </headerToolbar>
 

@@ -41,7 +41,7 @@
                     <Label text="{i18n>Customer.id}"/>
                     <Input
 						value="{/customer/id}"
-						enabled="{settings>/enabled}"/>
+						enabled="false"/>
 
                     <Label text="{i18n>Customer.address}"/>
                     <Input

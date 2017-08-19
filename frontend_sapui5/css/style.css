@@ -3,6 +3,9 @@
 .text-blue {
     color: #427CAC;
 }
+.text-light-blue {
+    color: #02AFEB !important;
+}
 .text-green {
     color: #2B7D2B;
 }

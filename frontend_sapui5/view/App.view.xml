@@ -38,7 +38,7 @@
 				</ToolbarSpacer>
 				<Label
 					text="{i18n>App.title} ({i18n>App.version})"
-					class="text-medium"/>
+					class="text-light-blue text-medium"/>
 				<ToolbarSpacer>
 					<layoutData>
 						<OverflowToolbarLayoutData

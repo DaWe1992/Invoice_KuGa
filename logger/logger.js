@@ -7,7 +7,7 @@
 
 // import necessary modules
 var fs = require("fs");
-var db = require("../db.js");
+var postgresDb = require("../postgres/postgres.js");
 var config = require("../config.js");
 
 module.exports = {
@@ -32,7 +32,7 @@ module.exports = {
         if(sLevel === this.levels.WARN && !config.logger.logWarn) return;
         if(sLevel === this.levels.ERR && !config.logger.logErro) return;
 
-        // insert log into db
+        // insert log into postgresDb
         var sSql = "INSERT INTO logs (" +
             "log_status, " +
             "log_text, " +
@@ -43,7 +43,7 @@ module.exports = {
             "current_date" +
         ");";
 
-        db.query(sSql, function(oErr, oResult) {
+        postgresDb.query(sSql, function(oErr, oResult) {
             if(oErr) {
                 // save log in file
                 // fallback in case the db connection is not available

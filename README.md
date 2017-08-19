@@ -53,6 +53,7 @@ The `MongoDB` database is used for user authentication. You can get a list of al
 
 ```
 mongo
+use users
 db.users.find()
 ```
 
@@ -207,6 +208,19 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
 
 - `http://<host>:8080/daily-cash-earnings/:id`:  
   Deletes the cash earning with id `id`.
+
+### Logs
+
+**GET:**
+
+- `http://<host>:8080/logs`:  
+  Returns all logs.
+
+### Users
+
+**GET:**
+- `http://<host>:8080/users`:  
+  Returns all users.
 
 ### Misc
 

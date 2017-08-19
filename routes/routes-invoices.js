@@ -7,7 +7,7 @@
 
 // import necessary modules
 var fs = require("fs");
-var db = require("../db.js");
+var postgresDb = require("../postgres/postgres.js");
 var pdf = require("html-pdf");
 var mustache = require("mustache");
 var logger = require("../logger/logger.js");
@@ -50,7 +50,7 @@ module.exports = function(oApp) {
         "ON invoices.inv_cust_id = customers.cust_id " +
         "ORDER BY custlastname;";
 
-        db.query(sSql, function(oErr, oResult) {
+        postgresDb.query(sSql, function(oErr, oResult) {
             if(oErr) {
                 logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
@@ -113,7 +113,7 @@ module.exports = function(oApp) {
                 "current_date" +
             ");";
 
-            db.query(sSql, function(oErr, oResult) {
+            postgresDb.query(sSql, function(oErr, oResult) {
                 if(oErr) {
                     logger.log(logger.levels.ERR, oErr);
                     return oRes.status(500).json({
@@ -153,7 +153,7 @@ module.exports = function(oApp) {
                     sSql += ";";
 
                     // save invoice positions in database
-                    db.query(sSql, function(oErr, oResult) {
+                    postgresDb.query(sSql, function(oErr, oResult) {
                         if(oErr) {
                             logger.log(logger.levels.ERR, oErr);
                             return oRes.status(500).json({
@@ -271,7 +271,7 @@ module.exports = function(oApp) {
             "'" + oPosition.unitprice + "', " +
             "'" + oPosition.vatrate + "');";
 
-        db.query(sSql, function(oErr, oResult) {
+        postgresDb.query(sSql, function(oErr, oResult) {
             if(oErr) {
                 logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
@@ -314,7 +314,7 @@ function getInvoiceById(sId, fCallback) {
     "ON customers.cust_id = invoices.inv_cust_id " +
     "WHERE invoices.inv_id = '" + sId + "';"
 
-    db.query(sSql, function(oErr, oResult) {
+    postgresDb.query(sSql, function(oErr, oResult) {
         if(oErr) {
             logger.log(logger.levels.ERR, oErr);
             fCallback(null, oErr);
@@ -331,7 +331,7 @@ function getInvoiceById(sId, fCallback) {
         "FROM invoices " +
         "WHERE inv_id = '" + sId + "';";
 
-        db.query(sSql, function(oErr, oResult) {
+        postgresDb.query(sSql, function(oErr, oResult) {
             if(oErr) {
                 logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
@@ -350,7 +350,7 @@ function getInvoiceById(sId, fCallback) {
             "FROM invoices " +
             "WHERE inv_id = '" + sId + "';";
 
-            db.query(sSql, function(oErr, oResult) {
+            postgresDb.query(sSql, function(oErr, oResult) {
                 if(oErr) {
                     logger.log(logger.levels.ERR, oErr);
                     fCallback(null, oErr);
@@ -370,7 +370,7 @@ function getInvoiceById(sId, fCallback) {
                 "FROM invoice_positions " +
                 "WHERE ipos_inv_id = '" + sId + "';";
 
-                db.query(sSql, function(oErr, oResult) {
+                postgresDb.query(sSql, function(oErr, oResult) {
                     if(oErr) {
                         logger.log(logger.levels.ERR, oErr);
                         fCallback(null, oErr)
@@ -480,7 +480,7 @@ function getNewInvoiceId(fCallback) {
 function getMaxInvoiceId(fCallback) {
     var sSql = "SELECT max(inv_id) AS maxid FROM invoices;";
 
-    db.query(sSql, function(oErr, oResult) {
+    postgresDb.query(sSql, function(oErr, oResult) {
         if(oErr) {
             logger.log(logger.levels.ERR, oErr);
             fCallback(null, oErr);

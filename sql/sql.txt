@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS customers(
+CREATE TABLE IF NOT EXISTS customers (
     cust_id VARCHAR(10) PRIMARY KEY,
     cust_address VARCHAR(10),
     cust_firstname VARCHAR(50),
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS customers(
     updated_by VARCHAR(50)
 );
 
-CREATE TABLE IF NOT EXISTS customer_contacts(
+CREATE TABLE IF NOT EXISTS customer_contacts (
 	cuco_id serial PRIMARY KEY,
 	cuco_customer VARCHAR(10) REFERENCES customers(cust_id) ON UPDATE CASCADE ON DELETE CASCADE,
 	cuco_contact_type VARCHAR(10),
@@ -24,13 +24,13 @@ CREATE TABLE IF NOT EXISTS customer_contacts(
     updated_by VARCHAR(50)
 );
 
-CREATE TABLE IF NOT EXISTS customers_lock(
+CREATE TABLE IF NOT EXISTS customers_lock (
 	culo_id VARCHAR(10) references customers(cust_id) primary key,
 	culo_user_email VARCHAR(100),
 	culo_user_name VARCHAR(50)
 );
 
-CREATE TABLE IF NOT EXISTS invoices(
+CREATE TABLE IF NOT EXISTS invoices (
     inv_id VARCHAR(10) PRIMARY KEY,
     inv_cust_id VARCHAR(10) REFERENCES customers(cust_id) ON UPDATE CASCADE ON DELETE CASCADE,
     inv_date DATE,

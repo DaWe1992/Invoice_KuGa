@@ -6,7 +6,7 @@
 "use strict";
 
 // import necessary modules
-var db = require("../db.js");
+var postgresDb = require("../postgres/postgres.js");
 var logger = require("../logger/logger.js");
 var isAuthenticated = require("../passport/isAuthenticated.js");
 
@@ -35,7 +35,7 @@ module.exports = function(oApp) {
         "FROM " +
             "logs;";
 
-        db.query(sSql, function(oErr, oResult) {
+        postgresDb.query(sSql, function(oErr, oResult) {
             if(oErr) {
                 logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
@@ -54,7 +54,7 @@ module.exports = function(oApp) {
                 "logs " +
             "GROUP BY log_status;";
 
-            db.query(sSql, function(oErr, oResult) {
+            postgresDb.query(sSql, function(oErr, oResult) {
                 if(oErr) {
                     logger.log(logger.levels.ERR, oErr);
                     return oRes.status(500).json({

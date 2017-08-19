@@ -1,0 +1,40 @@
+<mvc:View
+	controllerName="com.danielwehner.invoicekuga.controller.user.User"
+	height="100%"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc">
+
+	<Page
+		height="100%"
+		title="{i18n>User.page.title}"
+		class="sapUiStdPage"
+		showHeader="true">
+		<content>
+            <List
+                id="tableUsers"
+                items="{
+                    path: '/'
+                }">
+                <CustomListItem>
+                    <HBox>
+                        <FlexBox
+                            width="5%"
+                            justifyContent="Center">
+                            <core:Icon
+                                src="sap-icon://account"
+                                size="2rem"
+                                class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"/>
+                        </FlexBox>
+                        <VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
+                            <Label
+                                text="{username}"
+                                class="text-blue"/>
+                            <Label text="{email}"/>
+                        </VBox>
+                    </HBox>
+                </CustomListItem>
+            </List>
+		</content>
+	</Page>
+</mvc:View>

@@ -26,6 +26,9 @@ var oApp = express();
 
 console.log("SETTING UP THE SERVER...");
 
+// set up postgres tables
+require("./postgres/postgres_setup.js")();
+
 // connect to mongo db
 mongoose.connect(config.mongo.url, {
     useMongoClient: true
@@ -73,6 +76,7 @@ require("./routes/routes-cash-earnings")(oApp);
 require("./routes/routes-stats.js")(oApp);
 require("./routes/routes-excel.js")(oApp);
 require("./routes/routes-logs.js")(oApp);
+require("./routes/routes-users.js")(oApp);
 require("./routes/routes-authentication")(oApp, passport);
 
 // serve favicon

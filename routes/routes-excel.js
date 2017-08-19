@@ -7,7 +7,7 @@
 
 // import necessary modules
 var fs = require("fs");
-var db = require("../db.js");
+var postgresDb = require("../postgres/postgres.js");
 var async = require("async");
 var xlsBuilder = require("msexcel-builder-colorfix");
 var logger = require("../logger/logger.js");
@@ -264,7 +264,7 @@ function getAggregatedRevenues(sMonth, sYear, fCallback) {
     "GROUP BY date " +
     "ORDER BY date;";
 
-    db.query(sSql, function(oErr, oResult) {
+    postgresDb.query(sSql, function(oErr, oResult) {
         if(oErr) {
             logger.log(logger.levels.ERR, oErr);
             fCallback(null, oErr);

@@ -6,7 +6,7 @@
 "use strict";
 
 // import necessary modules
-var db = require("../db.js");
+var postgresDb = require("../postgres/postgres.js");
 var logger = require("../logger/logger.js");
 var isAuthenticated = require("../passport/isAuthenticated.js");
 
@@ -25,7 +25,7 @@ module.exports = function(oApp) {
             "cust_lastname AS lastname " +
         "FROM customers;";
 
-        db.query(sSql, function(oErr, oResult) {
+        postgresDb.query(sSql, function(oErr, oResult) {
             if(oErr) {
                 logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
@@ -83,7 +83,7 @@ module.exports = function(oApp) {
                 "current_date" +
             ");";
 
-            db.query(sSql, function(oErr, oResult) {
+            postgresDb.query(sSql, function(oErr, oResult) {
                 if(oErr) {
                     logger.log(logger.levels.ERR, oErr);
                     return oRes.status(500).json({
@@ -121,7 +121,7 @@ module.exports = function(oApp) {
                     sSql += ";";
 
                     // save customer contacts in database
-                    db.query(sSql, function(oErr, oResult) {
+                    postgresDb.query(sSql, function(oErr, oResult) {
                         if(oErr) {
                             logger.log(logger.levels.ERR, oErr);
                             return oRes.status(500).json({
@@ -172,7 +172,7 @@ module.exports = function(oApp) {
         "FROM customers " +
         "WHERE cust_id = '" + sId + "';";
 
-        db.query(sSql, function(oErr, oResult) {
+        postgresDb.query(sSql, function(oErr, oResult) {
             if(oErr) {
                 logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
@@ -192,7 +192,7 @@ module.exports = function(oApp) {
             "FROM customers " +
             "WHERE cust_id = '" + sId + "';";
 
-            db.query(sSql, function(oErr, oResult) {
+            postgresDb.query(sSql, function(oErr, oResult) {
                 if(oErr) {
                     logger.log(logger.levels.ERR, oErr);
                     return oRes.status(500).json({
@@ -211,7 +211,7 @@ module.exports = function(oApp) {
                 "FROM customer_contacts " +
                 "WHERE cuco_customer = '" + sId + "';";
 
-                db.query(sSql, function(oErr, oResult) {
+                postgresDb.query(sSql, function(oErr, oResult) {
                     if(oErr) {
                         logger.log(logger.levels.ERR, oErr);
                         return oRes.status(500).json({
@@ -247,7 +247,7 @@ module.exports = function(oApp) {
         "FROM customers_lock " +
         "WHERE culo_id = '" + sId + "';";
 
-        db.query(sSql, function(oErr, oResult) {
+        postgresDb.query(sSql, function(oErr, oResult) {
             if(oErr) {
                 logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
@@ -286,7 +286,7 @@ module.exports = function(oApp) {
             "'" + res.locals.user.fullName + "'" +
         ");";
 
-        db.query(sSql, function(oErr, oResult) {
+        postgresDb.query(sSql, function(oErr, oResult) {
             if(oErr) {
                 logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
@@ -311,7 +311,7 @@ module.exports = function(oApp) {
         var sId = oReq.params.id;
         var sSql = "DELETE FROM customers_lock WHERE culo_id = '" + sId + "';";
 
-        db.query(sSql, function(oErr, oResult) {
+        postgresDb.query(sSql, function(oErr, oResult) {
             if(oErr) {
                 logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
@@ -353,7 +353,7 @@ function getCounterValue(fCallback) {
         "substring(cust_id from 6 for (length(cust_id) - 5))" +
     ") AS counter FROM customers;";
 
-    db.query(sSql, function(oErr, oResult) {
+    postgresDb.query(sSql, function(oErr, oResult) {
         if(oErr) {
             logger.log(logger.levels.ERR, oErr);
             fCallback(null, oErr);

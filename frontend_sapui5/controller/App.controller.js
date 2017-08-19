@@ -139,6 +139,13 @@ sap.ui.define([
         },
 
         /**
+         * Navigates to the users page.
+         */
+        onNavToUsers: function() {
+            this.getRouter().navTo("users");
+        },
+
+        /**
          * Navigates to the logs page.
          */
         onNavToLogs: function() {

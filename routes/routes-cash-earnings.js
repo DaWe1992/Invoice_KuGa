@@ -6,7 +6,7 @@
 "use strict";
 
 // import necessary modules
-var db = require("../db.js");
+var postgresDb = require("../postgres/postgres.js");
 var logger = require("../logger/logger.js");
 var isAuthenticated = require("../passport/isAuthenticated.js");
 
@@ -25,7 +25,7 @@ module.exports = function(oApp) {
             "ce_description AS description " +
         "FROM cash_earnings;";
 
-        db.query(sSql, function(oErr, oResult) {
+        postgresDb.query(sSql, function(oErr, oResult) {
             if(oErr) {
                 logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
@@ -64,7 +64,7 @@ module.exports = function(oApp) {
             "ce_amount AS amount, " +
             "ce_description AS description;";
 
-        db.query(sSql, function(oErr, oResult) {
+        postgresDb.query(sSql, function(oErr, oResult) {
             if(oErr) {
                 logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({
@@ -90,7 +90,7 @@ module.exports = function(oApp) {
         var sId = oReq.params.id;
         var sSql = "DELETE FROM cash_earnings WHERE ce_id = '" + sId + "';";
 
-        db.query(sSql, function(oErr, oResult) {
+        postgresDb.query(sSql, function(oErr, oResult) {
             if(oErr) {
                 logger.log(logger.levels.ERR, oErr);
                 return oRes.status(500).json({

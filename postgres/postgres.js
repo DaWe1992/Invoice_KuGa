@@ -8,8 +8,8 @@
 
 // import necessary modules
 var pg = require("pg");
-var config = require("./config.js");
-var logger = require("./logger/logger.js");
+var config = require("../config.js");
+var logger = require("../logger/logger.js");
 
 var oPool = new pg.Pool(config.postgres);
 

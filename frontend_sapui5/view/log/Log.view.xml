@@ -63,16 +63,11 @@
 					                    	${status} === 'WARN' ? 'Critical' : 'Negative'
 										}"
 										size="2rem"
-										class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
-									/>
+										class="sapUiSmallMarginTopBottom"/>
 								</FlexBox>
 								<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
-									<Label
-										text="{date}"
-										class="text-blue"/>
-									<Label
-										text="{text}"
-										class="text-medium"/>
+									<Label text="{date}"/>
+									<Label text="{text}"/>
 								</VBox>
 							</HBox>
 						</CustomListItem>

@@ -90,6 +90,11 @@
                     "target": "statistics"
                 },
                 {
+                        "pattern": "users",
+                        "name": "users",
+                        "target": "users"
+                },
+                {
                     "pattern": "logs",
                     "name": "logs",
                     "target": "logs"
@@ -114,6 +119,10 @@
                 },
                 "statistics": {
                     "viewName": "statistics.Statistics",
+                    "viewLevel": 1
+                },
+                "users": {
+                    "viewName": "user.User",
                     "viewLevel": 1
                 },
                 "logs": {

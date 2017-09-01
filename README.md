@@ -233,7 +233,8 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
 - `http://<host>:8080/me`:  
   Returns the user information.
 - `http://<host>:8080/profile-image/:filename?`:  
-  Returns the user's profile image. If `filename` is specified the current user's profile image is returned.
+  Returns the user's profile image. If `filename` is specified the current user's profile image is returned.  
+
 **POST:**
 
 - `http://<host>:8080/login`:  
@@ -242,6 +243,8 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
   Sends the signup information to the server.  
 - `http://<host>:8080/logout`:  
   Logs the user out.
+- `http://<host>:8080/profile-image`:  
+  Posts a new profile image to the server.
 
 ## Debugging Node.js Backend
 

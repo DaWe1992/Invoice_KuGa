@@ -1,5 +1,5 @@
 <mvc:View
-	controllerName="com.danielwehner.invoicekuga.controller.user.User"
+	controllerName="com.danielwehner.invoicekuga.controller.user.UserList"
 	height="100%"
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core"
@@ -18,14 +18,12 @@
                 }">
                 <CustomListItem>
                     <HBox>
-                        <FlexBox
-                            width="5%"
-                            justifyContent="Center">
-                            <core:Icon
-                                src="sap-icon://account"
-                                size="2rem"
-                                class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"/>
-                        </FlexBox>
+						<Image
+							src="/profile-image/{username}"
+							class="sapUiTinyMargin img-round"
+							densityAware="false"
+							height="75px"
+							width="75px"/>
                         <VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
                             <Label
                                 text="{username}"

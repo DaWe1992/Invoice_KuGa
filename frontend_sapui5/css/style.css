@@ -12,3 +12,6 @@
 .text-medium {
     font-size: 1.15em;
 }
+.img-round {
+    border-radius: 20px;
+}

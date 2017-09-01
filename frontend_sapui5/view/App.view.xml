@@ -46,6 +46,12 @@
 							minWidth="20px"/>
 					</layoutData>
 				</ToolbarSpacer>
+				<Image
+					src="/profile-image"
+					class="sapUiTinyMargin img-round"
+					densityAware="false"
+					height="40px"
+					width="40px"/>
 				<Button
 					text="{/username}"
 					type="Transparent"

@@ -14,7 +14,7 @@ sap.ui.define([
 
     var self;
 
-    return BaseController.extend("com.danielwehner.invoicekuga.controller.user.User", {
+    return BaseController.extend("com.danielwehner.invoicekuga.controller.user.UserList", {
 
         /**
          * onInit function.

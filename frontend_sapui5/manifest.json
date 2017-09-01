@@ -122,7 +122,7 @@
                     "viewLevel": 1
                 },
                 "users": {
-                    "viewName": "user.User",
+                    "viewName": "user.UserList",
                     "viewLevel": 1
                 },
                 "logs": {

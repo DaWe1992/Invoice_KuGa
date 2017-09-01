@@ -13,6 +13,7 @@ var express = require("express");
 var mongoose = require("mongoose");
 var passport = require("passport");
 var flash = require("connect-flash");
+var busboy = require("connect-busboy");
 var favicon = require("serve-favicon");
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
@@ -51,6 +52,9 @@ oApp.use(bodyParser.json());
 oApp.use(bodyParser.urlencoded({extended: true}));
 oApp.use(cookieParser());
 
+// image upload
+oApp.use(busboy());
+
 // initialize passport.js
 oApp.use(expressSession({
     secret: config.session.secret,
@@ -77,6 +81,7 @@ require("./routes/routes-stats.js")(oApp);
 require("./routes/routes-excel.js")(oApp);
 require("./routes/routes-logs.js")(oApp);
 require("./routes/routes-users.js")(oApp);
+require("./routes/routes-img-upload.js")(oApp);
 require("./routes/routes-authentication")(oApp, passport);
 
 // serve favicon

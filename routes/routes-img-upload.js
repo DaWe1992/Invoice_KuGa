@@ -15,15 +15,15 @@ module.exports = function(oApp) {
     /**
      * Display profile image.
      *
-     * @name /profile-image/:filename
-     * @param filename (optional)
+     * @name /profile-image/:username
+     * @param username (optional)
      */
-    oApp.get("/profile-image/:filename?", isAuthenticated, (oReq, oRes) => {
-        let sFileName = oReq.params.filename;
+    oApp.get("/profile-image/:username?", isAuthenticated, (oReq, oRes) => {
+        let sUserName = oReq.params.username;
 
         // get img path without extension
-    	let sPath = (sFileName)
-            ? "./img_profile/" + sFileName
+    	let sPath = (sUserName)
+            ? "./img_profile/" + sUserName
             : "./img_profile/" + oReq.user.username;
 
         // possible file extensions

@@ -232,8 +232,8 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
   Shows the signup screen.
 - `http://<host>:8080/me`:  
   Returns the user information.
-- `http://<host>:8080/profile-image/:filename?`:  
-  Returns the user's profile image. If `filename` is specified the current user's profile image is returned.  
+- `http://<host>:8080/profile-image/:username?`:  
+  Returns a user's profile image. If `username` is not specified the current user's profile image is returned.  
 
 **POST:**
 

@@ -76,13 +76,13 @@ oApp.use(flash());
 // include routes
 require("./routes/routes-customers.js")(oApp);
 require("./routes/routes-invoices.js")(oApp);
-require("./routes/routes-cash-earnings")(oApp);
+require("./routes/routes-cash-earnings.js")(oApp);
 require("./routes/routes-stats.js")(oApp);
 require("./routes/routes-excel.js")(oApp);
 require("./routes/routes-logs.js")(oApp);
 require("./routes/routes-users.js")(oApp);
 require("./routes/routes-img-upload.js")(oApp);
-require("./routes/routes-authentication")(oApp, passport);
+require("./routes/routes-authentication.js")(oApp, passport);
 
 // serve favicon
 oApp.use(favicon(path.join(__dirname, "frontend", "img", "favicon.ico")));

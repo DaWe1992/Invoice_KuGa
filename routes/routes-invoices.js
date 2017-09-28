@@ -227,7 +227,8 @@ module.exports = function(oApp) {
                 });
             }
 
-            readAndRenderTemplate(oInvoice, function(sHtml) {
+            produceHtmlInvoice(oInvoice, function(sHtml) {
+            //readAndRenderTemplate(oInvoice, function(sHtml) {
 
                 // create pdf and pipe it to the response stream
                 pdf.create(sHtml, oPdfOptions).toStream(function(oErr, oStream) {
@@ -435,6 +436,165 @@ function readAndRenderTemplate(oInvoice, fCallback) {
 
         fCallback(sHtml);
     });
+}
+
+/**
+ * Produces the html invoice.
+ *
+ * @param oData
+ * @param fCallback
+ */
+function produceHtmlInvoice(oData, fCallback) {
+    fCallback("" +
+    "<!DOCTYPE html>" +
+    "<html>" +
+        "<head>" +
+            "<meta charset='UTF-8'>" +
+            "<title></title>" +
+            getCss() +
+        "</head>" +
+        "<body>" +
+            "<div id='invoice'>" +
+                getHtmlInvoiceHeader(oData) +
+                getHtmlInvoiceBody(oData) +
+                getHtmlInvoiceFooter() +
+            "</div>" +
+        "</body>" +
+    "</html>");
+}
+
+/**
+ * Styling for the invoice.
+ *
+ * @return
+ */
+function getCss() {
+    return "" +
+    "<style type='text/css'>" +
+        "body {font-family: Verdana;font-size: 0.55em;}" +
+        "table {width: 87.5%;}" +
+        "#invoice {margin-left: 10%;}" +
+        "#invoice-header-recipient {margin-top: 20%;margin-bottom: 20%;}" +
+        "#invoice-header-line table {border-bottom: 1.5px solid #000;}" +
+        "#invoice-header-line table th {text-align: left;}" +
+        "#invoice-header-line table td {width: 45%;}" +
+        "#invoice-header-text {margin-top: 5%;}" +
+        "#invoice-body-positions table {margin-top: 2.5%;margin-bottom: 2.5%;border-top: 1px solid #000;border-bottom: 1px solid #000;}" +
+        "#invoice-body-positions th {text-align: center !important;padding: 3px;border-bottom: 1px solid #000}" +
+        "#invoice-body-positions tr:nth-child(even) {background-color: #eee}" +
+        "#invoice-body-positions td {text-align: left;padding: 3px;}" +
+        "#last td {border-bottom: 1px solid #000;}" +
+        ".num {text-align: right !important;}" +
+    "</style>";
+}
+
+/**
+ * Get the html invoice header.
+ *
+ * @param oData
+ * @return
+ */
+function getHtmlInvoiceHeader(oData) {
+    return "" +
+    "<div id='invoice-header'>" +
+        "<div id='invoice-header-recipient'>" +
+            "<p>" +
+                oData.customer.address + "<br>" +
+                oData.customer.firstname + " " + oData.customer.lastname + "<br>" +
+                oData.customer.street + "<br>" +
+                oData.customer.zip + " " + oData.customer.city +
+            "</p>" +
+        "</div>" +
+        "<div id='invoice-header-line'>" +
+            "<table>" +
+                "<thead>" +
+                    "<tr>" +
+                        "<th>Rechnungs-Nr.:</th>" +
+                        "<th>Leistungsdatum:</th>" +
+                        "<th>Datum:</th>" +
+                    "</tr>" +
+                "</thead>" +
+                "<tbody>" +
+                    "<tr>" +
+                        "<td><b>" + oData.invoice.id + "</b></td>" +
+                        "<td>" + oData.invoice.timeOfDelivery + "</td>" +
+                        "<td>" + oData.invoice.date + "</td>" +
+                    "</tr>" +
+                "</tbody>" +
+            "</table>" +
+        "</div>" +
+        "<div id='invoice-header-text'>" +
+            "<p>" + oData.customer.address + " " + oData.customer.lastname + ",</p>" +
+            "<p>für unsere Leistungen erlauben wir uns,<br>Ihnen folgenden Betrag in Rechnung zu stellen:</p>" +
+        "</div>" +
+    "</div>";
+}
+
+/**
+ * Get the html invoice positions.
+ *
+ * @param oData
+ * @return
+ */
+function getHtmlInvoiceBody(oData) {
+    var sHtml = "" +
+    "<div id='invoice-body-positions'>" +
+        "<table>" +
+            "<thead>" +
+                "<tr>" +
+                    "<th>Menge</th>" +
+                    "<th>Position</th>" +
+                    "<th>Einzel</th>" +
+                    "<th>netto</th>" +
+                    "<th>MwSt</th>" +
+                    "<th>brutto</th>" +
+                "</tr>" +
+            "</thead>" +
+            "<tbody>";
+            for(var i = 0; i < oData.invoice.positions.length; i++) {
+                if(i === oData.invoice.positions.length - 1) {
+                    sHtml += "<tr id='last'>";
+                } else {
+                    sHtml += "<tr>";
+                }
+                sHtml += "" +
+                    "<td class='num'>" + oData.invoice.positions[i].qty + "</td>" +
+                    "<td>" + oData.invoice.positions[i].pos + "</td>" +
+                    "<td class='num'>" + oData.invoice.positions[i].unitprice + "</td>" +
+                    "<td class='num'>" + oData.invoice.positions[i].net + "</td>" +
+                    "<td class='num'>" + oData.invoice.positions[i].vat + "</td>" +
+                    "<td class='num'>" + oData.invoice.positions[i].gross + "</td>" +
+                "</tr>"
+            }
+       sHtml += "<tr>" +
+                    "<td><b>Summe</b></td>" +
+                    "<td></td>" +
+                    "<td></td>" +
+                    "<td class='num'><b>" + oData.invoice.sums.net + "</b></td>" +
+                    "<td class='num'><b>" + oData.invoice.sums.vat1 + "/" + oData.invoice.sums.vat2 + "</b></td>" +
+                    "<td class='num'><b>" + oData.invoice.sums.gross + "</b></td>" +
+                "</tr>" +
+            "</tbody>" +
+        "</table>" +
+    "</div>";
+    return sHtml;
+}
+
+/**
+ * Get the html invoice footer.
+ *
+ * @return
+ */
+function getHtmlInvoiceFooter() {
+    return "" +
+    "<div id='invoice-footer'>" +
+        "<div id='invoice-footer-text'>" +
+            "<p>" +
+                "Bitte überweisen Sie den Rechnungsbetrag innerhalb von <b>sieben Tagen</b> an das<br>oben stehende Konto.<br><br>" +
+                "Vielen Dank für das entgegengebrachte Vertrauen.<br><br><br><br>Jochen Wehner" +
+            "</p>" +
+        "</div>" +
+    "</div>";
 }
 
 /**

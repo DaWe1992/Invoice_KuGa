@@ -29,7 +29,7 @@
                 }"
                 inset="false"
                 growing="true"
-                growingThreshold="3">
+                growingThreshold="40">
                 <columns>
                     <Column width="40%">
                         <Text text="{i18n>Invoice.positions.pos}"/>

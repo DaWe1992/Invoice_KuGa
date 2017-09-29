@@ -474,20 +474,21 @@ function getCss() {
         "body {font-family: Verdana;font-size: 0.55em;}" +
         "table {width: 87.5%;}" +
         "#invoice {margin-left: 10%;}" +
-        "#invoice-header-recipient {margin-top: 20%;margin-bottom: 20%;}" +
+        "#invoice-header-recipient {margin-top: 20%;margin-bottom: 30%;}" +
         "#invoice-header-line table {border-bottom: 1.5px solid #000;}" +
         "#invoice-header-line table th {text-align: left;}" +
         "#invoice-header-line table td {width: 45%;}" +
         "#invoice-header-text {margin-top: 5%;}" +
-        "#invoice-header-text #sums {margin-top: 5%;margin-bottom: 5%;border: 1px solid #000;}" +
-        //"#invoice-header-text #sums td {border: 1px solid #000;}" +
-        "#invoice-positions table {margin-top: 10%;margin-bottom: 30%;border-top: 1px solid #000;border-bottom: 1px solid #000;}" +
-        "#invoice-positions table tr #last td {border-bottom: 1px solid #000;}" +
-        "#invoice-positions table th {text-align: center !important;padding: 3px;border-bottom: 1px solid #000}" +
-        "#invoice-positions table tr:nth-child(even) {background-color: #eee}" +
-        "#invoice-positions table td {text-align: left;padding: 3px;}" +
-        ".num {text-align: right !important;}" +
+        "#invoice-header-text table {margin-top: 5%;margin-bottom: 5%;border: 1px solid #000;}" +
+        "#invoice-positions .positions-table {margin-top: 10%;margin-bottom: 30%;border-top: 1px solid #000;border-bottom: 1px solid #000;}" +
+        "#invoice-positions .positions-table #last td {border-bottom: 1px solid #000;}" +
+        "#invoice-positions .positions-table th {text-align: center !important;padding: 3px;border-bottom: 1px solid #000}" +
+        "#invoice-positions .positions-table tr:nth-child(even) {background-color: #eee}" +
+        "#invoice-positions .positions-table td {text-align: left;padding: 3px;}" +
+        ".text-right {text-align: right !important;}" +
+        ".text {text-align: left !important;}" +
         "#invoice-footer {margin-bottom: 100%;}" +
+        ".page-header {border-bottom: 1px solid #000;}" +
     "</style>";
 }
 
@@ -498,7 +499,7 @@ function getCss() {
  * @return
  */
 function getHtmlInvoiceHeader(oData) {
-    return "" +
+    var sHtml = "" +
     "<div id='invoice-header'>" +
         "<div id='invoice-header-recipient'>" +
             "<p>" +
@@ -513,21 +514,23 @@ function getHtmlInvoiceHeader(oData) {
                 "<thead>" +
                     "<tr>" +
                         "<th>Rechnungs-Nr.:</th>" +
-                        "<th>Leistungsdatum:</th>" +
+                        "<th></th>" +
                         "<th>Datum:</th>" +
                     "</tr>" +
                 "</thead>" +
                 "<tbody>" +
                     "<tr>" +
                         "<td><b>" + oData.invoice.id + "</b></td>" +
-                        "<td>" + oData.invoice.timeOfDelivery + "</td>" +
+                        "<td></td>" +
                         "<td>" + oData.invoice.date + "</td>" +
                     "</tr>" +
                 "</tbody>" +
             "</table>" +
         "</div>" +
-        "<div id='invoice-header-text'>" +
-            "<p>" + oData.customer.address + " " + oData.customer.lastname + ",</p>" +
+        "<div id='invoice-header-text'>";
+            if(oData.customer.address === "Herr") {sHtml += "<p>Sehr geehrter ";}
+            else {sHtml += "<p>Sehr geehrte ";}
+            sHtml += oData.customer.address + " " + oData.customer.lastname + ",</p>" +
             "<p>für unsere Leistungen erlauben wir uns,<br>Ihnen folgenden Betrag in Rechnung zu stellen:</p>" +
             "<table id='sums'>" +
                 "<thead>" +
@@ -550,8 +553,21 @@ function getHtmlInvoiceHeader(oData) {
                     "</tr>" +
                 "</tbody>" +
             "</table>" +
+            "<table>" +
+                "<tbody>" +
+                    "<tr>" +
+                        "<td><b>Leistungsdatum:</b></td>" +
+                        "<td>" + oData.invoice.timeOfDelivery + "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                        "<td><b>Leistungsort:</b></td>" +
+                        "<td>" + oData.invoice.room + "</td>" +
+                    "</tr>" +
+                "</tbody>" +
+            "</table>" +
         "</div>" +
     "</div>";
+    return sHtml;
 }
 
 /**
@@ -562,7 +578,9 @@ function getHtmlInvoiceHeader(oData) {
  */
 function getHtmlInvoicePositions(oData) {
     var iPosCount = oData.invoice.positions.length;
+    var iPageCount = 2;
     var iPosPerPage = 35;
+    var iMaxPageCount = Math.ceil(iPosCount / iPosPerPage) + 1;
 
     var sHtml = "<div id='invoice-positions'>";
 
@@ -572,7 +590,15 @@ function getHtmlInvoicePositions(oData) {
         if(i % iPosPerPage === 0) {
             if(i !== 0) {sHtml += "</tbody></table>";}
             sHtml += "" +
-            "<br><table>" + getHtmlInvoicePositionsTableHeader() + "<tbody>";
+            "<br><table class='page-header'>" +
+                "<tr>" +
+                    "<td><small>Rechnungsnummer: <b>" + oData.invoice.id + "</b></small></td>" +
+                    "<td><small>Rechnungsdatum: " + oData.invoice.timeOfDelivery + "</small></td>" +
+                    "<td class='text-right'><small>Seite " + (iPageCount++) +
+                    "/" + iMaxPageCount + "</small></td>" +
+                "</tr>" +
+            "</table>" +
+            "<table class='positions-table'>" + getHtmlInvoicePositionsTableHeader() + "<tbody>";
         }
 
         // add id 'last' if the last position has been reached
@@ -581,12 +607,12 @@ function getHtmlInvoicePositions(oData) {
 
         // add ith position
         sHtml += "" +
-            "<td class='num'>" + oData.invoice.positions[i].qty + "</td>" +
+            "<td class='text-right'>" + oData.invoice.positions[i].qty + "</td>" +
             "<td>" + oData.invoice.positions[i].pos + "</td>" +
-            "<td class='num'>" + oData.invoice.positions[i].unitprice + "</td>" +
-            "<td class='num'>" + oData.invoice.positions[i].net + "</td>" +
-            "<td class='num'>" + oData.invoice.positions[i].vat + "</td>" +
-            "<td class='num'>" + oData.invoice.positions[i].gross + "</td>" +
+            "<td class='text-right'>" + oData.invoice.positions[i].unitprice + "</td>" +
+            "<td class='text-right'>" + oData.invoice.positions[i].net + "</td>" +
+            "<td class='text-right'>" + oData.invoice.positions[i].vat + "</td>" +
+            "<td class='text-right'>" + oData.invoice.positions[i].gross + "</td>" +
         "</tr>";
     }
 
@@ -595,9 +621,10 @@ function getHtmlInvoicePositions(oData) {
                 "<td><b>Summe</b></td>" +
                 "<td></td>" +
                 "<td></td>" +
-                "<td class='num'><b>" + oData.invoice.sums.net + "</b></td>" +
-                "<td class='num'><b>" + oData.invoice.sums.vat1 + "/" + oData.invoice.sums.vat2 + "</b></td>" +
-                "<td class='num'><b>" + oData.invoice.sums.gross + "</b></td>" +
+                "<td class='text-right'><b>" + oData.invoice.sums.net + "</b></td>" +
+                "<td class='text-right'><b>" + oData.invoice.sums.vat1 +
+                "/" + oData.invoice.sums.vat2 + "</b></td>" +
+                "<td class='text-right'><b>" + oData.invoice.sums.gross + "</b></td>" +
              "</tr></tbody></table></div>";
 
     return sHtml;
@@ -633,7 +660,7 @@ function getHtmlInvoiceFooter() {
         "<div id='invoice-footer-text'>" +
             "<p>" +
                 "Bitte überweisen Sie den Rechnungsbetrag innerhalb von <b>sieben Tagen</b> an das<br>oben stehende Konto.<br><br>" +
-                "Vielen Dank für das entgegengebrachte Vertrauen.<br><br><br><br>Jochen Wehner" +
+                "Vielen Dank für das entgegengebrachte Vertrauen.<br><br><br><br><br>Jochen Wehner" +
             "</p>" +
         "</div>" +
     "</div>";

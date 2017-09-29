@@ -6,13 +6,12 @@
 	xmlns:core="sap.ui.core">
 
 	<Page
-		showHeader="false"
-		class="sapUiResponsiveContentPadding">
+		showHeader="false">
 		<content>
 			<IconTabBar
 				expandable="false"
 				expanded="true"
-				stretchContentHeight="true"
+				stretchContentHeight="false"
 				class="sapUiResponsiveContentPadding">
 				<items>
 					<!-- ********************************************************************************** -->

@@ -379,7 +379,7 @@ function getInvoiceById(sId, fCallback) {
 
                     oResponse.invoice.positions = oResult.rows;
 
-                    // Calculate the sums
+                    // calculate the sums
                     getSums(oResponse.invoice.positions, function(oSums) {
                         oResponse.invoice.sums = oSums;
                         fCallback(oResponse, null);
@@ -456,8 +456,8 @@ function produceHtmlInvoice(oData, fCallback) {
         "<body>" +
             "<div id='invoice'>" +
                 getHtmlInvoiceHeader(oData) +
-                getHtmlInvoiceBody(oData) +
                 getHtmlInvoiceFooter() +
+                getHtmlInvoicePositions(oData) +
             "</div>" +
         "</body>" +
     "</html>");
@@ -479,17 +479,20 @@ function getCss() {
         "#invoice-header-line table th {text-align: left;}" +
         "#invoice-header-line table td {width: 45%;}" +
         "#invoice-header-text {margin-top: 5%;}" +
-        "#invoice-body-positions table {margin-top: 2.5%;margin-bottom: 2.5%;border-top: 1px solid #000;border-bottom: 1px solid #000;}" +
-        "#invoice-body-positions th {text-align: center !important;padding: 3px;border-bottom: 1px solid #000}" +
-        "#invoice-body-positions tr:nth-child(even) {background-color: #eee}" +
-        "#invoice-body-positions td {text-align: left;padding: 3px;}" +
-        "#last td {border-bottom: 1px solid #000;}" +
+        "#invoice-header-text #sums {margin-top: 5%;margin-bottom: 5%;border: 1px solid #000;}" +
+        //"#invoice-header-text #sums td {border: 1px solid #000;}" +
+        "#invoice-positions table {margin-top: 10%;margin-bottom: 30%;border-top: 1px solid #000;border-bottom: 1px solid #000;}" +
+        "#invoice-positions table tr #last td {border-bottom: 1px solid #000;}" +
+        "#invoice-positions table th {text-align: center !important;padding: 3px;border-bottom: 1px solid #000}" +
+        "#invoice-positions table tr:nth-child(even) {background-color: #eee}" +
+        "#invoice-positions table td {text-align: left;padding: 3px;}" +
         ".num {text-align: right !important;}" +
+        "#invoice-footer {margin-bottom: 100%;}" +
     "</style>";
 }
 
 /**
- * Get the html invoice header.
+ * Gets the html invoice header.
  *
  * @param oData
  * @return
@@ -526,62 +529,101 @@ function getHtmlInvoiceHeader(oData) {
         "<div id='invoice-header-text'>" +
             "<p>" + oData.customer.address + " " + oData.customer.lastname + ",</p>" +
             "<p>für unsere Leistungen erlauben wir uns,<br>Ihnen folgenden Betrag in Rechnung zu stellen:</p>" +
+            "<table id='sums'>" +
+                "<thead>" +
+                    "<tr>" +
+                        "<td>Netto</td>" +
+                        "<td>MwSt 7 %</td>" +
+                        "<td>MwSt 19 %</td>" +
+                        "<td>Brutto</td>" +
+                    "</tr>" +
+                "</thead>" +
+                "<tbody>" +
+                    "<tr>" +
+                        "<td><b>" + oData.invoice.sums.net + "</b></td>" +
+                        "<td><b>" + oData.invoice.sums.vat1 + "</b></td>" +
+                        "<td><b>" + oData.invoice.sums.vat2 + "</b></td>" +
+                        "<td><b>" + oData.invoice.sums.gross + "</b></td>" +
+                    "</tr>" +
+                    "<tr>" +
+                        "<td colspan='4'><small><em>Eine detaillierte Aufstellung kann den Folgeseiten entnommen werden.</em></small></td>" +
+                    "</tr>" +
+                "</tbody>" +
+            "</table>" +
         "</div>" +
     "</div>";
 }
 
 /**
- * Get the html invoice positions.
+ * Gets the html invoice positions.
  *
  * @param oData
  * @return
  */
-function getHtmlInvoiceBody(oData) {
-    var sHtml = "" +
-    "<div id='invoice-body-positions'>" +
-        "<table>" +
-            "<thead>" +
-                "<tr>" +
-                    "<th>Menge</th>" +
-                    "<th>Position</th>" +
-                    "<th>Einzel</th>" +
-                    "<th>netto</th>" +
-                    "<th>MwSt</th>" +
-                    "<th>brutto</th>" +
-                "</tr>" +
-            "</thead>" +
-            "<tbody>";
-            for(var i = 0; i < oData.invoice.positions.length; i++) {
-                if(i === oData.invoice.positions.length - 1) {
-                    sHtml += "<tr id='last'>";
-                } else {
-                    sHtml += "<tr>";
-                }
-                sHtml += "" +
-                    "<td class='num'>" + oData.invoice.positions[i].qty + "</td>" +
-                    "<td>" + oData.invoice.positions[i].pos + "</td>" +
-                    "<td class='num'>" + oData.invoice.positions[i].unitprice + "</td>" +
-                    "<td class='num'>" + oData.invoice.positions[i].net + "</td>" +
-                    "<td class='num'>" + oData.invoice.positions[i].vat + "</td>" +
-                    "<td class='num'>" + oData.invoice.positions[i].gross + "</td>" +
-                "</tr>"
-            }
-       sHtml += "<tr>" +
-                    "<td><b>Summe</b></td>" +
-                    "<td></td>" +
-                    "<td></td>" +
-                    "<td class='num'><b>" + oData.invoice.sums.net + "</b></td>" +
-                    "<td class='num'><b>" + oData.invoice.sums.vat1 + "/" + oData.invoice.sums.vat2 + "</b></td>" +
-                    "<td class='num'><b>" + oData.invoice.sums.gross + "</b></td>" +
-                "</tr>" +
-            "</tbody>" +
-        "</table>" +
-    "</div>";
+function getHtmlInvoicePositions(oData) {
+    var iPosCount = oData.invoice.positions.length;
+    var iPosPerPage = 35;
+
+    var sHtml = "<div id='invoice-positions'>";
+
+    for(var i = 0; i < iPosCount; i++) {
+
+        // start a new table on a new page after 35 positions
+        if(i % iPosPerPage === 0) {
+            if(i !== 0) {sHtml += "</tbody></table>";}
+            sHtml += "" +
+            "<br><table>" + getHtmlInvoicePositionsTableHeader() + "<tbody>";
+        }
+
+        // add id 'last' if the last position has been reached
+        if(i === iPosCount - 1) {sHtml += "<tr id='last'>";}
+        else {sHtml += "<tr>";}
+
+        // add ith position
+        sHtml += "" +
+            "<td class='num'>" + oData.invoice.positions[i].qty + "</td>" +
+            "<td>" + oData.invoice.positions[i].pos + "</td>" +
+            "<td class='num'>" + oData.invoice.positions[i].unitprice + "</td>" +
+            "<td class='num'>" + oData.invoice.positions[i].net + "</td>" +
+            "<td class='num'>" + oData.invoice.positions[i].vat + "</td>" +
+            "<td class='num'>" + oData.invoice.positions[i].gross + "</td>" +
+        "</tr>";
+    }
+
+    // add sum row
+    sHtml += "<tr>" +
+                "<td><b>Summe</b></td>" +
+                "<td></td>" +
+                "<td></td>" +
+                "<td class='num'><b>" + oData.invoice.sums.net + "</b></td>" +
+                "<td class='num'><b>" + oData.invoice.sums.vat1 + "/" + oData.invoice.sums.vat2 + "</b></td>" +
+                "<td class='num'><b>" + oData.invoice.sums.gross + "</b></td>" +
+             "</tr></tbody></table></div>";
+
     return sHtml;
 }
 
 /**
- * Get the html invoice footer.
+ * Gets the invoice positions table header.
+ *
+ * @return
+ */
+function getHtmlInvoicePositionsTableHeader() {
+    return "" +
+    "<thead>" +
+        "<tr>" +
+            "<th>Menge</th>" +
+            "<th>Position</th>" +
+            "<th>Einzel</th>" +
+            "<th>netto</th>" +
+            "<th>MwSt</th>" +
+            "<th>brutto</th>" +
+        "</tr>" +
+    "</thead>";
+}
+
+/**
+ * Gets the html invoice footer.
  *
  * @return
  */

@@ -251,7 +251,7 @@ module.exports = function(oApp) {
             "culo_id AS id, " +
             "culo_user_email AS email, " +
             "culo_user_name AS user " +
-        "FROM customers_lock " +
+        "FROM customer_lock " +
         "WHERE culo_id = '" + sId + "'" + sByCurrentUser;
 
         postgresDb.query(sSql, function(oErr, oResult) {
@@ -283,7 +283,7 @@ module.exports = function(oApp) {
      */
     oApp.post("/customers/:id/lock", isAuthenticated, function(oReq, oRes) {
         var sId = oReq.params.id;
-        var sSql = "INSERT INTO customers_lock (" +
+        var sSql = "INSERT INTO customer_lock (" +
             "culo_id, " +
             "culo_user_email, " +
             "culo_user_name" +
@@ -316,7 +316,7 @@ module.exports = function(oApp) {
      */
     oApp.post("/customers/:id/unlock", isAuthenticated, function(oReq, oRes) {
         var sId = oReq.params.id;
-        var sSql = "DELETE FROM customers_lock WHERE culo_id = '" + sId + "';";
+        var sSql = "DELETE FROM customer_lock WHERE culo_id = '" + sId + "';";
 
         postgresDb.query(sSql, function(oErr, oResult) {
             if(oErr) {

@@ -41,9 +41,9 @@ module.exports = function() {
                 "updated_by VARCHAR(50)" +
             ");", function(oErr, oResult) {});
 
-            // create table customers_lock
+            // create table customer_lock
             postgresDb.query("" +
-            "CREATE TABLE IF NOT EXISTS customers_lock (" +
+            "CREATE TABLE IF NOT EXISTS customer_lock (" +
             	"culo_id VARCHAR(10) references customers(cust_id) primary key, " +
             	"culo_user_email VARCHAR(100), " +
             	"culo_user_name VARCHAR(50)" +
@@ -78,6 +78,14 @@ module.exports = function() {
                         "created_by VARCHAR(50), " +
                         "updated_at DATE, " +
                         "updated_by VARCHAR(50)" +
+                    ");", function(oErr, oResult) {});
+
+                    // create table invoice_lock
+                    postgresDb.query("" +
+                    "CREATE TABLE IF NOT EXISTS invoice_lock (" +
+                        "inlo_id VARCHAR(10) references invoices(inv_id) primary key, " +
+                        "inlo_user_email VARCHAR(100), " +
+                        "inlo_user_name VARCHAR(50)" +
                     ");", function(oErr, oResult) {});
                 }
             });

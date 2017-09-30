@@ -23,6 +23,11 @@ sap.ui.define([
          */
         onInit: function() {
             self = this;
+
+            this.getEvtBus().subscribe(
+                "customerChannel", "customerChangedEvent", this._handleCustomerChangedEvent
+            );
+
             this._addContactDialog = new AddContactDialog(this.getView());
 
             this.getView().setModel(
@@ -57,7 +62,10 @@ sap.ui.define([
 
                     if(res.data) {
                         // already locked
-                        MessageToast.show("The record is currently locked by user: " + res.data.user);
+                        MessageToast.show(
+                            self.getTextById("Misc.lock.currently.locked") +
+                            res.data.user
+                        );
                         oToggleButton.setPressed(false);
                     } else {
                         // not yet locked
@@ -75,7 +83,6 @@ sap.ui.define([
                     var oModel = self.getView().getModel("settings");
                     oModel.getData().enabled = false;
                     oModel.refresh();
-                    MessageToast.show("The record has been unlocked");
                 }, function(res) {});
             }
         },
@@ -96,6 +103,30 @@ sap.ui.define([
          */
         onCustomerDelete: function(oEvent) {
 
+        },
+
+        /**
+         * Checks if the customer to be displayed
+         * is locked by the current user.
+         *
+         * @param sChannel
+         * @param sEvent
+         * @param oData
+         */
+        _handleCustomerChangedEvent: function(sChannel, sEvent, oData) {
+            var oModel = self.getView().getModel("settings");
+            var oToggleButton = self.getView().byId("toggleCustomerLock");
+
+            new LockService().isCustomerLockedByCurrentUser(oData.id, function(res) {
+                if(res.data) {
+                    oModel.getData().enabled = true;
+                    oToggleButton.setPressed(true);
+                } else {
+                    oModel.getData().enabled = false;
+                    oToggleButton.setPressed(false);
+                }
+                oModel.refresh();
+            });
         }
     });
 });

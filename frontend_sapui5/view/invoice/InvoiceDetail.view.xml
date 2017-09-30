@@ -62,7 +62,8 @@
 					<Link
 						text="{i18n>Invoice.print}"
 						href="/invoices/{/invoice/id}/print"
-						class="sapUiTinyMarginBegin"/>
+						class="sapUiTinyMarginBegin"
+						press="onInvoicePrint"/>
 					<ToolbarSpacer>
 						<layoutData>
 							<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>

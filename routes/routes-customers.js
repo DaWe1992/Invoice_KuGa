@@ -6,6 +6,7 @@
 "use strict";
 
 // import necessary modules
+var url = require("url");
 var postgresDb = require("../postgres/postgres.js");
 var logger = require("../logger/logger.js");
 var isAuthenticated = require("../passport/isAuthenticated.js");
@@ -235,17 +236,23 @@ module.exports = function(oApp) {
      *
      * @name /customers/:id/islocked
      * @param id (obligatory)
+     * @param byCurrentUser (optional, checks if the record is locked by the current user)
      */
     oApp.get("/customers/:id/islocked", isAuthenticated, function(oReq, oRes) {
+        var oQueryObject = url.parse(oReq.url, true).query;
         var sId = oReq.params.id;
         var bResponse;
+
+        var sByCurrentUser = (oQueryObject.byCurrentUser === "true")
+            ? " AND culo_user_name = '" + oReq.user.username + "';"
+            : ";";
 
         var sSql = "SELECT " +
             "culo_id AS id, " +
             "culo_user_email AS email, " +
             "culo_user_name AS user " +
         "FROM customers_lock " +
-        "WHERE culo_id = '" + sId + "';";
+        "WHERE culo_id = '" + sId + "'" + sByCurrentUser;
 
         postgresDb.query(sSql, function(oErr, oResult) {
             if(oErr) {

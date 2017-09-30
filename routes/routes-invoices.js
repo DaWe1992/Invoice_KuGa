@@ -486,7 +486,6 @@ function getCss() {
         "#invoice-positions .positions-table tr:nth-child(even) {background-color: #eee}" +
         "#invoice-positions .positions-table td {text-align: left;padding: 3px;}" +
         ".text-right {text-align: right !important;}" +
-        ".text {text-align: left !important;}" +
         "#invoice-footer {margin-bottom: 100%;}" +
         ".page-header {border-bottom: 1px solid #000;}" +
     "</style>";
@@ -605,7 +604,7 @@ function getHtmlInvoicePositions(oData) {
         if(i === iPosCount - 1) {sHtml += "<tr id='last'>";}
         else {sHtml += "<tr>";}
 
-        // add ith position
+        // add i-th position
         sHtml += "" +
             "<td class='text-right'>" + oData.invoice.positions[i].qty + "</td>" +
             "<td>" + oData.invoice.positions[i].pos + "</td>" +

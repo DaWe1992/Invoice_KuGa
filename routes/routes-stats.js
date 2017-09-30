@@ -26,8 +26,8 @@ module.exports = function(oApp) {
      * Returns the event revenues grouped by customers.
      *
      * @name /statistics/evtrevbycustomer
-     * @param gross (if true, gross prices are returned, else net prices)
-     * @param limit (limits the number of result rows)
+     * @param gross (optional, if true, gross prices are returned, else net prices)
+     * @param limit (optional, limits the number of result rows)
      */
     oApp.get("/statistics/evt-rev-by-customer", isAuthenticated, function(oReq, oRes) {
         var oQueryObject = url.parse(oReq.url, true).query;

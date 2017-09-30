@@ -113,6 +113,10 @@
                     oCurrentDetailPage.setModel(oModel);
                 });
             }
+
+            this.getEvtBus().publish("customerChannel", "customerChangedEvent", {
+                "id": oData.id
+            });
         },
 
         /**

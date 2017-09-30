@@ -86,6 +86,12 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
 - `http://<host>:8080/customers/:id/islocked`:  
   Returns `true` if the customer with id `id` is currently locked by another user.
 
+  **Query parameters:**
+
+  | name            | values       | description                                                              |
+  | --------------- | ------------ | ------------------------------------------------------------------------ |
+  | *byCurrentUser* | true, false  | true := checks lock for current user, false := checks lock for all users |  
+
 **POST:**
 
 - `http://<host>:8080/customers`:  

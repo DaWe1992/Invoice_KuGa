@@ -51,6 +51,18 @@ sap.ui.define([
          */
         isCustomerLocked: function(sId, fSuccess, fError) {
             this._http.performGet("/customers/" + sId + "/isLocked", fSuccess, fError);
+        },
+
+        /**
+         * Checks lock status of customer record.
+         * Checks if the current user locked the customer record.
+         *
+         * @param sId (id of customer to be checked)
+         * @param fSuccess (callback in case of success)
+         * @param fError (callback in case of error)
+         */
+        isCustomerLockedByCurrentUser: function(sId, fSuccess, fError) {
+            this._http.performGet("/customers/" + sId + "/isLocked?byCurrentUser=true", fSuccess, fError);
         }
     });
 });

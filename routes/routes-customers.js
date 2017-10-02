@@ -278,7 +278,7 @@ module.exports = function(oApp) {
     /**
      * Locks a customer record.
      *
-     * @name /customers/id/lock
+     * @name /customers/:id/lock
      * @param id (obligatory)
      */
     oApp.post("/customers/:id/lock", isAuthenticated, function(oReq, oRes) {
@@ -311,7 +311,7 @@ module.exports = function(oApp) {
     /**
      * Unlocks a customer record.
      *
-     * @name /customers/id/unlock
+     * @name /customers/:id/unlock
      * @param id (obligatory)
      */
     oApp.post("/customers/:id/unlock", isAuthenticated, function(oReq, oRes) {

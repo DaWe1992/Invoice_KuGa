@@ -64,6 +64,10 @@
 						href="/invoices/{/invoice/id}/print"
 						class="sapUiTinyMarginBegin"
 						press="onInvoicePrint"/>
+					<ToggleButton
+						id="toggleInvoiceLock"
+						icon="sap-icon://unlocked"
+						press="onToggleInvoiceLock"/>
 					<ToolbarSpacer>
 						<layoutData>
 							<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>

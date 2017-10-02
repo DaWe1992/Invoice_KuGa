@@ -7,6 +7,7 @@
 
 // import necessary modules
 var fs = require("fs");
+var url = require("url");
 var postgresDb = require("../postgres/postgres.js");
 var pdf = require("html-pdf");
 var mustache = require("mustache");
@@ -204,6 +205,108 @@ module.exports = function(oApp) {
             return oRes.status(200).json({
                 "success": true,
                 "data": oData
+            });
+        });
+    });
+
+    /**
+     * Checks if an invoice record is locked.
+     *
+     * @name /invoices/:id/islocked
+     * @param id (obligatory)
+     * @param byCurrentUser (optional, checks if the record is locked by the current user)
+     */
+    oApp.get("/invoices/:id/islocked", isAuthenticated, function(oReq, oRes) {
+        var oQueryObject = url.parse(oReq.url, true).query;
+        var sId = oReq.params.id;
+        var bResponse;
+
+        var sByCurrentUser = (oQueryObject.byCurrentUser === "true")
+            ? " AND inlo_user_name = '" + oReq.user.username + "';"
+            : ";";
+
+        var sSql = "SELECT " +
+            "inlo_id AS id, " +
+            "inlo_user_email AS email, " +
+            "inlo_user_name AS user " +
+        "FROM invoice_lock " +
+        "WHERE inlo_id = '" + sId + "'" + sByCurrentUser;
+
+        postgresDb.query(sSql, function(oErr, oResult) {
+            if(oErr) {
+                logger.log(logger.levels.ERR, oErr);
+                return oRes.status(500).json({
+                    "success": false,
+                    "err": oErr
+                });
+            }
+
+            bResponse = ((oResult.rows.length > 0)
+                ? oResult.rows[0]
+                : false
+            );
+
+            return oRes.status(200).json({
+                "success": true,
+                "data": bResponse
+            });
+        });
+    });
+
+    /**
+     * Locks an invoice record.
+     *
+     * @name /invoices/:id/lock
+     * @param id (obligatory)
+     */
+    oApp.post("/invoices/:id/lock", isAuthenticated, function(oReq, oRes) {
+        var sId = oReq.params.id;
+        var sSql = "INSERT INTO invoice_lock (" +
+            "inlo_id, " +
+            "inlo_user_email, " +
+            "inlo_user_name" +
+        ") VALUES (" +
+            "'" + sId + "'," +
+            "'" + oReq.user.email + "', " +
+            "'" + oReq.user.username + "'" +
+        ");";
+
+        postgresDb.query(sSql, function(oErr, oResult) {
+            if(oErr) {
+                logger.log(logger.levels.ERR, oErr);
+                return oRes.status(500).json({
+                    "success": false,
+                    "err": oErr
+                });
+            }
+
+            return oRes.status(200).json({
+                "success": true
+            });
+        });
+    });
+
+    /**
+     * Unlocks an invoice record.
+     *
+     * @name /invoices/:id/unlock
+     * @param id (obligatory)
+     */
+    oApp.post("/invoices/:id/unlock", isAuthenticated, function(oReq, oRes) {
+        var sId = oReq.params.id;
+        var sSql = "DELETE FROM invoice_lock WHERE inlo_id = '" + sId + "';";
+
+        postgresDb.query(sSql, function(oErr, oResult) {
+            if(oErr) {
+                logger.log(logger.levels.ERR, oErr);
+                return oRes.status(500).json({
+                    "success": false,
+                    "err": oErr
+                });
+            }
+
+            return oRes.status(200).json({
+                "success": true
             });
         });
     });

@@ -42,19 +42,27 @@
                     <core:Title text="{i18n>Invoice.form.section.head}"/>
 
                     <Label text="{i18n>Invoice.id}"/>
-                    <Input value="{/invoice/id}"/>
+                    <Input
+						value="{/invoice/id}"
+						enabled="false"/>
 
                     <Label text="{i18n>Invoice.description}"/>
-                    <Input value="{/invoice/description}"/>
+                    <Input
+						value="{/invoice/description}"
+						enabled="{settings>/enabled}"/>
 
                     <Label text="{i18n>Invoice.date}"/>
                     <DatePicker
                         value="{/invoice/date}"
                         valueFormat="yyyy-MM-dd"
-                        displayFormat="long"/>
+                        displayFormat="long"
+						enabled="{settings>/enabled}"/>
 
                     <Label text="{i18n>Invoice.room}"/>
-                    <Select id="invoiceRoom" selectedKey="{/invoice/room}">
+                    <Select
+						id="invoiceRoom"
+						selectedKey="{/invoice/room}"
+						enabled="{settings>/enabled}">
                         <items>
                             <core:Item text="{i18n>Invoice.room.rossini}" key="rossini"/>
                             <core:Item text="{i18n>Invoice.room.littmann}" key="littmann"/>
@@ -62,36 +70,52 @@
                     </Select>
 
                     <Label text="{i18n>Invoice.comments}"/>
-                    <Input value="{/invoice/comments}"/>
+                    <Input
+						value="{/invoice/comments}"
+						enabled="{settings>/enabled}"/>
 
                     <!-- ************************************************************ -->
                     <!-- Customer data -->
                     <core:Title text="{i18n>Invoice.form.section.customer}"/>
 
                     <Label text="{i18n>Customer.id}"/>
-                    <Input value="{/customer/id}" enabled="{settings>/enabled}"/>
+                    <Input
+						value="{/customer/id}"
+						enabled="{settings>/enabled}"/>
 
                     <Label text="{i18n>Customer.address}"/>
-                    <Input value="{/customer/address}" enabled="false"/>
+                    <Input
+						value="{/customer/address}"
+						enabled="false"/>
 
                     <Label text="{i18n>Customer.firstname} / {i18n>Customer.lastname}"/>
-                    <Input value="{/customer/firstname}" enabled="false"/>
-                    <Input value="{/customer/lastname}" enabled="false">
+                    <Input
+						value="{/customer/firstname}"
+						enabled="false"/>
+                    <Input
+						value="{/customer/lastname}"
+						enabled="false">
                         <layoutData>
                             <layout:GridData span="XL1 L4 M6 S12"/>
                         </layoutData>
                     </Input>
 
                     <Label text="{i18n>Customer.street}"/>
-                    <Input value="{/customer/street}" enabled="false"/>
+                    <Input
+						value="{/customer/street}"
+						enabled="false"/>
 
                     <Label text="{i18n>Customer.zip} / {i18n>Customer.city}"/>
-                    <Input value="{/customer/zip}" enabled="false">
+                    <Input
+						value="{/customer/zip}"
+						enabled="false">
                         <layoutData>
                             <layout:GridData span="XL1 L3 M4 S12"/>
                         </layoutData>
                     </Input>
-                    <Input value="{/customer/city}" enabled="false"/>
+                    <Input
+						value="{/customer/city}"
+						enabled="false"/>
 
                 </form:content>
             </form:SimpleForm>

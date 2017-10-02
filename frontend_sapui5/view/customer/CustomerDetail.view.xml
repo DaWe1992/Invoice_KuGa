@@ -9,7 +9,7 @@
 			<IconTabBar
 				expanded="true"
 				expandable="false"
-				stretchContentHeight="true"
+				stretchContentHeight="false"
 				class="sapUiResponsiveContentPadding">
 				<items>
 					<!-- ********************************************************************************** -->

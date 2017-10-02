@@ -84,7 +84,7 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
 - `http://<host>:8080/customers/:id`:  
   Returns the customer with id `id`.
 - `http://<host>:8080/customers/:id/islocked`:  
-  Returns `true` if the customer with id `id` is currently locked by another user.
+  Returns `true` if the customer with id `id` is currently locked by a user.
 
   **Query parameters:**
 
@@ -135,6 +135,14 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
   Creates pdf for the invoice with id `id`.
 - `http://<host>:8080/invoices/:id/positions`:  
   Returns all invoice positions for the invoice with id `id`.
+- `http://<host>:8080/invoices/:id/islocked`:  
+  Returns `true` if the invoice with id `id` is currently locked by a user.
+
+  **Query parameters:**
+
+  | name            | values       | description                                                              |
+  | --------------- | ------------ | ------------------------------------------------------------------------ |
+  | *byCurrentUser* | true, false  | true := checks lock for current user, false := checks lock for all users |
 
 **POST:**
 
@@ -168,6 +176,10 @@ The `express.js` file is the entry point of the `Node.js` application. All API e
 
 - `http://<host>:8080/invoices/:id/positions`:  
   Adds a new invoice position to the invoice with id `id`.
+- `http://<host>:8080/invoices/:id/lock`:  
+  Locks the invoice record with id `id`.
+- `http://<host>:8080/invoices/:id/unlock`:  
+  Unlocks the invoice record with id `id`.
 
 ### Statistics Endpoints
 

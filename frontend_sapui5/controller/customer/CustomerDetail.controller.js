@@ -63,7 +63,7 @@ sap.ui.define([
                     if(res.data) {
                         // already locked
                         MessageToast.show(
-                            self.getTextById("Misc.lock.currently.locked") +
+                            self.getTextById("Misc.record.currently.locked") +
                             res.data.user
                         );
                         oToggleButton.setPressed(false);

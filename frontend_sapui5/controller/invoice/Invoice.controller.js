@@ -109,6 +109,10 @@ sap.ui.define([
                     oCurrentDetailPage.setModel(oModel);
                 });
             }
+
+            this.getEvtBus().publish("invoiceChannel", "invoiceChangedEvent", {
+                "id": oData.id
+            });
         },
 
         /**

@@ -63,6 +63,51 @@ sap.ui.define([
          */
         isCustomerLockedByCurrentUser: function(sId, fSuccess, fError) {
             this._http.performGet("/customers/" + sId + "/isLocked?byCurrentUser=true", fSuccess, fError);
+        },
+
+        /**
+         * Locks invoice record.
+         *
+         * @param sId (id of invoice to be locked)
+         * @param fSuccess (callback in case of success)
+         * @param fError (callback in case of error)
+         */
+        lockInvoice: function(sId, fSuccess, fError) {
+            this._http.performPost("/invoices/" + sId + "/lock", null, fSuccess, fError);
+        },
+
+        /**
+         * Unlocks invoice record.
+         *
+         * @param sId (id of invoice to be unlocked)
+         * @param fSuccess (callback in case of success)
+         * @param fError (callback in case of error)
+         */
+        unlockInvoice: function(sId, fSuccess, fError) {
+            this._http.performPost("/invoices/" + sId + "/unlock", null, fSuccess, fError);
+        },
+
+        /**
+         * Checks lock status of invoice record.
+         *
+         * @param sId (id of invoice to be checked)
+         * @param fSuccess (callback in case of success)
+         * @param fError (callback in case of error)
+         */
+        isInvoiceLocked: function(sId, fSuccess, fError) {
+            this._http.performGet("/invoices/" + sId + "/isLocked", fSuccess, fError);
+        },
+
+        /**
+         * Checks lock status of invoice record.
+         * Checks if the current user locked the invoice record.
+         *
+         * @param sId (id of invoice to be checked)
+         * @param fSuccess (callback in case of success)
+         * @param fError (callback in case of error)
+         */
+        isInvoiceLockedByCurrentUser: function(sId, fSuccess, fError) {
+            this._http.performGet("/invoices/" + sId + "/isLocked?byCurrentUser=true", fSuccess, fError);
         }
     });
 });

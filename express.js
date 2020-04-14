@@ -85,7 +85,7 @@ require("./routes/routes-img-upload.js")(oApp);
 require("./routes/routes-authentication.js")(oApp, passport);
 
 // serve favicon
-oApp.use(favicon(path.join(__dirname, "frontend", "img", "favicon.ico")));
+oApp.use(favicon(path.join(__dirname, "frontend_sapui5", "favicon.ico")));
 // serve static files in frontend(_sapui5) folder
 oApp.use(
     isAuthenticated, express.static(

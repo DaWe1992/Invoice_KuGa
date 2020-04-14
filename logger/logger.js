@@ -43,20 +43,7 @@ module.exports = {
             "current_date" +
         ");";
 
-        postgresDb.query(sSql, function(oErr, oResult) {
-            if(oErr) {
-                // save log in file
-                // fallback in case the db connection is not available
-                var oDate = new Date();
-                var sYear = oDate.getFullYear();
-
-                fs.appendFile(
-                    "./logs/log" + sYear + ".txt",
-                    this.levels.ERR + "\t\t" + oDate + "\t\t" + oErr + "\n",
-                    function(oErr) {}
-                );
-            }
-        });
+        postgresDb.query(sSql, function(oErr, oResult) {});
     },
 
     /**

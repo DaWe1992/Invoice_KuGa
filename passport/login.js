@@ -6,12 +6,12 @@
 
 // import necessary modules
 var LocalStrategy   = require("passport-local").Strategy;
-var User = require("./models/user.js");
-var bCrypt = require("bcrypt-nodejs");
-var logger = require("../logger/logger.js");
+var user 			= require("./user.js");
+
+// ==============================================================
 
 module.exports = function(passport) {
-
+	
     /**
      * Configure login strategy.
      */
@@ -19,44 +19,21 @@ module.exports = function(passport) {
             passReqToCallback: true
         },
         function(oReq, sUsername, sPassword, fDone) {
-
-            // check in mongo if a user with username exists or not
-            User.findOne({"username": sUsername},
-                function(oErr, oUser) {
-                    if(oErr) {
-                        logger.log(logger.levels.ERR, oErr);
-                        return fDone(oErr);
-                    }
-
-                    // username does not exist, log the error and redirect back
-                    if(!oUser) {
-                        logger.log(logger.levels.ERR, "User not found with username " + sUsername);
-                        return fDone(null, false, oReq.flash("message", "User not found"));
-                    }
-
-                    // user exists but wrong password, log the error
-                    if(!isValidPassword(oUser, sPassword)) {
-                        logger.log(logger.levels.ERR, "Invalid password");
-                        // redirect to login page
-                        return fDone(null, false, oReq.flash("message", "Invalid password"));
-                    }
-
-                    // both user and password match, return user
-                    return fDone(null, oUser);
-                }
-            );
-
+			var oUser = user.findByName(sUsername);
+			
+			// user was not found
+			if(!oUser) {
+				return fDone(null, false, oReq.flash("message", "User not found"));
+			}
+			
+			// user was found
+			// ...but wrong password
+			if(sPassword != oUser.password) {
+				return fDone(null, false, oReq.flash("message", "Invalid password"));
+			}
+			
+			// user could be authenticated, return user
+			return fDone(null, oUser);
         })
     );
-
-    /**
-     * Check if the password provided is valid.
-     *
-     * @param oUser
-     * @param sPassword
-     * @return
-     */
-    var isValidPassword = function(oUser, sPassword){
-        return bCrypt.compareSync(sPassword, oUser.password);
-    }
 };

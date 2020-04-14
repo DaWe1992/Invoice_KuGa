@@ -10,7 +10,7 @@ module.exports = {
     app: {
         port: 8080
     },
-    frontend: "_sapui5", // alternative: ""
+    frontend: "_sapui5",
     logger: {
         enabled: true,
         logErro: true,
